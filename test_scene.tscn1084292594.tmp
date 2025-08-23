@@ -1,0 +1,88 @@
+[gd_scene load_steps=14 format=3 uid="uid://dlf2cy08l0smq"]
+
+[ext_resource type="Texture2D" uid="uid://lgsidpu2qvf0" path="res://texture_04.png" id="1_ia1lp"]
+[ext_resource type="PackedScene" uid="uid://dat5ka1sdrdf2" path="res://low_poly_mage.glb" id="1_uhqqe"]
+[ext_resource type="Script" uid="uid://b3wb426fydlox" path="res://character_body_3d.gd" id="3_sasra"]
+[ext_resource type="Script" uid="uid://crvuimvqpynv" path="res://first_person_camera.gd" id="4_coq8p"]
+[ext_resource type="Script" uid="uid://ock1n16rt78m" path="res://force_grab.gd" id="5_2nij2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sasra"]
+albedo_texture = ExtResource("1_ia1lp")
+uv1_triplanar = true
+
+[sub_resource type="Environment" id="Environment_coq8p"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ia1lp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_coq8p"]
+albedo_color = Color(0, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_7cbxl"]
+radius = 0.35
+height = 0.675
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2nij2"]
+bounce = 0.5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_coq8p"]
+radius = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_2nij2"]
+radius = 1.0
+height = 2.0
+
+[node name="Node3D" type="Node3D"]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+material_override = SubResource("StandardMaterial3D_sasra")
+use_collision = true
+size = Vector3(100, 1, 175)
+metadata/_edit_lock_ = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_coq8p")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 0.278689, 0.960381, 0, -0.960381, 0.278689, 0, 14.3357, 0)
+shadow_enabled = true
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("3_sasra")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+shape = SubResource("CapsuleShape3D_ia1lp")
+
+[node name="Sketchfab_Scene" parent="CharacterBody3D" instance=ExtResource("1_uhqqe")]
+transform = Transform3D(-2.5134e-08, 0, 0.575, 0, 0.575, 0, -0.575, 0, -2.5134e-08, 0, 0, 0)
+
+[node name="Head" type="Node3D" parent="CharacterBody3D"]
+script = ExtResource("4_coq8p")
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/Head"]
+transform = Transform3D(1, 0, 0, 0, 0.975488, 0.220051, 0, -0.220051, 0.975488, 0, 1.7, 2.57335)
+current = true
+
+[node name="RayCast3D" type="RayCast3D" parent="CharacterBody3D/Head/Camera3D"]
+target_position = Vector3(0, 1, -10)
+
+[node name="Hand" type="Node3D" parent="CharacterBody3D/Head/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 0.975488, -0.220051, 0, 0.220051, 0.975488, 0, 0.546986, -5.75776)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D/Head/Camera3D/Hand"]
+material_override = SubResource("StandardMaterial3D_coq8p")
+mesh = SubResource("SphereMesh_7cbxl")
+
+[node name="ForceGrab" type="Node" parent="CharacterBody3D/Head"]
+script = ExtResource("5_2nij2")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="." groups=["pickable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.64622, -5.06498)
+physics_material_override = SubResource("PhysicsMaterial_2nij2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+shape = SubResource("SphereShape3D_coq8p")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+mesh = SubResource("SphereMesh_2nij2")
