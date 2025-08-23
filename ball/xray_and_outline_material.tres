@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://clg21jobsftmx"]
+
+[ext_resource type="Shader" uid="uid://qyyju1ohkit7" path="res://ball/perfect_outline.gdshader" id="1_euukt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_buypi"]
+no_depth_test = true
+
+[resource]
+render_priority = 0
+next_pass = SubResource("StandardMaterial3D_buypi")
+shader = ExtResource("1_euukt")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_width = 3.0

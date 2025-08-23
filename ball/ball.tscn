@@ -1,0 +1,36 @@
+[gd_scene load_steps=8 format=3 uid="uid://cbq8n0y1yl5u0"]
+
+[ext_resource type="Script" uid="uid://daxbco1ixnqf2" path="res://ball/ball.gd" id="1_pwunn"]
+[ext_resource type="Material" uid="uid://clg21jobsftmx" path="res://ball/xray_and_outline_material.tres" id="2_biv8x"]
+[ext_resource type="Material" uid="uid://bcin3ddwkaiwl" path="res://ball/xray_material.tres" id="3_biv8x"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_cbx31"]
+bounce = 0.5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_41u45"]
+radius = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ktgx5"]
+transparency = 4
+albedo_color = Color(0.297199, 0.000964348, 0.715262, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_n5601"]
+radius = 1.0
+height = 2.0
+
+[node name="Ball" type="RigidBody3D" groups=["pickable"]]
+collision_layer = 3
+mass = 15.0
+physics_material_override = SubResource("PhysicsMaterial_cbx31")
+gravity_scale = 1.5
+script = ExtResource("1_pwunn")
+HIGHLIGHT = ExtResource("2_biv8x")
+XRAY = ExtResource("3_biv8x")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_41u45")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_ktgx5")
+material_overlay = ExtResource("3_biv8x")
+mesh = SubResource("SphereMesh_n5601")

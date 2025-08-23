@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://dlf2cy08l0smq"]
+[gd_scene load_steps=18 format=3 uid="uid://dlf2cy08l0smq"]
 
 [ext_resource type="Texture2D" uid="uid://lgsidpu2qvf0" path="res://texture_04.png" id="1_ia1lp"]
 [ext_resource type="PackedScene" uid="uid://dat5ka1sdrdf2" path="res://low_poly_mage.glb" id="1_uhqqe"]
@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://crvuimvqpynv" path="res://first_person_camera.gd" id="4_coq8p"]
 [ext_resource type="Script" uid="uid://ock1n16rt78m" path="res://force_grab.gd" id="5_2nij2"]
 [ext_resource type="Script" uid="uid://dwefe6514inmd" path="res://force_push.gd" id="6_7cbxl"]
-[ext_resource type="Shader" uid="uid://qyyju1ohkit7" path="res://perfect_outline.gdshader" id="7_8pr8v"]
+[ext_resource type="PackedScene" uid="uid://cbq8n0y1yl5u0" path="res://ball/ball.tscn" id="8_buypi"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sasra"]
 albedo_texture = ExtResource("1_ia1lp")
@@ -17,7 +17,17 @@ uv1_triplanar = true
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ia1lp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_coq8p"]
+transparency = 4
 albedo_color = Color(0, 1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_buypi"]
+no_depth_test = true
+shading_mode = 0
+albedo_color = Color(0.392157, 1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_njel3"]
+next_pass = SubResource("StandardMaterial3D_buypi")
+albedo_color = Color(0.392157, 1, 1, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_7cbxl"]
 radius = 0.35
@@ -33,38 +43,6 @@ albedo_color = Color(0.917647, 0, 0.129412, 0.254902)
 
 [sub_resource type="BoxMesh" id="BoxMesh_8pr8v"]
 size = Vector3(4.015, 4.805, 1.875)
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2nij2"]
-bounce = 0.5
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_coq8p"]
-radius = 1.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_njel3"]
-transparency = 4
-albedo_color = Color(0.658824, 0.615686, 1, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_buypi"]
-no_depth_test = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_buypi"]
-render_priority = 0
-next_pass = SubResource("StandardMaterial3D_buypi")
-shader = ExtResource("7_8pr8v")
-shader_parameter/outline_color = Color(1, 1, 1, 1)
-shader_parameter/outline_width = 3.0
-
-[sub_resource type="SphereMesh" id="SphereMesh_2nij2"]
-radius = 1.0
-height = 2.0
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_2nij2"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7cbxl"]
-transparency = 4
-albedo_color = Color(1, 0.27451, 1, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_8pr8v"]
 
 [node name="Node3D" type="Node3D"]
 
@@ -107,6 +85,7 @@ transform = Transform3D(1, 0, 0, 0, 0.975488, -0.220051, 0, 0.220051, 0.975488, 
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D/Head/Camera3D/Hand"]
 material_override = SubResource("StandardMaterial3D_coq8p")
+material_overlay = SubResource("StandardMaterial3D_njel3")
 mesh = SubResource("SphereMesh_7cbxl")
 
 [node name="ForceGrab" type="Node" parent="CharacterBody3D/Head"]
@@ -134,34 +113,7 @@ mesh = SubResource("BoxMesh_8pr8v")
 wait_time = 2.0
 one_shot = true
 
-[node name="HeavyBall" type="RigidBody3D" parent="." groups=["pickable"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.64622, -5.06498)
-collision_layer = 3
-mass = 15.0
-physics_material_override = SubResource("PhysicsMaterial_2nij2")
-gravity_scale = 1.5
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="HeavyBall"]
-shape = SubResource("SphereShape3D_coq8p")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="HeavyBall"]
-material_override = SubResource("StandardMaterial3D_njel3")
-material_overlay = SubResource("ShaderMaterial_buypi")
-mesh = SubResource("SphereMesh_2nij2")
-
-[node name="LightBall" type="RigidBody3D" parent="." groups=["pickable"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.82451, 1.64622, -5.06498)
-collision_layer = 3
-mass = 5.0
-physics_material_override = SubResource("PhysicsMaterial_2nij2")
-gravity_scale = 1.5
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LightBall"]
-shape = SubResource("SphereShape3D_2nij2")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="LightBall"]
-material_override = SubResource("StandardMaterial3D_7cbxl")
-material_overlay = SubResource("ShaderMaterial_buypi")
-mesh = SubResource("SphereMesh_8pr8v")
+[node name="Ball" parent="." instance=ExtResource("8_buypi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.49383, 1.62129, -4.76815)
 
 [connection signal="timeout" from="CharacterBody3D/Head/ForcePush/Timer" to="CharacterBody3D/Head/ForcePush" method="_on_timer_timeout"]
