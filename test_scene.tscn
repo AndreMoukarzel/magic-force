@@ -1,11 +1,7 @@
-[gd_scene load_steps=18 format=3 uid="uid://dlf2cy08l0smq"]
+[gd_scene load_steps=6 format=3 uid="uid://dlf2cy08l0smq"]
 
 [ext_resource type="Texture2D" uid="uid://lgsidpu2qvf0" path="res://texture_04.png" id="1_ia1lp"]
-[ext_resource type="PackedScene" uid="uid://dat5ka1sdrdf2" path="res://low_poly_mage.glb" id="1_uhqqe"]
-[ext_resource type="Script" uid="uid://b3wb426fydlox" path="res://character_body_3d.gd" id="3_sasra"]
-[ext_resource type="Script" uid="uid://crvuimvqpynv" path="res://first_person_camera.gd" id="4_coq8p"]
-[ext_resource type="Script" uid="uid://ock1n16rt78m" path="res://force_grab.gd" id="5_2nij2"]
-[ext_resource type="Script" uid="uid://dwefe6514inmd" path="res://force_push.gd" id="6_7cbxl"]
+[ext_resource type="PackedScene" uid="uid://bx8b8yvq5h1jd" path="res://player/player.tscn" id="3_sasra"]
 [ext_resource type="PackedScene" uid="uid://cbq8n0y1yl5u0" path="res://ball/ball.tscn" id="8_buypi"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sasra"]
@@ -13,36 +9,6 @@ albedo_texture = ExtResource("1_ia1lp")
 uv1_triplanar = true
 
 [sub_resource type="Environment" id="Environment_coq8p"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ia1lp"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_coq8p"]
-transparency = 4
-albedo_color = Color(0, 1, 1, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_buypi"]
-no_depth_test = true
-shading_mode = 0
-albedo_color = Color(0.392157, 1, 1, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_njel3"]
-next_pass = SubResource("StandardMaterial3D_buypi")
-albedo_color = Color(0.392157, 1, 1, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_7cbxl"]
-radius = 0.35
-height = 0.675
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_7cbxl"]
-points = PackedVector3Array(-2.0075, -2.4025, -0.9375, -2.0075, -2.4025, 0.9375, -2.0075, 2.4025, -0.9375, 2.0075, -2.4025, -0.9375, 2.0075, -2.4025, 0.9375, -2.0075, 2.4025, 0.9375, 2.0075, 2.4025, -0.9375, 2.0075, 2.4025, 0.9375)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8pr8v"]
-transparency = 1
-cull_mode = 1
-albedo_color = Color(0.917647, 0, 0.129412, 0.254902)
-
-[sub_resource type="BoxMesh" id="BoxMesh_8pr8v"]
-size = Vector3(4.015, 4.805, 1.875)
 
 [node name="Node3D" type="Node3D"]
 
@@ -60,60 +26,8 @@ environment = SubResource("Environment_coq8p")
 transform = Transform3D(1, 0, 0, 0, 0.278689, 0.960381, 0, -0.960381, 0.278689, 0, 14.3357, 0)
 shadow_enabled = true
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-script = ExtResource("3_sasra")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
-shape = SubResource("CapsuleShape3D_ia1lp")
-
-[node name="Sketchfab_Scene" parent="CharacterBody3D" instance=ExtResource("1_uhqqe")]
-transform = Transform3D(-2.5134e-08, 0, 0.575, 0, 0.575, 0, -0.575, 0, -2.5134e-08, 0, 0, 0)
-
-[node name="Head" type="Node3D" parent="CharacterBody3D"]
-script = ExtResource("4_coq8p")
-
-[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/Head"]
-transform = Transform3D(1, 0, 0, 0, 0.968778, 0.24793, 0, -0.24793, 0.968778, 0, 2.40114, 4.20052)
-current = true
-
-[node name="RayCast3D" type="RayCast3D" parent="CharacterBody3D/Head/Camera3D"]
-target_position = Vector3(0, 1, -16)
-
-[node name="Hand" type="Node3D" parent="CharacterBody3D/Head/Camera3D"]
-transform = Transform3D(1, 0, 0, 0, 0.975488, -0.220051, 0, 0.220051, 0.975488, 0, 1.11179, -6.73985)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D/Head/Camera3D/Hand"]
-material_override = SubResource("StandardMaterial3D_coq8p")
-material_overlay = SubResource("StandardMaterial3D_njel3")
-mesh = SubResource("SphereMesh_7cbxl")
-
-[node name="ForceGrab" type="Node" parent="CharacterBody3D/Head"]
-script = ExtResource("5_2nij2")
-
-[node name="ForcePush" type="Node3D" parent="CharacterBody3D/Head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
-script = ExtResource("6_7cbxl")
-
-[node name="Area3D" type="Area3D" parent="CharacterBody3D/Head/ForcePush"]
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="CharacterBody3D/Head/ForcePush/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.53839, -2.09912)
-shape = SubResource("ConvexPolygonShape3D_7cbxl")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D/Head/ForcePush/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.53839, -2.09912)
-visible = false
-material_override = SubResource("StandardMaterial3D_8pr8v")
-mesh = SubResource("BoxMesh_8pr8v")
-
-[node name="Timer" type="Timer" parent="CharacterBody3D/Head/ForcePush"]
-wait_time = 2.0
-one_shot = true
-
 [node name="Ball" parent="." instance=ExtResource("8_buypi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.49383, 1.62129, -4.76815)
 
-[connection signal="timeout" from="CharacterBody3D/Head/ForcePush/Timer" to="CharacterBody3D/Head/ForcePush" method="_on_timer_timeout"]
+[node name="Player" parent="." instance=ExtResource("3_sasra")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01533, 2.46741)

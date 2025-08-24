@@ -1,8 +1,8 @@
 extends Node
 
 
-@onready var RAYCAST: RayCast3D = $"../Camera3D/RayCast3D"
-@onready var HAND: Node3D = $"../Camera3D/Hand"
+@export var RAYCAST: RayCast3D
+@export var HAND: Node3D
 
 var SNAP_LERP: float = 5.0
 var GRAB_FORCE: float = 12.0
@@ -20,6 +20,7 @@ func release():
 
 func grab() -> bool:
 	var object = RAYCAST.get_collider()
+	print(object)
 	if object and object.is_in_group("pickable"):
 		GRABBED_OBJECT = object
 		GRAB_FORCE_PER_MASS = GRAB_FORCE / GRABBED_OBJECT.mass

@@ -1,0 +1,131 @@
+[gd_scene load_steps=19 format=3 uid="uid://bx8b8yvq5h1jd"]
+
+[ext_resource type="PackedScene" uid="uid://dat5ka1sdrdf2" path="res://low_poly_mage.glb" id="1_oul6g"]
+[ext_resource type="Script" uid="uid://b3wb426fydlox" path="res://character_body_3d.gd" id="1_qjkh3"]
+[ext_resource type="Script" uid="uid://ock1n16rt78m" path="res://spells/force_grab.gd" id="3_qjkh3"]
+[ext_resource type="Script" uid="uid://dwefe6514inmd" path="res://spells/force_push.gd" id="4_g6k8r"]
+[ext_resource type="Script" uid="uid://bp7a0kn6v5jk4" path="res://player/simple_camera.gd" id="4_yw30f"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rkbax"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2ieo8"]
+transparency = 1
+cull_mode = 1
+albedo_color = Color(0.917647, 0, 0.129412, 0.254902)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ebec5"]
+size = Vector3(7, 4.6, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qjkh3"]
+size = Vector3(7, 4.6, 4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qjkh3"]
+transparency = 1
+cull_mode = 1
+albedo_color = Color(0, 0.588373, 0.301544, 0.254902)
+
+[sub_resource type="BoxMesh" id="BoxMesh_g6k8r"]
+size = Vector3(3.5, 1, 1.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g6k8r"]
+size = Vector3(3.5, 1, 1.5)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qjkh3"]
+radius = 0.3
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_g6k8r"]
+radius = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_boad6"]
+transparency = 4
+albedo_color = Color(0, 1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_buypi"]
+no_depth_test = true
+shading_mode = 0
+albedo_color = Color(0.392157, 1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rgyib"]
+next_pass = SubResource("StandardMaterial3D_buypi")
+albedo_color = Color(0.392157, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_hg6s5"]
+radius = 0.35
+height = 0.675
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_qjkh3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_rkbax")
+
+[node name="Mage" parent="." instance=ExtResource("1_oul6g")]
+transform = Transform3D(-2.5134e-08, 0, -0.575, 0, 0.575, 0, 0.575, 0, -2.5134e-08, 0, 0, 0)
+
+[node name="ForceGrab" type="Node" parent="." node_paths=PackedStringArray("RAYCAST", "HAND")]
+script = ExtResource("3_qjkh3")
+RAYCAST = NodePath("../CameraSpring/Camera3D/RayCast3D")
+HAND = NodePath("../HandSpring/Hand")
+
+[node name="ForcePush" type="Node3D" parent="." node_paths=PackedStringArray("PLAYER", "CAM")]
+script = ExtResource("4_g6k8r")
+PLAYER = NodePath("..")
+CAM = NodePath("../CameraSpring/Camera3D")
+
+[node name="Area3D" type="Area3D" parent="ForcePush"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 2)
+collision_layer = 0
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ForcePush/Area3D"]
+visible = false
+material_override = SubResource("StandardMaterial3D_2ieo8")
+mesh = SubResource("BoxMesh_ebec5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcePush/Area3D"]
+shape = SubResource("BoxShape3D_qjkh3")
+
+[node name="AreaFloorPush" type="Area3D" parent="ForcePush"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 1)
+collision_layer = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ForcePush/AreaFloorPush"]
+material_override = SubResource("StandardMaterial3D_qjkh3")
+mesh = SubResource("BoxMesh_g6k8r")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcePush/AreaFloorPush"]
+shape = SubResource("BoxShape3D_g6k8r")
+
+[node name="Cooldown" type="Timer" parent="ForcePush"]
+wait_time = 1.5
+one_shot = true
+
+[node name="CameraSpring" type="SpringArm3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("SphereShape3D_qjkh3")
+spring_length = 6.0
+script = ExtResource("4_yw30f")
+
+[node name="Camera3D" type="Camera3D" parent="CameraSpring"]
+current = true
+
+[node name="RayCast3D" type="RayCast3D" parent="CameraSpring/Camera3D"]
+target_position = Vector3(0, 0, -12)
+collision_mask = 2
+debug_shape_custom_color = Color(1, 0, 0, 1)
+
+[node name="HandSpring" type="SpringArm3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2, 0)
+shape = SubResource("SphereShape3D_g6k8r")
+spring_length = 4.0
+
+[node name="Hand" type="Node3D" parent="HandSpring"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="HandSpring/Hand"]
+material_override = SubResource("StandardMaterial3D_boad6")
+material_overlay = SubResource("StandardMaterial3D_rgyib")
+mesh = SubResource("SphereMesh_hg6s5")
+
+[connection signal="timeout" from="ForcePush/Cooldown" to="ForcePush" method="_on_timer_timeout"]
