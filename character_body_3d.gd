@@ -19,7 +19,7 @@ func _physics_process(delta: float) -> void:
 	var inv_rot: Vector3 = inverted_rotation(cam_rot)
 	
 	direction = direction.rotated(Vector3.UP, cam_rot.y)
-	CHAR.global_rotation.y = cam_rot.y + PI/2
+	CHAR.global_rotation.y = cam_rot.y
 	HAND_SPRING.rotation = inv_rot
 	$ForcePush.rotation = inv_rot
 
