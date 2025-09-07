@@ -5,7 +5,7 @@ extends Node3D
 @export var CAM :Camera3D
 var CATCH_VELOCITY: Vector3 = Vector3(0, -10, 0) # Base velocity set when object is caught
 var PUSH_FORCE: float = 220.0
-var SELF_PUSH_FORCE: float = 0.8
+var SELF_PUSH_FORCE: float = 4.3
 
 
 func area_push() -> void:

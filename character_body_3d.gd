@@ -1,15 +1,20 @@
 extends CharacterBody3D
 
 @export var SPEED: float = 5.0
-@export var fall_acceleration = 9.8
+@export var ACC: float = 15.0
+@export var ACC_AIR: float = 2.0
+@export var RISE_ACC: float = 10.0
+@export var FALL_ACC: float = 18.5
+@export var KNOCKBACK_DECAY: float = 15.0
 
 @onready var CAM: Camera3D = $CameraSpring/Camera3D
 @onready var CHAR: Node3D = $Mage
 @onready var HAND_SPRING: SpringArm3D = $HandSpring
-var knockback: Vector3 = Vector3.ZERO
+var KNOCKBACK: Vector3 = Vector3.ZERO
+
 
 func apply_knockback(force: Vector3) -> void:
-	knockback = force
+	KNOCKBACK = force
 
 
 func _physics_process(delta: float) -> void:
@@ -24,20 +29,34 @@ func _physics_process(delta: float) -> void:
 	$ForcePush.rotation = inv_rot
 
 	if is_on_floor():
-		if direction:
-			velocity.x = direction.x * SPEED
-			velocity.z = direction.z * SPEED
-		else:
-			velocity.x = move_toward(velocity.x, 0, SPEED)
-			velocity.z = move_toward(velocity.z, 0, SPEED)
+		velocity.x = move_toward(velocity.x, direction.x * SPEED, ACC * delta)
+		velocity.z = move_toward(velocity.z, direction.z * SPEED, ACC * delta)
 	else:
-		velocity.y -= fall_acceleration * delta
+		velocity.x = move_toward(velocity.x, direction.x * SPEED, ACC_AIR * delta)
+		velocity.z = move_toward(velocity.z, direction.z * SPEED, ACC_AIR * delta)
+		if velocity.y > 0:
+			# Ascending: lower gravity for slower upward deceleration
+			velocity.y -= RISE_ACC * delta
+		else:
+			# Descending: higher gravity for faster, snappier fall
+			velocity.y -= FALL_ACC * delta
+			if $Float.is_active and velocity.y <= -$Float.FLOAT_SPEED:
+				velocity.y = -$Float.FLOAT_SPEED
 	
-	# Apply knockback (decays over time if desired)
-	if knockback.length() > 0.1:
-		velocity += knockback
-		knockback = knockback.lerp(Vector3.ZERO, delta * 5.0) # smooth decay
-
+	# Apply knockback
+	if KNOCKBACK.length() > 0.1:
+		if direction:
+			var horizontal_knockback = KNOCKBACK.project(Vector3(1, 0, 1)).normalized()
+			var dot = direction.dot(horizontal_knockback)
+			var angle = acos(clamp(dot, -1.0, 1.0)) # angle in radians between 0 and pi
+			var angle_factor = sin(angle) # 0 when parallel, 1 when perpendicular
+			var boost = lerp(1.0, 2.5, angle_factor) # more boost when orthogonal
+			velocity.x = move_toward(velocity.x, direction.x * SPEED, boost * ACC_AIR * delta)
+			velocity.z = move_toward(velocity.z, direction.z * SPEED, boost * ACC_AIR * delta)
+		
+		velocity += KNOCKBACK
+		KNOCKBACK = KNOCKBACK.lerp(Vector3.ZERO, delta * KNOCKBACK_DECAY) # smooth decay
+	
 	move_and_slide()
 
 
@@ -55,3 +74,8 @@ func _input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("secondary_action"):
 		$ForcePush.area_push()
+	
+	if event.is_action_pressed("float"):
+		$Float.activate()
+	elif event.is_action_released("float"):
+		$Float.deactivate()
