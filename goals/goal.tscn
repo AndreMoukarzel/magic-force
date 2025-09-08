@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=3 uid="uid://cj03l5kvgpert"]
+
+[ext_resource type="Script" uid="uid://bpqmu8gqq8gea" path="res://goals/goal.gd" id="1_gvldf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_chmpl"]
+size = Vector3(8.4, 5.6, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_chmpl"]
+albedo_color = Color(0, 1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gvldf"]
+albedo_color = Color(0.979495, 0, 0.0315869, 1)
+
+[node name="Goal" type="Node3D"]
+script = ExtResource("1_gvldf")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -0.25)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_chmpl")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+use_collision = true
+collision_layer = 7
+collision_mask = 6
+
+[node name="Front" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.25)
+material_override = SubResource("StandardMaterial3D_chmpl")
+size = Vector3(9, 6, 0.5)
+
+[node name="Back" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.25)
+material_override = SubResource("StandardMaterial3D_gvldf")
+size = Vector3(9, 6.54, 0.5)
+
+[node name="Space" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0)
+operation = 2
+size = Vector3(8.4, 5.6, 1)
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
