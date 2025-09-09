@@ -1,9 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cj03l5kvgpert"]
+[gd_scene load_steps=7 format=3 uid="uid://cj03l5kvgpert"]
 
 [ext_resource type="Script" uid="uid://bpqmu8gqq8gea" path="res://goals/goal.gd" id="1_gvldf"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_chmpl"]
-size = Vector3(8.4, 5.6, 0.5)
+size = Vector3(8.4, 5.6, 1.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_chmpl"]
 albedo_color = Color(0, 1, 1, 1)
@@ -11,16 +11,25 @@ albedo_color = Color(0, 1, 1, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gvldf"]
 albedo_color = Color(0.979495, 0, 0.0315869, 1)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_11adn"]
+cull_mode = 2
+
+[sub_resource type="QuadMesh" id="QuadMesh_gvldf"]
+size = Vector2(9, 9)
+subdivide_width = 5
+subdivide_depth = 5
+
 [node name="Goal" type="Node3D"]
 script = ExtResource("1_gvldf")
 
 [node name="Area3D" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -0.25)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -1.5)
 collision_layer = 0
 collision_mask = 2
 monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
 shape = SubResource("BoxShape3D_chmpl")
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
@@ -43,5 +52,40 @@ size = Vector3(9, 6.54, 0.5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0)
 operation = 2
 size = Vector3(8.4, 5.6, 1)
+
+[node name="Net" type="SoftBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 3, -3.5)
+material_override = SubResource("StandardMaterial3D_11adn")
+mesh = SubResource("QuadMesh_gvldf")
+collision_layer = 0
+collision_mask = 7
+pinned_points = [0, 6, 48, 42, 43, 44, 45, 46, 47]
+attachments/0/point_index = 0
+attachments/0/spatial_attachment_path = NodePath("")
+attachments/0/offset = Vector3(0, 0, 0)
+attachments/1/point_index = 6
+attachments/1/spatial_attachment_path = NodePath("")
+attachments/1/offset = Vector3(0, 0, 0)
+attachments/2/point_index = 48
+attachments/2/spatial_attachment_path = NodePath("")
+attachments/2/offset = Vector3(0, 0, 0)
+attachments/3/point_index = 42
+attachments/3/spatial_attachment_path = NodePath("")
+attachments/3/offset = Vector3(0, 0, 0)
+attachments/4/point_index = 43
+attachments/4/spatial_attachment_path = NodePath("")
+attachments/4/offset = Vector3(0, 0, 0)
+attachments/5/point_index = 44
+attachments/5/spatial_attachment_path = NodePath("")
+attachments/5/offset = Vector3(0, 0, 0)
+attachments/6/point_index = 45
+attachments/6/spatial_attachment_path = NodePath("")
+attachments/6/offset = Vector3(0, 0, 0)
+attachments/7/point_index = 46
+attachments/7/spatial_attachment_path = NodePath("")
+attachments/7/offset = Vector3(0, 0, 0)
+attachments/8/point_index = 47
+attachments/8/spatial_attachment_path = NodePath("")
+attachments/8/offset = Vector3(0, 0, 0)
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
