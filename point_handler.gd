@@ -1,0 +1,24 @@
+extends Control
+
+signal goal_scored
+
+@export var GOAL_A: Node3D
+@export var GOAL_B: Node3D
+
+var SCORE_A: int = 0
+var SCORE_B: int = 0
+
+
+func _ready() -> void:
+	GOAL_A.goal_scored.connect(goal_was_scored.bind("A"))
+	GOAL_B.goal_scored.connect(goal_was_scored.bind("B"))
+
+
+func goal_was_scored(team: String) -> void:
+	if team == "A":
+		SCORE_A += 1
+		$HBoxContainer/ScoreA.text = str(SCORE_A)
+	elif team == "B":
+		SCORE_B += 1
+		$HBoxContainer/ScoreB.text = str(SCORE_B)
+	emit_signal("goal_scored")
