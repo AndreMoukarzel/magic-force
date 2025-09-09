@@ -5,8 +5,8 @@ extends Node
 @export var HAND: Node3D
 
 var SNAP_LERP: float = 5.0
-var GRAB_FORCE: float = 12.0
-var LET_GO_DISTANCE: float = 20.0
+var GRAB_FORCE: float = 18.0
+var LET_GO_DISTANCE: float = 25.0
 var GRABBED_OBJECT: RigidBody3D = null
 var GRAB_FORCE_PER_MASS: float = 0.0 # Updated when a new object is grabbed
 
