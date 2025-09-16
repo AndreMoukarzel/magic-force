@@ -20,7 +20,6 @@ func release():
 
 func grab() -> bool:
 	var object = RAYCAST.get_collider()
-	print(object)
 	if object and object.is_in_group("pickable"):
 		GRABBED_OBJECT = object
 		GRAB_FORCE_PER_MASS = GRAB_FORCE / GRABBED_OBJECT.mass

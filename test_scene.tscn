@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dlf2cy08l0smq"]
+[gd_scene load_steps=13 format=3 uid="uid://dlf2cy08l0smq"]
 
 [ext_resource type="Script" uid="uid://hcj0epu188wp" path="res://point_handler.gd" id="1_2nij2"]
 [ext_resource type="Script" uid="uid://buqwqt1pevghn" path="res://spawn_handler.gd" id="1_7cbxl"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://dx8f8idcufjnf" path="res://texture_01.png" id="4_8pr8v"]
 [ext_resource type="PackedScene" uid="uid://cj03l5kvgpert" path="res://goals/goal.tscn" id="4_coq8p"]
 [ext_resource type="PackedScene" uid="uid://cbq8n0y1yl5u0" path="res://ball/ball.tscn" id="8_buypi"]
+[ext_resource type="PackedScene" uid="uid://yyhv57x8ch56" path="res://entity/pusher.tscn" id="8_njel3"]
+[ext_resource type="PackedScene" uid="uid://cq82bbnw3xp8x" path="res://entity/grabber.tscn" id="9_njel3"]
 
 [sub_resource type="Environment" id="Environment_coq8p"]
 
@@ -69,6 +71,8 @@ text = "0"
 [node name="Walls" type="CSGCombiner3D" parent="."]
 material_override = SubResource("StandardMaterial3D_buypi")
 use_collision = true
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="Fill" type="CSGBox3D" parent="Walls"]
 size = Vector3(80, 60, 110)
@@ -137,5 +141,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 25)
 
 [node name="Spawn4" type="Marker3D" parent="SpawnPoints/SpawnsB"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12)
+
+[node name="Pusher" parent="." instance=ExtResource("8_njel3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.5052, 1.97, -22.0322)
+
+[node name="Grabber" parent="." instance=ExtResource("9_njel3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0941, 1.97, -23.9635)
 
 [connection signal="timeout" from="SpawnHandler/RespawnTimer" to="SpawnHandler" method="_on_respawn_timer_timeout"]

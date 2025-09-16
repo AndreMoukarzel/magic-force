@@ -1,0 +1,82 @@
+[gd_scene load_steps=11 format=3 uid="uid://yyhv57x8ch56"]
+
+[ext_resource type="PackedScene" uid="uid://bbhhjkh6mw2xv" path="res://base_mage.tscn" id="1_4tdr0"]
+[ext_resource type="Script" uid="uid://brwn87v41ipic" path="res://entity/pusher.gd" id="1_5hkf7"]
+[ext_resource type="Script" uid="uid://dwefe6514inmd" path="res://spells/force_push.gd" id="3_gyt0c"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5hkf7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_14kg8"]
+transparency = 1
+cull_mode = 1
+albedo_color = Color(0.917647, 0, 0.129412, 0.254902)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wakhi"]
+size = Vector3(7, 4.6, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q8uj0"]
+size = Vector3(7, 4.6, 4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m4crf"]
+transparency = 1
+cull_mode = 1
+albedo_color = Color(0, 0.588373, 0.301544, 0.254902)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vgqrt"]
+size = Vector3(3.5, 1, 1.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_26t00"]
+size = Vector3(3.5, 1, 1.5)
+
+[node name="Pusher" type="CharacterBody3D"]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_5hkf7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_5hkf7")
+
+[node name="Mage" type="Node3D" parent="."]
+
+[node name="BaseMage" parent="Mage" instance=ExtResource("1_4tdr0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="ForcePush" type="Node3D" parent="." node_paths=PackedStringArray("PLAYER", "CAM")]
+script = ExtResource("3_gyt0c")
+PLAYER = NodePath("")
+CAM = NodePath("")
+
+[node name="Area3D" type="Area3D" parent="ForcePush"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 2)
+collision_layer = 0
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ForcePush/Area3D"]
+visible = false
+material_override = SubResource("StandardMaterial3D_14kg8")
+mesh = SubResource("BoxMesh_wakhi")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcePush/Area3D"]
+shape = SubResource("BoxShape3D_q8uj0")
+
+[node name="AreaFloorPush" type="Area3D" parent="ForcePush"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 1)
+collision_layer = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ForcePush/AreaFloorPush"]
+material_override = SubResource("StandardMaterial3D_m4crf")
+mesh = SubResource("BoxMesh_vgqrt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcePush/AreaFloorPush"]
+shape = SubResource("BoxShape3D_26t00")
+
+[node name="Cooldown" type="Timer" parent="ForcePush"]
+wait_time = 1.5
+one_shot = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="ForcePush/Cooldown" to="ForcePush" method="_on_timer_timeout"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

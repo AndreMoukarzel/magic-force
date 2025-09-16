@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://cq82bbnw3xp8x"]
+
+[ext_resource type="Script" uid="uid://d0j5f4p5a4rxx" path="res://entity/grabber.gd" id="1_f8ep5"]
+[ext_resource type="PackedScene" uid="uid://bbhhjkh6mw2xv" path="res://base_mage.tscn" id="1_p0a1k"]
+[ext_resource type="Script" uid="uid://ock1n16rt78m" path="res://spells/force_grab.gd" id="2_13rmr"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_13rmr"]
+
+[node name="Grabber" type="CharacterBody3D"]
+script = ExtResource("1_f8ep5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_13rmr")
+
+[node name="Mage" type="Node3D" parent="."]
+
+[node name="BaseMage" parent="Mage" instance=ExtResource("1_p0a1k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="GrabPosition" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.08117, 3.66183)
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, 0, 10)
+collision_mask = 2
+debug_shape_custom_color = Color(1, 0, 0, 1)
+
+[node name="ForceGrab" type="Node" parent="." node_paths=PackedStringArray("RAYCAST", "HAND")]
+script = ExtResource("2_13rmr")
+RAYCAST = NodePath("../RayCast3D")
+HAND = NodePath("../GrabPosition")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
