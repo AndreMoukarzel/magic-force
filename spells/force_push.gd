@@ -16,6 +16,9 @@ func area_push() -> void:
 	for body in bodies:
 		if body.has_method("apply_impulse"):
 			push_away(body)
+			
+			if body.has_method("clear_all_grabbers"):
+				body.clear_all_grabbers()
 	
 	var floors: Array[Node3D] = $AreaFloorPush.get_overlapping_bodies()
 	if len(floors) > 0:

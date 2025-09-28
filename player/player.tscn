@@ -1,35 +1,13 @@
-[gd_scene load_steps=20 format=3 uid="uid://bx8b8yvq5h1jd"]
+[gd_scene load_steps=14 format=3 uid="uid://bx8b8yvq5h1jd"]
 
 [ext_resource type="Script" uid="uid://b3wb426fydlox" path="res://character_body_3d.gd" id="1_qjkh3"]
 [ext_resource type="PackedScene" uid="uid://bbhhjkh6mw2xv" path="res://base_mage.tscn" id="2_qjkh3"]
 [ext_resource type="Script" uid="uid://c4cdd4kueepxk" path="res://spells/float.gd" id="3_g6k8r"]
 [ext_resource type="Script" uid="uid://ock1n16rt78m" path="res://spells/force_grab.gd" id="3_qjkh3"]
-[ext_resource type="Script" uid="uid://dwefe6514inmd" path="res://spells/force_push.gd" id="4_g6k8r"]
 [ext_resource type="Script" uid="uid://bp7a0kn6v5jk4" path="res://player/simple_camera.gd" id="4_yw30f"]
+[ext_resource type="PackedScene" uid="uid://bv2hfx1pmunvp" path="res://spells/force_push.tscn" id="5_g6k8r"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rkbax"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2ieo8"]
-transparency = 1
-cull_mode = 1
-albedo_color = Color(0.917647, 0, 0.129412, 0.254902)
-
-[sub_resource type="BoxMesh" id="BoxMesh_ebec5"]
-size = Vector3(7, 4.6, 4)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_qjkh3"]
-size = Vector3(7, 4.6, 4)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qjkh3"]
-transparency = 1
-cull_mode = 1
-albedo_color = Color(0, 0.588373, 0.301544, 0.254902)
-
-[sub_resource type="BoxMesh" id="BoxMesh_g6k8r"]
-size = Vector3(3.5, 1, 1.5)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_g6k8r"]
-size = Vector3(3.5, 1, 1.5)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_qjkh3"]
 radius = 0.3
@@ -74,38 +52,9 @@ script = ExtResource("3_qjkh3")
 RAYCAST = NodePath("../CameraSpring/Camera3D/RayCast3D")
 HAND = NodePath("../HandSpring/Hand")
 
-[node name="ForcePush" type="Node3D" parent="." node_paths=PackedStringArray("PLAYER", "CAM")]
-script = ExtResource("4_g6k8r")
+[node name="ForcePush" parent="." node_paths=PackedStringArray("PLAYER", "CAM") instance=ExtResource("5_g6k8r")]
 PLAYER = NodePath("..")
 CAM = NodePath("../CameraSpring/Camera3D")
-
-[node name="Area3D" type="Area3D" parent="ForcePush"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 2)
-collision_layer = 0
-collision_mask = 2
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ForcePush/Area3D"]
-visible = false
-material_override = SubResource("StandardMaterial3D_2ieo8")
-mesh = SubResource("BoxMesh_ebec5")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcePush/Area3D"]
-shape = SubResource("BoxShape3D_qjkh3")
-
-[node name="AreaFloorPush" type="Area3D" parent="ForcePush"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 1)
-collision_layer = 0
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ForcePush/AreaFloorPush"]
-material_override = SubResource("StandardMaterial3D_qjkh3")
-mesh = SubResource("BoxMesh_g6k8r")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ForcePush/AreaFloorPush"]
-shape = SubResource("BoxShape3D_g6k8r")
-
-[node name="Cooldown" type="Timer" parent="ForcePush"]
-wait_time = 1.5
-one_shot = true
 
 [node name="CameraSpring" type="SpringArm3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -132,5 +81,3 @@ spring_length = 4.0
 material_override = SubResource("StandardMaterial3D_boad6")
 material_overlay = SubResource("StandardMaterial3D_rgyib")
 mesh = SubResource("SphereMesh_hg6s5")
-
-[connection signal="timeout" from="ForcePush/Cooldown" to="ForcePush" method="_on_timer_timeout"]

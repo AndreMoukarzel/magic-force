@@ -22,7 +22,6 @@ func _input(event):
 		#DIR.y = wrapf(DIR.y, 0.0, TAU)
 		DIR.x -= event.relative.y * SENS
 		DIR.x = clamp(DIR.x, -PI/2, PI/4)
-		print(DIR)
 	
 	if event.is_action_pressed("primary_action"):
 		$ForceGrab.grab()

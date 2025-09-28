@@ -16,6 +16,11 @@ func _physics_process(delta: float) -> void:
 		hold_object(GRABBED_OBJECT, delta)
 
 func release():
+	if GRABBED_OBJECT and GRABBED_OBJECT.has_method("remove_grabber"):
+		GRABBED_OBJECT.remove_grabber(self)
+	GRABBED_OBJECT = null
+
+func forced_release():
 	GRABBED_OBJECT = null
 
 func grab() -> bool:
@@ -23,6 +28,9 @@ func grab() -> bool:
 	if object and object.is_in_group("pickable"):
 		GRABBED_OBJECT = object
 		GRAB_FORCE_PER_MASS = GRAB_FORCE / GRABBED_OBJECT.mass
+		if object.has_method("add_grabber"):
+			object.add_grabber(self)
+		
 		return true
 	return false
 

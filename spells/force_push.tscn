@@ -1,0 +1,60 @@
+[gd_scene load_steps=8 format=3 uid="uid://bv2hfx1pmunvp"]
+
+[ext_resource type="Script" uid="uid://dwefe6514inmd" path="res://spells/force_push.gd" id="1_3xmm7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2ieo8"]
+transparency = 1
+cull_mode = 1
+albedo_color = Color(0.917647, 0, 0.129412, 0.254902)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ebec5"]
+size = Vector3(7, 4.6, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qjkh3"]
+size = Vector3(7, 4.6, 4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qjkh3"]
+transparency = 1
+cull_mode = 1
+albedo_color = Color(0, 0.588373, 0.301544, 0.254902)
+
+[sub_resource type="BoxMesh" id="BoxMesh_g6k8r"]
+size = Vector3(3.5, 1, 1.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g6k8r"]
+size = Vector3(3.5, 1, 1.5)
+
+[node name="ForcePush" type="Node3D" node_paths=PackedStringArray("PLAYER", "CAM")]
+script = ExtResource("1_3xmm7")
+PLAYER = NodePath("")
+CAM = NodePath("")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 2)
+collision_layer = 0
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D"]
+visible = false
+material_override = SubResource("StandardMaterial3D_2ieo8")
+mesh = SubResource("BoxMesh_ebec5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_qjkh3")
+
+[node name="AreaFloorPush" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 1)
+collision_layer = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="AreaFloorPush"]
+material_override = SubResource("StandardMaterial3D_qjkh3")
+mesh = SubResource("BoxMesh_g6k8r")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AreaFloorPush"]
+shape = SubResource("BoxShape3D_g6k8r")
+
+[node name="Cooldown" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[connection signal="timeout" from="Cooldown" to="." method="_on_timer_timeout"]
