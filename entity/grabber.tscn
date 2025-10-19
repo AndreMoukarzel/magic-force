@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://d0j5f4p5a4rxx" path="res://entity/grabber.gd" id="1_f8ep5"]
 [ext_resource type="PackedScene" uid="uid://bbhhjkh6mw2xv" path="res://base_mage.tscn" id="1_p0a1k"]
-[ext_resource type="Script" uid="uid://ock1n16rt78m" path="res://spells/force_grab.gd" id="2_13rmr"]
+[ext_resource type="PackedScene" uid="uid://7w2a5k2w72i7" path="res://spells/force_grab.tscn" id="3_f8ep5"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_13rmr"]
 
@@ -25,9 +25,7 @@ target_position = Vector3(0, 0, 10)
 collision_mask = 2
 debug_shape_custom_color = Color(1, 0, 0, 1)
 
-[node name="ForceGrab" type="Node" parent="." node_paths=PackedStringArray("RAYCAST", "HAND")]
-script = ExtResource("2_13rmr")
-RAYCAST = NodePath("../RayCast3D")
+[node name="ForceGrab" parent="." node_paths=PackedStringArray("HAND") instance=ExtResource("3_f8ep5")]
 HAND = NodePath("../GrabPosition")
 
 [node name="Timer" type="Timer" parent="."]

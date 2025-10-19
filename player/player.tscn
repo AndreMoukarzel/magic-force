@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://b3wb426fydlox" path="res://character_body_3d.gd" id="1_qjkh3"]
 [ext_resource type="PackedScene" uid="uid://bbhhjkh6mw2xv" path="res://base_mage.tscn" id="2_qjkh3"]
 [ext_resource type="Script" uid="uid://c4cdd4kueepxk" path="res://spells/float.gd" id="3_g6k8r"]
-[ext_resource type="Script" uid="uid://ock1n16rt78m" path="res://spells/force_grab.gd" id="3_qjkh3"]
+[ext_resource type="PackedScene" uid="uid://7w2a5k2w72i7" path="res://spells/force_grab.tscn" id="4_g6k8r"]
 [ext_resource type="Script" uid="uid://bp7a0kn6v5jk4" path="res://player/simple_camera.gd" id="4_yw30f"]
 [ext_resource type="PackedScene" uid="uid://bv2hfx1pmunvp" path="res://spells/force_push.tscn" id="5_g6k8r"]
 
@@ -47,9 +47,7 @@ shape = SubResource("CapsuleShape3D_rkbax")
 [node name="Float" type="Node" parent="."]
 script = ExtResource("3_g6k8r")
 
-[node name="ForceGrab" type="Node" parent="." node_paths=PackedStringArray("RAYCAST", "HAND")]
-script = ExtResource("3_qjkh3")
-RAYCAST = NodePath("../CameraSpring/Camera3D/RayCast3D")
+[node name="ForceGrab" parent="." node_paths=PackedStringArray("HAND") instance=ExtResource("4_g6k8r")]
 HAND = NodePath("../HandSpring/Hand")
 
 [node name="ForcePush" parent="." node_paths=PackedStringArray("PLAYER", "CAM") instance=ExtResource("5_g6k8r")]

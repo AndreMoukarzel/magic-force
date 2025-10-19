@@ -1,7 +1,6 @@
-extends Node
+extends Node3D
 
 
-@export var RAYCAST: RayCast3D
 @export var HAND: Node3D
 
 var SNAP_LERP: float = 5.0
@@ -15,21 +14,26 @@ func _physics_process(delta: float) -> void:
 	if GRABBED_OBJECT:
 		hold_object(GRABBED_OBJECT, delta)
 
+
 func release():
 	if GRABBED_OBJECT and GRABBED_OBJECT.has_method("remove_grabber"):
 		GRABBED_OBJECT.remove_grabber(self)
 	GRABBED_OBJECT = null
 
+
 func forced_release():
 	GRABBED_OBJECT = null
 
+
 func grab() -> bool:
-	var object = RAYCAST.get_collider()
-	if object and object.is_in_group("pickable"):
-		GRABBED_OBJECT = object
+	var bodies: Array[Node3D] = $Area3D.get_overlapping_bodies()
+	var closest_body: Node3D = _get_closets_pickable_body(bodies)
+	
+	if closest_body != null:
+		GRABBED_OBJECT = closest_body
 		GRAB_FORCE_PER_MASS = GRAB_FORCE / GRABBED_OBJECT.mass
-		if object.has_method("add_grabber"):
-			object.add_grabber(self)
+		if closest_body.has_method("add_grabber"):
+			closest_body.add_grabber(self)
 		
 		return true
 	return false
@@ -47,3 +51,30 @@ func hold_object(grabbed_obj: RigidBody3D, delta: float) -> void:
 		-direction * distance * GRAB_FORCE_PER_MASS,
 		SNAP_LERP * delta
 	)
+
+
+func _get_closets_pickable_body(bodies: Array[Node3D]) -> Node3D:
+	var closest_body: Node3D = null
+	var closest_distance: float = 99999999.9
+	for body in bodies:
+		if body.is_in_group("pickable"):
+			var body_distance: float = self.global_position.distance_squared_to(body.global_position)
+			
+			if closest_body == null:
+				closest_body = body
+				closest_distance = body_distance
+			else:
+				if body_distance < closest_distance:
+					closest_body = body
+					closest_distance = body_distance
+	return closest_body
+
+
+func _on_area_3d_body_entered(body: Node3D) -> void:
+	if body.has_method("highlight_on"):
+		body.highlight_on()
+
+
+func _on_area_3d_body_exited(body: Node3D) -> void:
+	if body.has_method("highlight_off"):
+		body.highlight_off()
