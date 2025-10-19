@@ -26,7 +26,8 @@ func _physics_process(delta: float) -> void:
 	direction = direction.rotated(Vector3.UP, cam_rot.y)
 	CHAR.global_rotation.y = cam_rot.y
 	HAND_SPRING.rotation = inv_rot
-	$ForcePush.rotation = inv_rot
+	$ForcePush.rotation = cam_rot
+	$ForceGrab.rotation = cam_rot
 
 	if is_on_floor():
 		velocity.x = move_toward(velocity.x, direction.x * SPEED, ACC * delta)

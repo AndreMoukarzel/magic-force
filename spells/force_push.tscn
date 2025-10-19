@@ -24,13 +24,11 @@ size = Vector3(3.5, 1, 1.5)
 [sub_resource type="BoxShape3D" id="BoxShape3D_g6k8r"]
 size = Vector3(3.5, 1, 1.5)
 
-[node name="ForcePush" type="Node3D" node_paths=PackedStringArray("PLAYER", "CAM")]
+[node name="ForcePush" type="Node3D"]
 script = ExtResource("1_3xmm7")
-PLAYER = NodePath("")
-CAM = NodePath("")
 
 [node name="Area3D" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -2)
 collision_layer = 0
 collision_mask = 2
 
@@ -43,7 +41,7 @@ mesh = SubResource("BoxMesh_ebec5")
 shape = SubResource("BoxShape3D_qjkh3")
 
 [node name="AreaFloorPush" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, -1)
 collision_layer = 0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="AreaFloorPush"]

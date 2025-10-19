@@ -143,7 +143,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 25)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12)
 
 [node name="Pusher" parent="." instance=ExtResource("8_njel3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.5052, 1.97, -22.0322)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -11.5052, 1.97, -22.0322)
 
 [node name="Grabber" parent="." instance=ExtResource("9_njel3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0941, 1.97, -23.9635)
