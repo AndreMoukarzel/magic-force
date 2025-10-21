@@ -6,6 +6,8 @@ extends CharacterBody3D
 @export var RISE_ACC: float = 10.0
 @export var FALL_ACC: float = 18.5
 @export var KNOCKBACK_DECAY: float = 15.0
+@export var ROT_ACC: float = 3.5
+@export var ROT_ACC_AIR: float = 1.2
 
 @onready var CAM: Camera3D = $CameraSpring/Camera3D
 @onready var CHAR: Node3D = $Mage
@@ -32,9 +34,13 @@ func _physics_process(delta: float) -> void:
 	if is_on_floor():
 		velocity.x = move_toward(velocity.x, direction.x * SPEED, ACC * delta)
 		velocity.z = move_toward(velocity.z, direction.z * SPEED, ACC * delta)
+		CHAR.global_rotation.x = move_toward(CHAR.global_rotation.x, 0.0, ROT_ACC * delta)
+		CHAR.global_rotation.z = move_toward(CHAR.global_rotation.z, 0.0, ROT_ACC * delta)
 	else:
 		velocity.x = move_toward(velocity.x, direction.x * SPEED, ACC_AIR * delta)
 		velocity.z = move_toward(velocity.z, direction.z * SPEED, ACC_AIR * delta)
+		CHAR.global_rotation.x = move_toward(CHAR.global_rotation.x, cam_rot.x, ROT_ACC_AIR * delta)
+		CHAR.global_rotation.z = move_toward(CHAR.global_rotation.z, cam_rot.z, ROT_ACC_AIR * delta)
 		if velocity.y > 0:
 			# Ascending: lower gravity for slower upward deceleration
 			velocity.y -= RISE_ACC * delta
