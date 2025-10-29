@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://qkf6p7xymemo"]
+
+[ext_resource type="Script" uid="uid://hcj0epu188wp" path="res://gameplay_handlers/point_handler.gd" id="1_qvxy1"]
+
+[node name="PointHandler" type="Control" node_paths=PackedStringArray("GOAL_A", "GOAL_B")]
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+script = ExtResource("1_qvxy1")
+GOAL_A = NodePath("")
+GOAL_B = NodePath("")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -12.0
+offset_right = 12.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_constants/separation = 30
+
+[node name="ScoreA" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="ScoreB" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "0"

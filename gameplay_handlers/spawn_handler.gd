@@ -14,6 +14,7 @@ var SPAWN_COOLDOWN: float = 1.5
 func _ready() -> void:
 	spawn_ball()
 	POINT_HANDLER.goal_scored.connect(goal_was_scored)
+	spawn_players()
 
 
 func spawn_ball() -> void:
@@ -27,11 +28,15 @@ func spawn_ball() -> void:
 
 
 func spawn_players() -> void:
-	spawn_player($"../Player".global_position, "A")
+	for player in $"../TeamA".get_children():
+		spawn_player(player, "A")
+	for player in $"../TeamB".get_children():
+		spawn_player(player, "B")
 
 
-func spawn_player(player_pos: Vector3=Vector3(), team: String="A") -> void:
+func spawn_player(player: Node3D, team: String="A") -> void:
 	var timer := get_tree().create_timer(SPAWN_COOLDOWN)
+	var player_pos: Vector3 = player.global_position
 	var closest_available_spawn: Marker3D = _get_closest_available_spawn(player_pos, team)
 	
 	# Makes timer unavailable
@@ -40,11 +45,11 @@ func spawn_player(player_pos: Vector3=Vector3(), team: String="A") -> void:
 		_release_spawn(closest_available_spawn, team)
 	)
 	
-	$"../Player".global_position = closest_available_spawn.global_position
+	player.global_position = closest_available_spawn.global_position
 
 
 func goal_was_scored() -> void:
-	$RespawnTimer.start()
+	$GoalRespawnTimer.start()
 	# DOES NOT exclude the ball, but make it so it can't be interacted with
 	ACTIVE_BALL.set_collision_layer_value(2, 0)
 

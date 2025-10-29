@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://be5prj4vyqmow"]
+
+[ext_resource type="Script" uid="uid://buqwqt1pevghn" path="res://gameplay_handlers/spawn_handler.gd" id="1_6oghj"]
+[ext_resource type="PackedScene" uid="uid://cbq8n0y1yl5u0" path="res://ball/ball.tscn" id="2_jsklm"]
+
+[node name="SpawnHandler" type="Node" node_paths=PackedStringArray("POINT_HANDLER")]
+script = ExtResource("1_6oghj")
+BALL_SCN = ExtResource("2_jsklm")
+POINT_HANDLER = NodePath("")
+
+[node name="GoalRespawnTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="timeout" from="GoalRespawnTimer" to="." method="_on_respawn_timer_timeout"]

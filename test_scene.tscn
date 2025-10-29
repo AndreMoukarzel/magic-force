@@ -1,12 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://dlf2cy08l0smq"]
+[gd_scene load_steps=11 format=3 uid="uid://dlf2cy08l0smq"]
 
-[ext_resource type="Script" uid="uid://hcj0epu188wp" path="res://point_handler.gd" id="1_2nij2"]
-[ext_resource type="Script" uid="uid://buqwqt1pevghn" path="res://spawn_handler.gd" id="1_7cbxl"]
 [ext_resource type="Texture2D" uid="uid://lgsidpu2qvf0" path="res://texture_04.png" id="1_ia1lp"]
+[ext_resource type="PackedScene" uid="uid://qmir5vg1sis3" path="res://gameplay_handlers/game_handler.tscn" id="1_vr1i5"]
 [ext_resource type="PackedScene" uid="uid://bx8b8yvq5h1jd" path="res://player/player.tscn" id="3_sasra"]
 [ext_resource type="Texture2D" uid="uid://dx8f8idcufjnf" path="res://texture_01.png" id="4_8pr8v"]
 [ext_resource type="PackedScene" uid="uid://cj03l5kvgpert" path="res://goals/goal.tscn" id="4_coq8p"]
-[ext_resource type="PackedScene" uid="uid://cbq8n0y1yl5u0" path="res://ball/ball.tscn" id="8_buypi"]
 [ext_resource type="PackedScene" uid="uid://yyhv57x8ch56" path="res://entity/pusher.tscn" id="8_njel3"]
 [ext_resource type="PackedScene" uid="uid://cq82bbnw3xp8x" path="res://entity/grabber.tscn" id="9_njel3"]
 
@@ -29,44 +27,23 @@ environment = SubResource("Environment_coq8p")
 transform = Transform3D(1, 0, 0, 0, 0.278689, 0.960381, 0, -0.960381, 0.278689, 0, 14.3357, 0)
 shadow_enabled = true
 
-[node name="SpawnHandler" type="Node" parent="." node_paths=PackedStringArray("POINT_HANDLER", "SPAWNERS")]
-script = ExtResource("1_7cbxl")
-BALL_SCN = ExtResource("8_buypi")
-POINT_HANDLER = NodePath("../PointHandler")
-SPAWNERS = NodePath("../SpawnPoints")
+[node name="GameHandler" parent="." instance=ExtResource("1_vr1i5")]
 
-[node name="RespawnTimer" type="Timer" parent="SpawnHandler"]
-wait_time = 2.0
-one_shot = true
+[node name="SpawnHandler" parent="GameHandler" index="0" node_paths=PackedStringArray("SPAWNERS")]
+SPAWNERS = NodePath("../../SpawnPoints")
 
-[node name="PointHandler" type="Control" parent="." node_paths=PackedStringArray("GOAL_A", "GOAL_B")]
-layout_mode = 3
-anchors_preset = 10
-anchor_right = 1.0
-grow_horizontal = 2
-size_flags_horizontal = 3
-script = ExtResource("1_2nij2")
-GOAL_A = NodePath("../GoalA")
-GOAL_B = NodePath("../GoalB")
+[node name="PointHandler" parent="GameHandler" index="1" node_paths=PackedStringArray("GOAL_A", "GOAL_B")]
+GOAL_A = NodePath("../../GoalA")
+GOAL_B = NodePath("../../GoalB")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PointHandler"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -12.0
-offset_right = 12.0
-offset_bottom = 23.0
-grow_horizontal = 2
-theme_override_constants/separation = 30
+[node name="Player" parent="GameHandler/TeamA" index="0" instance=ExtResource("3_sasra")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.16494, 7.29029)
 
-[node name="ScoreA" type="Label" parent="PointHandler/HBoxContainer"]
-layout_mode = 2
-text = "0"
+[node name="Pusher" parent="GameHandler/TeamB" index="0" instance=ExtResource("8_njel3")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -11.5052, 1.97, -22.0322)
 
-[node name="ScoreB" type="Label" parent="PointHandler/HBoxContainer"]
-layout_mode = 2
-text = "0"
+[node name="Grabber" parent="GameHandler/TeamB" index="1" instance=ExtResource("9_njel3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0941, 1.97, -23.9635)
 
 [node name="Walls" type="CSGCombiner3D" parent="."]
 material_override = SubResource("StandardMaterial3D_buypi")
@@ -88,9 +65,6 @@ material_override = SubResource("StandardMaterial3D_sasra")
 use_collision = true
 size = Vector3(65, 1, 105)
 metadata/_edit_lock_ = true
-
-[node name="Player" parent="." instance=ExtResource("3_sasra")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.16494, 7.29029)
 
 [node name="GoalA" parent="." instance=ExtResource("4_coq8p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -45)
@@ -142,10 +116,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 25)
 [node name="Spawn4" type="Marker3D" parent="SpawnPoints/SpawnsB"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12)
 
-[node name="Pusher" parent="." instance=ExtResource("8_njel3")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -11.5052, 1.97, -22.0322)
-
-[node name="Grabber" parent="." instance=ExtResource("9_njel3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0941, 1.97, -23.9635)
-
-[connection signal="timeout" from="SpawnHandler/RespawnTimer" to="SpawnHandler" method="_on_respawn_timer_timeout"]
+[editable path="GameHandler"]

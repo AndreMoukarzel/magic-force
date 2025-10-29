@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://qmir5vg1sis3"]
+
+[ext_resource type="PackedScene" uid="uid://be5prj4vyqmow" path="res://gameplay_handlers/spawn_handler.tscn" id="1_7jguk"]
+[ext_resource type="PackedScene" uid="uid://qkf6p7xymemo" path="res://gameplay_handlers/point_handler.tscn" id="3_3awm7"]
+
+[node name="GameHandler" type="Node"]
+
+[node name="SpawnHandler" parent="." node_paths=PackedStringArray("POINT_HANDLER") instance=ExtResource("1_7jguk")]
+POINT_HANDLER = NodePath("../PointHandler")
+
+[node name="PointHandler" parent="." instance=ExtResource("3_3awm7")]
+
+[node name="TeamA" type="Node" parent="."]
+
+[node name="TeamB" type="Node" parent="."]
