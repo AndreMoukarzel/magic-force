@@ -33,7 +33,7 @@ func _on_lobby_created(connect_value: int, this_lobby_id: int) -> void:
 		Steam.setLobbyData(LOBBY_ID, "name", "Lobby Name")
 		
 		print("CREATED LOBBY: ", LOBBY_ID)
-		var set_relay: bool = Steam.allowP2PPacketRelay(true)
+		var _set_relay: bool = Steam.allowP2PPacketRelay(true)
 
 
 func join_lobby(this_lobby_id: int) -> void:
@@ -76,7 +76,7 @@ func send_p2p_packet(this_target: int, packet_data: Dictionary, send_type: int =
 
 
 func _on_p2p_session_request(remote_id: int) -> void:
-	var this_requester: String = Steam.getFriendPersonaName(remote_id)
+	var _this_requester: String = Steam.getFriendPersonaName(remote_id)
 	Steam.acceptP2PSessionWithUser(remote_id)
 
 
@@ -99,7 +99,7 @@ func read_p2p_packet() -> void:
 	
 	if packet_size > 0:
 		var this_packet: Dictionary = Steam.readP2PPacket(packet_size, 0)
-		var packet_sender: int = this_packet["remote_steam_id"]
+		var _packet_sender: int = this_packet["remote_steam_id"]
 		var packet_code: PackedByteArray = this_packet["data"]
 		var readable_data: Dictionary = bytes_to_var(packet_code)
 		
@@ -108,3 +108,20 @@ func read_p2p_packet() -> void:
 				"handshake":
 					print("Player: ", readable_data["username"], " HAS JOINED!!!")
 					get_lobby_members()
+
+
+func leave_lobby() -> void:
+	# If in a lobby, leave it
+	if LOBBY_ID != 0:
+		# Send leave request to Steam
+		Steam.leaveLobby(LOBBY_ID)
+		# Wipe the Steam lobby ID then display the default lobby ID and player list title
+		LOBBY_ID = 0
+		# Close session with all users
+		for this_member in LOBBY_MEMBERS:
+			# Make sure this isn't your Steam ID
+			if this_member['steam_id'] != Global.STEAM_ID:
+				# Close the P2P session using the Networking class
+				Steam.closeP2PSessionWithUser(this_member['steam_id'])
+		# Clear the local lobby list
+		LOBBY_MEMBERS.clear()

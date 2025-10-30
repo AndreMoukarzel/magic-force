@@ -1,0 +1,108 @@
+[gd_scene load_steps=2 format=3 uid="uid://c67bb553mf8lh"]
+
+[ext_resource type="Script" uid="uid://l64y7c1wjkps" path="res://lobby/lobby.gd" id="1_ll2xe"]
+
+[node name="Lobby" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ll2xe")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="LobbyId" type="Label" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Session ID:"
+
+[node name="TeamDisplay" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TeamA" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TeamDisplay"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamA"]
+layout_mode = 2
+text = "Team Red"
+
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamA"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TeamAMembers" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamA/Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ChangeTeam" type="Button" parent="MarginContainer/VBoxContainer/TeamDisplay"]
+layout_mode = 2
+size_flags_vertical = 4
+text = "Change Team"
+
+[node name="TeamB" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TeamDisplay"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamB"]
+layout_mode = 2
+text = "Team Blue"
+
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamB"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TeamBMembers" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamB/Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Buttons" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Ready" type="Button" parent="MarginContainer/VBoxContainer/Buttons"]
+layout_mode = 2
+text = "Ready"
+
+[node name="Start" type="Button" parent="MarginContainer/VBoxContainer/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "The host may start the game when everyone is ready"
+disabled = true
+text = "Start"
+
+[node name="Exit" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Exit"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/TeamDisplay/ChangeTeam" to="." method="_on_change_team_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Buttons/Ready" to="." method="_on_ready_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Buttons/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]

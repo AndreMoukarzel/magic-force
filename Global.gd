@@ -14,5 +14,6 @@ func _ready() -> void:
 	STEAM_ID = Steam.getSteamID()
 	STEAM_USERNAME = Steam.getPersonaName()
 
+
 func _process(_delta: float) -> void:
 	Steam.run_callbacks()
