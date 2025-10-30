@@ -15,6 +15,11 @@ run/main_scene="uid://dlf2cy08l0smq"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Global="*res://Global.gd"
+Network="*res://Network.gd"
+
 [global_group]
 
 pickable=""
@@ -74,3 +79,13 @@ float={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+
+[steam]
+
+initialization/app_id=0
+initialization/initialize_on_startup=false
+initialization/embed_callbacks=false
+
+[steam_server]
+
+initialization/embed_callbacks=false
