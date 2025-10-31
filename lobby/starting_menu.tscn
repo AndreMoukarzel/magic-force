@@ -21,7 +21,7 @@ grow_vertical = 2
 
 [node name="BaseMenu" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 6
 size_flags_vertical = 4
 
 [node name="TestScene" type="Button" parent="HBoxContainer/BaseMenu"]
@@ -38,17 +38,6 @@ unique_name_in_owner = true
 wait_time = 3.0
 one_shot = true
 
-[node name="JoinButtons" type="HBoxContainer" parent="HBoxContainer/BaseMenu"]
-layout_mode = 2
-
-[node name="Join" type="Button" parent="HBoxContainer/BaseMenu/JoinButtons"]
-layout_mode = 2
-text = "Join"
-
-[node name="LobbyId" type="LineEdit" parent="HBoxContainer/BaseMenu/JoinButtons"]
-unique_name_in_owner = true
-layout_mode = 2
-
 [node name="BaseMenuError" type="Label" parent="HBoxContainer/BaseMenu"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -58,48 +47,48 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="SteamHud" type="Control" parent="HBoxContainer"]
-visible = false
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 2
 size_flags_vertical = 4
 
-[node name="Panel" type="Panel" parent="HBoxContainer/SteamHud"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/SteamHud"]
+layout_mode = 0
+offset_top = -1.0
+offset_right = 40.0
+offset_bottom = 39.0
+
+[node name="Panel" type="Panel" parent="HBoxContainer/SteamHud/VBoxContainer"]
 custom_minimum_size = Vector2(120, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/SteamHud/VBoxContainer/Panel"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -60.0
-offset_top = -50.0
-offset_right = 60.0
-offset_bottom = 50.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 6
-size_flags_vertical = 4
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/SteamHud/Panel"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/SteamHud/Panel/ScrollContainer"]
+[node name="LoadedLobbies" type="VBoxContainer" parent="HBoxContainer/SteamHud/VBoxContainer/Panel/ScrollContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/SteamHud/Panel"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="ListLobbies" type="Button" parent="HBoxContainer/SteamHud/Panel/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/SteamHud/VBoxContainer"]
 layout_mode = 2
 
-[node name="Join" type="Button" parent="HBoxContainer/SteamHud/Panel/HBoxContainer"]
+[node name="ListLobbies" type="Button" parent="HBoxContainer/SteamHud/VBoxContainer/HBoxContainer"]
 layout_mode = 2
+text = "List Lobbies"
+
+[node name="Join" type="Button" parent="HBoxContainer/SteamHud/VBoxContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Join"
 
 [connection signal="pressed" from="HBoxContainer/BaseMenu/TestScene" to="." method="_on_test_scene_pressed"]
 [connection signal="pressed" from="HBoxContainer/BaseMenu/Host" to="." method="_on_host_pressed"]
 [connection signal="timeout" from="HBoxContainer/BaseMenu/Host/HostRetryTimer" to="." method="_on_host_retry_timer_timeout"]
-[connection signal="pressed" from="HBoxContainer/BaseMenu/JoinButtons/Join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="HBoxContainer/SteamHud/VBoxContainer/HBoxContainer/ListLobbies" to="." method="_on_list_lobbies_pressed"]
+[connection signal="pressed" from="HBoxContainer/SteamHud/VBoxContainer/HBoxContainer/Join" to="." method="_on_join_pressed"]

@@ -30,7 +30,8 @@ func _on_lobby_created(connect_value: int, this_lobby_id: int) -> void:
 		LOBBY_ID = this_lobby_id
 		
 		Steam.setLobbyJoinable(LOBBY_ID, true)
-		Steam.setLobbyData(LOBBY_ID, "name", "Lobby Name")
+		Steam.setLobbyData(LOBBY_ID, "name", Global.STEAM_LOBBY_NAME)
+		Steam.setLobbyData(LOBBY_ID, "mode", "Test")
 		
 		print("CREATED LOBBY: ", LOBBY_ID)
 		var _set_relay: bool = Steam.allowP2PPacketRelay(true)
@@ -103,11 +104,20 @@ func read_p2p_packet() -> void:
 		var packet_code: PackedByteArray = this_packet["data"]
 		var readable_data: Dictionary = bytes_to_var(packet_code)
 		
+		print("Received package")
+		print(readable_data.has("message"))
+		
 		if readable_data.has("message"):
 			match readable_data["message"]:
 				"handshake":
 					print("Player: ", readable_data["username"], " HAS JOINED!!!")
 					get_lobby_members()
+
+
+func list_lobbies() -> void:
+	Steam.addRequestLobbyListDistanceFilter(Steam.LOBBY_DISTANCE_FILTER_DEFAULT)
+	Steam.addRequestLobbyListStringFilter("name", Global.STEAM_LOBBY_NAME, Steam.LOBBY_COMPARISON_EQUAL)
+	Steam.requestLobbyList()
 
 
 func leave_lobby() -> void:
