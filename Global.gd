@@ -7,6 +7,7 @@ var STEAM_ID: int = 0
 var STEAM_USERNAME: String = ""
 var STEAM_CONNECTED: bool = false
 
+
 func _init() -> void:
 	OS.set_environment("SteamAppID", str(STEAM_APP_ID))
 	OS.set_environment("SteamGameID", str(STEAM_APP_ID))

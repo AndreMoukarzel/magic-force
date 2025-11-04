@@ -1,6 +1,5 @@
 extends Control
 
-
 func _ready() -> void:
 	%BaseMenuError.text = ""
 	Steam.lobby_created.connect(_on_steam_lobby_created)
@@ -12,9 +11,11 @@ func _on_test_scene_pressed() -> void:
 
 
 func _on_host_pressed() -> void:
-	Network.create_lobby()
-	%HostRetryTimer.start()
-	%Host.disabled = true
+	#Network.create_lobby()
+	#%HostRetryTimer.start()
+	#%Host.disabled = true
+	$Multiplayer.become_host()
+	_on_steam_lobby_created(1, 1)
 
 
 func _on_steam_lobby_created(connect_value: int, _this_lobby_id: int) -> void:
@@ -58,3 +59,8 @@ func join_lobby(lobby_id):
 
 func _on_join_pressed() -> void:
 	pass
+
+
+func _on_join_test_pressed() -> void:
+	$Multiplayer.join_as_client()
+	_on_steam_lobby_created(1, 1)

@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://dsjen3mvwpnu8"]
+
+[ext_resource type="PackedScene" uid="uid://bx8b8yvq5h1jd" path="res://player/player.tscn" id="1_seaqv"]
+[ext_resource type="Script" uid="uid://cjcx1v2edipow" path="res://multiplayer/players/multiplayer_controller.gd" id="2_6b4kk"]
+
+[node name="MultiplayerPlayer" instance=ExtResource("1_seaqv")]
+script = ExtResource("2_6b4kk")

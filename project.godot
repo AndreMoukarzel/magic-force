@@ -18,7 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Global="*res://Global.gd"
-Network="*res://Network.gd"
+Network="*res://multiplayer/Network.gd"
 
 [global_group]
 

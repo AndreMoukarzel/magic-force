@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://0mk7es65ny1j"]
+[gd_scene load_steps=3 format=3 uid="uid://0mk7es65ny1j"]
 
 [ext_resource type="Script" uid="uid://dp6vkq6jtsvky" path="res://lobby/starting_menu.gd" id="1_fhbbh"]
+[ext_resource type="Script" uid="uid://bngi2ui34dc5n" path="res://multiplayer/enet_multiplayer.gd" id="2_78thc"]
 
 [node name="StartingMenu" type="Control"]
 layout_mode = 3
@@ -37,6 +38,10 @@ text = "Host"
 unique_name_in_owner = true
 wait_time = 3.0
 one_shot = true
+
+[node name="JoinTest" type="Button" parent="HBoxContainer/BaseMenu"]
+layout_mode = 2
+text = "Join"
 
 [node name="BaseMenuError" type="Label" parent="HBoxContainer/BaseMenu"]
 unique_name_in_owner = true
@@ -87,8 +92,12 @@ visible = false
 layout_mode = 2
 text = "Join"
 
+[node name="Multiplayer" type="Node" parent="."]
+script = ExtResource("2_78thc")
+
 [connection signal="pressed" from="HBoxContainer/BaseMenu/TestScene" to="." method="_on_test_scene_pressed"]
 [connection signal="pressed" from="HBoxContainer/BaseMenu/Host" to="." method="_on_host_pressed"]
 [connection signal="timeout" from="HBoxContainer/BaseMenu/Host/HostRetryTimer" to="." method="_on_host_retry_timer_timeout"]
+[connection signal="pressed" from="HBoxContainer/BaseMenu/JoinTest" to="." method="_on_join_test_pressed"]
 [connection signal="pressed" from="HBoxContainer/SteamHud/VBoxContainer/HBoxContainer/ListLobbies" to="." method="_on_list_lobbies_pressed"]
 [connection signal="pressed" from="HBoxContainer/SteamHud/VBoxContainer/HBoxContainer/Join" to="." method="_on_join_pressed"]

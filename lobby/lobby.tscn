@@ -102,6 +102,13 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "Exit"
 
+[node name="Players" type="Node" parent="."]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://dnh47e40ql5yd")
+spawn_path = NodePath("../Players")
+spawn_limit = 8
+
 [connection signal="pressed" from="MarginContainer/VBoxContainer/TeamDisplay/ChangeTeam" to="." method="_on_change_team_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Buttons/Ready" to="." method="_on_ready_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Buttons/Start" to="." method="_on_start_pressed"]
