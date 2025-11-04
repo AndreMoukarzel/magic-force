@@ -4,6 +4,7 @@ extends Node
 # Properties must be exported to be synced
 @export var PLAYER_ID: int = 1
 @export var TEAM: String = "A"
+@export var READY: bool = false
 
 
 func set_player_id(id: int) -> void:

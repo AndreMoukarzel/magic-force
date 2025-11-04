@@ -2,11 +2,13 @@ extends Control
 
 
 var PLAYER_SCN := preload("res://multiplayer/players/lobby_player.tscn")
+var PLAYER_LABEL_SCN := preload("res://lobby/player_label.tscn")
 
 
 func _ready() -> void:
 	multiplayer.peer_connected.connect(_add_lobby_player)
 	multiplayer.peer_disconnected.connect(_remove_lobby_player)
+	#multiplayer.server_disconnected.connect(_remove_everyone)
 	
 	if not OS.has_feature("dedicated_server"):
 		_add_lobby_player(multiplayer.get_unique_id())
@@ -46,13 +48,15 @@ func _remove_lobby_player(id: int) -> void:
 @rpc
 func _add_all_player_labels() -> void:
 	for Player in $Players.get_children():
-		add_player_label(int(Player.name), Player.name, Player.TEAM)
+		add_player_label(int(Player.name), Player.name, Player.TEAM, Player.READY)
 
 
-func add_player_label(player_id: int, player_name: String, team: String) -> void:
-	var NewLabel: Label = Label.new()
+func add_player_label(player_id: int, player_name: String, team: String, is_ready: bool=false) -> void:
+	var NewLabel := PLAYER_LABEL_SCN.instantiate()
 	NewLabel.name = str(player_id)
-	NewLabel.text = player_name
+	NewLabel.set_player_name(player_name)
+	if is_ready:
+		NewLabel.toggle_player_ready()
 	
 	if team == "A":
 		%TeamAMembers.add_child(NewLabel, true)
@@ -60,7 +64,7 @@ func add_player_label(player_id: int, player_name: String, team: String) -> void
 		%TeamBMembers.add_child(NewLabel, true)
 
 
-func find_player_display(Player) -> Label:
+func find_player_label(Player) -> PlayerLabel:
 	## Finds the equivalent player node inside of Player display
 	var TeamMembers = %TeamAMembers
 	if Player.TEAM == "B":
@@ -80,21 +84,36 @@ func change_team(player_id: int) -> void:
 		return
 	
 	var team: String = Player.TEAM
-	var PlayerLabel: Label = find_player_display(Player)
-	
-	if not multiplayer.is_server():
-		print("ID: ", player_id)
-		print("Team: ", team)
+	var player_label: PlayerLabel = find_player_label(Player)
 	
 	if PlayerLabel == null:
 		return
 	
 	if team == "A":
-		PlayerLabel.reparent(%TeamBMembers)
+		player_label.reparent(%TeamBMembers)
 		Player.TEAM = "B"
 	else:
-		PlayerLabel.reparent(%TeamAMembers)
+		player_label.reparent(%TeamAMembers)
 		Player.TEAM = "A"
+
+
+@rpc("any_peer", "call_local")
+func get_ready(player_id: int) -> void:
+	var Player = $Players.get_node(str(player_id))
+	
+	if Player == null:
+		return
+	
+	Player.READY = not Player.READY
+	var player_label: PlayerLabel = find_player_label(Player)
+	player_label.toggle_player_ready()
+
+
+func all_players_are_ready() -> bool:
+	for Player in $Players.get_children():
+		if not Player.READY:
+			return false
+	return true
 
 
 func _on_change_team_pressed() -> void:
@@ -103,11 +122,18 @@ func _on_change_team_pressed() -> void:
 
 
 func _on_ready_pressed() -> void:
-	pass # Replace with function body.
+	var player_id: int = multiplayer.get_unique_id()
+	get_ready.rpc(player_id)
+	
+	if multiplayer.is_server() and all_players_are_ready():
+		%Start.disabled= false
+	else:
+		%Start.disabled= true
 
 
 func _on_start_pressed() -> void:
-	pass # Replace with function body.
+	if multiplayer.is_server():
+		pass
 
 
 func _on_exit_pressed() -> void:
