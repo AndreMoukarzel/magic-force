@@ -8,7 +8,8 @@ var PLAYER_LABEL_SCN := preload("res://lobby/player_label.tscn")
 func _ready() -> void:
 	multiplayer.peer_connected.connect(_add_lobby_player)
 	multiplayer.peer_disconnected.connect(_remove_lobby_player)
-	#multiplayer.server_disconnected.connect(_remove_everyone)
+	if not multiplayer.is_server():
+		multiplayer.server_disconnected.connect(_on_server_disconnected)
 	
 	if not OS.has_feature("dedicated_server"):
 		_add_lobby_player(multiplayer.get_unique_id())
@@ -42,7 +43,20 @@ func _remove_lobby_player(id: int) -> void:
 	print("Player %s left the game!" % id)
 	if not $Players.has_node(str(id)):
 		return
-	$Players.get_node(str(id)).queue_free()
+	
+	var PlayerNode: Node = $Players.get_node(str(id))
+	remove_player_label.rpc(PlayerNode)
+	PlayerNode.queue_free()
+
+
+@rpc("call_local")
+func remove_player_label(Player: Node) -> void:
+	var player_label: PlayerLabel = find_player_label(Player)
+	
+	if PlayerLabel == null:
+		return
+	
+	player_label.queue_free()
 
 
 @rpc
@@ -64,7 +78,7 @@ func add_player_label(player_id: int, player_name: String, team: String, is_read
 		%TeamBMembers.add_child(NewLabel, true)
 
 
-func find_player_label(Player) -> PlayerLabel:
+func find_player_label(Player: Node) -> PlayerLabel:
 	## Finds the equivalent player node inside of Player display
 	var TeamMembers = %TeamAMembers
 	if Player.TEAM == "B":
@@ -136,6 +150,13 @@ func _on_start_pressed() -> void:
 		pass
 
 
+func _on_server_disconnected() -> void:
+	print("Server lost")
+	if get_tree():
+		get_tree().change_scene_to_file("res://lobby/starting_menu.tscn")
+
+
 func _on_exit_pressed() -> void:
 	Network.leave_lobby()
+	multiplayer.multiplayer_peer.close()
 	get_tree().change_scene_to_file("res://lobby/starting_menu.tscn")
