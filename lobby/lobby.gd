@@ -47,6 +47,8 @@ func _remove_lobby_player(id: int) -> void:
 	var PlayerNode: Node = $Players.get_node(str(id))
 	remove_player_label.rpc(PlayerNode)
 	PlayerNode.queue_free()
+	
+	update_start_state()
 
 
 @rpc("call_local")
@@ -130,6 +132,26 @@ func all_players_are_ready() -> bool:
 	return true
 
 
+func update_change_state() -> void:
+	## Updates the state of the ChangeTeam Button based on this Player's state
+	var player_id: int = multiplayer.get_unique_id()
+	var Player = $Players.get_node(str(player_id))
+	
+	%ChangeTeam.disabled = Player.READY
+	
+
+
+func update_start_state() -> void:
+	## Updates the state of the Start Button based on the Players' states
+	if multiplayer.is_server() and all_players_are_ready():
+		# Must be server and all Players must be ready
+		if %TeamAMembers.get_child_count() > 0 and %TeamBMembers.get_child_count() > 0:
+			# Must have Players in both Teams
+			%Start.disabled= false
+	else:
+		%Start.disabled= true
+
+
 func _on_change_team_pressed() -> void:
 	var player_id: int = multiplayer.get_unique_id()
 	change_team.rpc(player_id)
@@ -139,10 +161,8 @@ func _on_ready_pressed() -> void:
 	var player_id: int = multiplayer.get_unique_id()
 	get_ready.rpc(player_id)
 	
-	if multiplayer.is_server() and all_players_are_ready():
-		%Start.disabled= false
-	else:
-		%Start.disabled= true
+	update_change_state()
+	update_start_state()
 
 
 func _on_start_pressed() -> void:

@@ -57,6 +57,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ChangeTeam" type="Button" parent="MarginContainer/VBoxContainer/TeamDisplay"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 4
 text = "Change Team"
