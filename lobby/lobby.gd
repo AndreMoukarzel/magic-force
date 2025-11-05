@@ -25,7 +25,7 @@ func _add_lobby_player(id: int) -> void:
 	print("Player %s joined the game!" % id)
 	
 	var player_to_add = PLAYER_SCN.instantiate()
-	var player_team: String = "A"
+	var player_team: String = get_less_populous_team()
 	player_to_add.set_player_id(id)
 	player_to_add.name = str(id)
 	player_to_add.TEAM = player_team
@@ -65,6 +65,12 @@ func remove_player_label(Player: Node) -> void:
 func _add_all_player_labels() -> void:
 	for Player in $Players.get_children():
 		add_player_label(int(Player.name), Player.name, Player.TEAM, Player.READY)
+
+
+func get_less_populous_team() -> String:
+	if %TeamAMembers.get_child_count() > %TeamBMembers.get_child_count():
+		return "B"
+	return "A"
 
 
 func add_player_label(player_id: int, player_name: String, team: String, is_ready: bool=false) -> void:
