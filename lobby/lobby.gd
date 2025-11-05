@@ -123,6 +123,16 @@ func get_ready(player_id: int) -> void:
 	Player.READY = not Player.READY
 	var player_label: PlayerLabel = find_player_label(Player)
 	player_label.toggle_player_ready()
+	
+	update_start_state()
+
+
+@rpc("call_local")
+func start_game_to_all() -> void:
+	if multiplayer.is_server():
+		pass
+	
+	get_tree().change_scene_to_file("res://arenas/multiplayer_test_scene.tscn")
 
 
 func all_players_are_ready() -> bool:
@@ -138,7 +148,6 @@ func update_change_state() -> void:
 	var Player = $Players.get_node(str(player_id))
 	
 	%ChangeTeam.disabled = Player.READY
-	
 
 
 func update_start_state() -> void:
@@ -162,12 +171,11 @@ func _on_ready_pressed() -> void:
 	get_ready.rpc(player_id)
 	
 	update_change_state()
-	update_start_state()
 
 
 func _on_start_pressed() -> void:
 	if multiplayer.is_server():
-		pass
+		start_game_to_all.rpc()
 
 
 func _on_server_disconnected() -> void:

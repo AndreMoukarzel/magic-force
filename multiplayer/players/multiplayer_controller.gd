@@ -3,7 +3,7 @@ extends "res://entity/player_controller.gd"
 var PLAYER_ID: int = 1:
 	set(id):
 		PLAYER_ID = id
-		%InputSynchronizer.set_multiplayer_authority(id)
+		#%InputSynchronizer.set_multiplayer_authority(id)
 
 
 func _ready():

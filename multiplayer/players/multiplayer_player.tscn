@@ -1,7 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://dsjen3mvwpnu8"]
+[gd_scene load_steps=4 format=3 uid="uid://dsjen3mvwpnu8"]
 
 [ext_resource type="PackedScene" uid="uid://bx8b8yvq5h1jd" path="res://player/player.tscn" id="1_seaqv"]
 [ext_resource type="Script" uid="uid://cjcx1v2edipow" path="res://multiplayer/players/multiplayer_controller.gd" id="2_6b4kk"]
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_5aan2"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
 [node name="MultiplayerPlayer" instance=ExtResource("1_seaqv")]
 script = ExtResource("2_6b4kk")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="7"]
+replication_config = SubResource("SceneReplicationConfig_5aan2")

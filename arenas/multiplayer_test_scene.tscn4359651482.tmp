@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://cy65hxm00y75l"]
+
+[ext_resource type="PackedScene" uid="uid://dlf2cy08l0smq" path="res://arenas/test_scene.tscn" id="1_vlwpr"]
+[ext_resource type="Script" uid="uid://4h8u23ygpr0s" path="res://multiplayer/multiplayer_test_scene.gd" id="2_3d02y"]
+
+[node name="MultiplayerTestScene" instance=ExtResource("1_vlwpr")]
+script = ExtResource("2_3d02y")
+
+[node name="Players" type="Node" parent="." index="7"]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." index="8"]
+_spawnable_scenes = PackedStringArray("uid://dsjen3mvwpnu8")
+spawn_path = NodePath("../Players")
+spawn_limit = 8
+
+[connection signal="spawned" from="MultiplayerSpawner" to="." method="_on_multiplayer_spawner_spawned"]
+
+[editable path="GameHandler"]
