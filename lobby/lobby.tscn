@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://c67bb553mf8lh"]
+[gd_scene load_steps=3 format=3 uid="uid://c67bb553mf8lh"]
 
 [ext_resource type="Script" uid="uid://l64y7c1wjkps" path="res://lobby/lobby.gd" id="1_ll2xe"]
+[ext_resource type="Script" uid="uid://bwcqt5iw3tocy" path="res://lobby/team_display.gd" id="2_mnguq"]
 
 [node name="Lobby" type="Control"]
 layout_mode = 3
@@ -32,8 +33,10 @@ layout_mode = 2
 text = "Session ID:"
 
 [node name="TeamDisplay" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+script = ExtResource("2_mnguq")
 
 [node name="TeamA" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TeamDisplay"]
 layout_mode = 2

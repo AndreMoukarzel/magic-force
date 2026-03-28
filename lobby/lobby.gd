@@ -25,18 +25,19 @@ func _add_lobby_player(id: int) -> void:
 	print("Player %s joined the game!" % id)
 	
 	var player_to_add = PLAYER_SCN.instantiate()
-	var player_team: String = get_less_populous_team()
+	var player_team: String = %TeamDisplay.get_less_populous_team()
 	player_to_add.set_player_id(id)
 	player_to_add.name = str(id)
-	player_to_add.TEAM = player_team
 	
 	$Players.add_child(player_to_add, true)
 	
-	add_player_label(id, str(id), player_team)
+	add_player_label(id, str(id), "A")
 	
 	# Signals the new player that it was added, so it can add its own copies of Player Labels
 	if id != multiplayer.get_unique_id():
-		_add_all_player_labels.rpc_id(id)
+		_add_all_player_labels.rpc_id(id, get_all_players_info())
+		if player_team != "A":
+			change_team.rpc(id)
 
 
 func _remove_lobby_player(id: int) -> void:
@@ -53,7 +54,7 @@ func _remove_lobby_player(id: int) -> void:
 
 @rpc("call_local")
 func remove_player_label(Player: Node) -> void:
-	var player_label: PlayerLabel = find_player_label(Player)
+	var player_label: PlayerLabel = %TeamDisplay.find_player_label(Player)
 	
 	if PlayerLabel == null:
 		return
@@ -63,14 +64,9 @@ func remove_player_label(Player: Node) -> void:
 
 @rpc
 func _add_all_player_labels() -> void:
+	## Clients create all labels of active existing Players
 	for Player in $Players.get_children():
 		add_player_label(int(Player.name), Player.name, Player.TEAM, Player.READY)
-
-
-func get_less_populous_team() -> String:
-	if %TeamAMembers.get_child_count() > %TeamBMembers.get_child_count():
-		return "B"
-	return "A"
 
 
 func add_player_label(player_id: int, player_name: String, team: String, is_ready: bool=false) -> void:
@@ -86,18 +82,6 @@ func add_player_label(player_id: int, player_name: String, team: String, is_read
 		%TeamBMembers.add_child(NewLabel, true)
 
 
-func find_player_label(Player: Node) -> PlayerLabel:
-	## Finds the equivalent player node inside of Player display
-	var TeamMembers = %TeamAMembers
-	if Player.TEAM == "B":
-		TeamMembers = %TeamBMembers
-	
-	for player_label in TeamMembers.get_children():
-		if player_label.name == str(Player.name):
-			return player_label
-	return null
-
-
 @rpc("any_peer", "call_local")
 func change_team(player_id: int) -> void:
 	var Player = $Players.get_node(str(player_id))
@@ -106,7 +90,7 @@ func change_team(player_id: int) -> void:
 		return
 	
 	var team: String = Player.TEAM
-	var player_label: PlayerLabel = find_player_label(Player)
+	var player_label: PlayerLabel = %TeamDisplay.find_player_label(Player)
 	
 	if PlayerLabel == null:
 		return
@@ -127,7 +111,7 @@ func get_ready(player_id: int) -> void:
 		return
 	
 	Player.READY = not Player.READY
-	var player_label: PlayerLabel = find_player_label(Player)
+	var player_label: PlayerLabel = %TeamDisplay.find_player_label(Player)
 	player_label.toggle_player_ready()
 	
 	update_start_state()
@@ -139,6 +123,14 @@ func start_game_to_all() -> void:
 		pass
 	
 	get_tree().change_scene_to_file("res://arenas/multiplayer_test_scene.tscn")
+
+
+func get_all_players_info() -> Array:
+	## Returns a list with information from all connected players
+	var players = []
+	for Player in $Players.get_children():
+		players.append([Player.name, Player.TEAM, Player.READY])
+	return players
 
 
 func all_players_are_ready() -> bool:
