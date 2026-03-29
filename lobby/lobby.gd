@@ -2,7 +2,6 @@ extends Control
 
 
 var PLAYER_SCN := preload("res://multiplayer/players/lobby_player.tscn")
-var PLAYER_LABEL_SCN := preload("res://lobby/player_label.tscn")
 
 
 func _ready() -> void:
@@ -30,8 +29,7 @@ func _add_lobby_player(id: int) -> void:
 	player_to_add.name = str(id)
 	
 	$Players.add_child(player_to_add, true)
-	
-	add_player_label(id, str(id), "A")
+	%TeamDisplay.add_player_label(id, str(id), "A")
 	
 	# Signals the new player that it was added, so it can add its own copies of Player Labels
 	if id != multiplayer.get_unique_id():
@@ -66,20 +64,7 @@ func remove_player_label(Player: Node) -> void:
 func _add_all_player_labels() -> void:
 	## Clients create all labels of active existing Players
 	for Player in $Players.get_children():
-		add_player_label(int(Player.name), Player.name, Player.TEAM, Player.READY)
-
-
-func add_player_label(player_id: int, player_name: String, team: String, is_ready: bool=false) -> void:
-	var NewLabel := PLAYER_LABEL_SCN.instantiate()
-	NewLabel.name = str(player_id)
-	NewLabel.set_player_name(player_name)
-	if is_ready:
-		NewLabel.toggle_player_ready()
-	
-	if team == "A":
-		%TeamAMembers.add_child(NewLabel, true)
-	elif team == "B":
-		%TeamBMembers.add_child(NewLabel, true)
+		%TeamDisplay.add_player_label(int(Player.name), Player.name, Player.TEAM, Player.READY)
 
 
 @rpc("any_peer", "call_local")
@@ -111,8 +96,7 @@ func get_ready(player_id: int) -> void:
 		return
 	
 	Player.READY = not Player.READY
-	var player_label: PlayerLabel = %TeamDisplay.find_player_label(Player)
-	player_label.toggle_player_ready()
+	%TeamDisplay.update_player_label_ready(Player)
 	
 	update_start_state()
 
@@ -154,9 +138,9 @@ func update_start_state() -> void:
 		# Must be server and all Players must be ready
 		if %TeamAMembers.get_child_count() > 0 and %TeamBMembers.get_child_count() > 0:
 			# Must have Players in both Teams
-			%Start.disabled= false
+			%Start.disabled = false
 	else:
-		%Start.disabled= true
+		%Start.disabled = true
 
 
 func _on_change_team_pressed() -> void:
@@ -173,6 +157,8 @@ func _on_ready_pressed() -> void:
 
 func _on_start_pressed() -> void:
 	if multiplayer.is_server():
+		for Player in $Players.get_children():
+			Network.PLAYER_TEAMS[Player.name] = Player.TEAM
 		start_game_to_all.rpc()
 
 

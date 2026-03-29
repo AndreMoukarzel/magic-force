@@ -13,6 +13,14 @@ properties/1/replication_mode = 1
 
 [node name="MultiplayerPlayer" instance=ExtResource("1_seaqv")]
 script = ExtResource("2_6b4kk")
+PLAYER_ID = 1
+TEAM = "A"
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="7"]
+[node name="Label3D" type="Label3D" parent="." index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.347304, 0)
+billboard = 1
+text = "Example Text"
+font_size = 52
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="8"]
 replication_config = SubResource("SceneReplicationConfig_5aan2")

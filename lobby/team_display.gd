@@ -1,6 +1,9 @@
 extends HBoxContainer
 
 
+var PLAYER_LABEL_SCN := preload("res://lobby/player_label.tscn")
+
+
 func get_less_populous_team() -> String:
 	## Returns Teams with less Players
 	if %TeamAMembers.get_child_count() > %TeamBMembers.get_child_count():
@@ -29,3 +32,23 @@ func find_player_label(Player: Node) -> PlayerLabel:
 		if player_label.name == str(Player.name):
 			return player_label
 	return null
+
+
+func add_player_label(player_id: int, player_name: String, team: String, is_ready: bool=false) -> void:
+	## Adds PlayerLabel object to specified Team's Members Panel
+	var NewLabel := PLAYER_LABEL_SCN.instantiate()
+	NewLabel.name = str(player_id)
+	NewLabel.set_player_name(player_name)
+	if is_ready:
+		NewLabel.toggle_player_ready()
+	
+	if team == "A":
+		%TeamAMembers.add_child(NewLabel, true)
+	elif team == "B":
+		%TeamBMembers.add_child(NewLabel, true)
+
+
+func update_player_label_ready(Player):
+	## Toggles the "Ready" state being displayed for Player's label
+	var player_label: PlayerLabel = find_player_label(Player)
+	player_label.toggle_player_ready()

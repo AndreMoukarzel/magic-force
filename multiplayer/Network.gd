@@ -6,6 +6,7 @@ var IS_HOST: bool = false
 var LOBBY_ID: int = 0
 var LOBBY_MEMBERS: Array = []
 var LOBBY_MEMBERS_MAX: int = 10
+var PLAYER_TEAMS = {}
 
 
 func _ready() -> void:
