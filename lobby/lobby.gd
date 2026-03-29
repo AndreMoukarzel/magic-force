@@ -25,17 +25,23 @@ func _add_lobby_player(id: int) -> void:
 	
 	var player_to_add = PLAYER_SCN.instantiate()
 	var player_team: String = %TeamDisplay.get_less_populous_team()
-	player_to_add.set_player_id(id)
 	player_to_add.name = str(id)
+	player_to_add.TEAM = player_team
+	player_to_add.set_player_id(id)
 	
 	$Players.add_child(player_to_add, true)
-	%TeamDisplay.add_player_label(id, str(id), "A")
+	%TeamDisplay.add_player_label(id, str(id), player_team)
 	
-	# Signals the new player that it was added, so it can add its own copies of Player Labels
+	# Signals the client that its new player was added, so it can add its own copies of Player Labels
 	if id != multiplayer.get_unique_id():
-		_add_all_player_labels.rpc_id(id)
-		if player_team != "A":
-			change_team.rpc(id)
+		# For all players, adds new Player
+		for Player in $Players.get_children():
+			var player_id: int = int(Player.name)
+			_add_each_player_in_client.rpc_id(id, Player.name, Player.TEAM, Player.READY)
+			
+			# For other clients that already exist, also add the newly connected Player
+			if player_id != 1 and player_id != id:
+				_add_each_player_in_client.rpc_id(player_id, player_to_add.name, player_to_add.TEAM, player_to_add.READY)
 
 
 func _remove_lobby_player(id: int) -> void:
@@ -61,10 +67,13 @@ func remove_player_label(Player: Node) -> void:
 
 
 @rpc
-func _add_all_player_labels() -> void:
-	## Clients create all labels of active existing Players
-	for Player in $Players.get_children():
-		%TeamDisplay.add_player_label(int(Player.name), Player.name, Player.TEAM, Player.READY)
+func _add_each_player_in_client(player_name, player_team, player_ready) -> void:
+	print(
+		"\t[%s] Adding %s | Team: %s | Ready: %s" %
+		[str(multiplayer.get_unique_id()), player_name, player_team, player_ready]
+	)
+	$Players.get_node(str(player_name)).TEAM = player_team
+	%TeamDisplay.add_player_label(int(player_name), player_name, player_team, player_ready)
 
 
 @rpc("any_peer", "call_local")
@@ -77,9 +86,10 @@ func change_team(player_id: int) -> void:
 	var team: String = Player.TEAM
 	var player_label: PlayerLabel = %TeamDisplay.find_player_label(Player)
 	
-	if PlayerLabel == null:
+	if player_label == null:
 		return
 	
+	print("Changing player %s from Team %s" % [str(player_id), team])
 	if team == "A":
 		player_label.reparent(%TeamBMembers)
 		Player.TEAM = "B"
