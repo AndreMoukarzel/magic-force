@@ -35,7 +35,7 @@ func _add_lobby_player(id: int) -> void:
 	
 	# Signals the new player that it was added, so it can add its own copies of Player Labels
 	if id != multiplayer.get_unique_id():
-		_add_all_player_labels.rpc_id(id, get_all_players_info())
+		_add_all_player_labels.rpc_id(id)
 		if player_team != "A":
 			change_team.rpc(id)
 
