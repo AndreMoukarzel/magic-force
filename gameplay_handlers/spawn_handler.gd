@@ -3,7 +3,7 @@ extends Node
 @export var BALL_SCN: PackedScene
 @export var POINT_HANDLER: Control
 @export var SPAWNERS: Node3D
-var ACTIVE_BALL: RigidBody3D = null
+@onready var ACTIVE_BALL: RigidBody3D = get_node("Ball")
 var UNAVAILABLE_SPAWNS: Dictionary[String, Array] = {
 	"A": [],
 	"B": [],
@@ -19,12 +19,8 @@ func _ready() -> void:
 
 func spawn_ball() -> void:
 	var pos: Vector3 = SPAWNERS.get_node("BallSpawn").global_position
-	var BallInstance: RigidBody3D = BALL_SCN.instantiate()
-	
-	self.add_child(BallInstance)
-	BallInstance.global_position = pos
-	
-	ACTIVE_BALL = BallInstance
+	ACTIVE_BALL.set_collision_layer_value(2, true) # Makes the ball interactable
+	ACTIVE_BALL.global_position = pos
 
 
 func spawn_players() -> void:
@@ -51,7 +47,7 @@ func spawn_player(player: Node3D, team: String="A") -> void:
 func goal_was_scored() -> void:
 	$GoalRespawnTimer.start()
 	# DOES NOT exclude the ball, but make it so it can't be interacted with
-	ACTIVE_BALL.set_collision_layer_value(2, 0)
+	ACTIVE_BALL.set_collision_layer_value(2, false)
 
 
 func _get_team_spawns(team: String) -> Array[Node]:
@@ -71,7 +67,6 @@ func _get_closest_available_spawn(pos: Vector3, team: String) -> Marker3D:
 
 
 func _on_respawn_timer_timeout() -> void:
-	ACTIVE_BALL.queue_free()
 	spawn_ball()
 	spawn_players()
 

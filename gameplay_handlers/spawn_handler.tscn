@@ -3,13 +3,15 @@
 [ext_resource type="Script" uid="uid://buqwqt1pevghn" path="res://gameplay_handlers/spawn_handler.gd" id="1_6oghj"]
 [ext_resource type="PackedScene" uid="uid://cbq8n0y1yl5u0" path="res://ball/ball.tscn" id="2_jsklm"]
 
-[node name="SpawnHandler" type="Node" node_paths=PackedStringArray("POINT_HANDLER")]
+[node name="SpawnHandler" type="Node"]
 script = ExtResource("1_6oghj")
 BALL_SCN = ExtResource("2_jsklm")
-POINT_HANDLER = NodePath("")
 
 [node name="GoalRespawnTimer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+
+[node name="Ball" parent="." instance=ExtResource("2_jsklm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70.69023, 6.7542505, 0)
 
 [connection signal="timeout" from="GoalRespawnTimer" to="." method="_on_respawn_timer_timeout"]
