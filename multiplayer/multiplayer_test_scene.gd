@@ -6,7 +6,6 @@ var GAME_HAS_STARTED: bool = false
 
 
 func _ready() -> void:
-	multiplayer.peer_connected.connect(_connected_print)
 	multiplayer.peer_disconnected.connect(_remove_player)
 	
 	if multiplayer.is_server():
@@ -15,12 +14,11 @@ func _ready() -> void:
 			
 			print("Adding player %s in Team %s" % [player_id, player_team])
 			add_player_mage(int(player_id), player_team) # Adds player to server
+			# The player will be automatically added to Clients by the MultiplayerSpawner
+			
 			if int(player_id) != multiplayer.get_unique_id(): # Syncs players with themselves
 				_set_name_and_camera.rpc_id(int(player_id), player_id, player_team)
 
-
-func _connected_print():
-	print("%s emitting connection print" % str(multiplayer.get_unique_id()))
 
 @rpc
 func _set_name_and_camera(player_name, player_team) -> void:
@@ -32,6 +30,8 @@ func _set_name_and_camera(player_name, player_team) -> void:
 	$Players.get_node(str(player_name)).set_player_id(int(player_name))
 	# Set camera correctly of this player
 	$Players.get_node(str(player_name)).get_node("CameraSpring/Camera3D").make_current()
+	# Gives the Player authority over themselves
+	$Players.get_node(str(player_name)).set_multiplayer_authority(int(player_name))
 
 
 func add_player_mage(player_id: int, team: String) -> void:
@@ -44,7 +44,7 @@ func add_player_mage(player_id: int, team: String) -> void:
 	NewPlayer.set_player_id(player_id)
 	
 	$Players.add_child(NewPlayer, true)
-	
+	# Relinquishes the Server from having authority over other players
 	NewPlayer.set_multiplayer_authority(player_id)
 
 
@@ -54,11 +54,4 @@ func _remove_player(id: int) -> void:
 		return
 	
 	var PlayerNode: Node = $Players.get_node(str(id))
-	#remove_player_label.rpc(PlayerNode)
 	PlayerNode.queue_free()
-	
-	#update_start_state()
-
-
-func _on_multiplayer_spawner_spawned(node: Node) -> void:
-	print(node.name)

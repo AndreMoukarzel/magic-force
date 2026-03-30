@@ -10,13 +10,10 @@ func set_player_id(id: int) -> void:
 	PLAYER_ID = id
 	$Label3D.text = str(id)
 
-
-func _enter_tree() -> void:
-	pass
-
-
 func _ready():
 	if multiplayer.get_unique_id() == PLAYER_ID:
+		print("Player %s ready with ID %s" % [multiplayer.get_unique_id(), PLAYER_ID])
+		set_multiplayer_authority(PLAYER_ID)
 		$CameraSpring/Camera3D.make_current()
 	else:
 		$CameraSpring/Camera3D.current = false
@@ -44,9 +41,8 @@ func apply_knockback(force: Vector3) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	var input_dir = Vector2(0, 0)
-	if is_multiplayer_authority():
-		input_dir = Input.get_vector("left", "right", "forward", "back")
+	if not is_multiplayer_authority(): return
+	var input_dir = Input.get_vector("left", "right", "forward", "back")
 	var direction: Vector3 = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	var cam_rot: Vector3 = CAM.global_rotation
 	var inv_rot: Vector3 = inverted_rotation(cam_rot)
