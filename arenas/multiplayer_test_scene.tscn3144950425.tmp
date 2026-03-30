@@ -1,0 +1,116 @@
+[gd_scene load_steps=9 format=3 uid="uid://cy65hxm00y75l"]
+
+[ext_resource type="PackedScene" uid="uid://qmir5vg1sis3" path="res://gameplay_handlers/game_handler.tscn" id="1_a8rpr"]
+[ext_resource type="Script" uid="uid://4h8u23ygpr0s" path="res://multiplayer/multiplayer_test_scene.gd" id="2_3d02y"]
+[ext_resource type="Texture2D" uid="uid://dx8f8idcufjnf" path="res://texture_01.png" id="2_8odck"]
+[ext_resource type="Texture2D" uid="uid://lgsidpu2qvf0" path="res://texture_04.png" id="3_unas5"]
+[ext_resource type="PackedScene" uid="uid://cj03l5kvgpert" path="res://goals/goal.tscn" id="4_bcydl"]
+
+[sub_resource type="Environment" id="Environment_xynlu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7n2vf"]
+albedo_texture = ExtResource("2_8odck")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ej27l"]
+albedo_texture = ExtResource("3_unas5")
+uv1_triplanar = true
+
+[node name="MultiplayerTestScene" type="Node3D"]
+script = ExtResource("2_3d02y")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_xynlu")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 0.278689, 0.960381, 0, -0.960381, 0.278689, 0, 14.3357, 0)
+shadow_enabled = true
+
+[node name="GameHandler" parent="." instance=ExtResource("1_a8rpr")]
+
+[node name="SpawnHandler" parent="GameHandler" index="0" node_paths=PackedStringArray("SPAWNERS")]
+SPAWNERS = NodePath("../../SpawnPoints")
+
+[node name="PointHandler" parent="GameHandler" index="1" node_paths=PackedStringArray("GOAL_A", "GOAL_B")]
+GOAL_A = NodePath("../../GoalA")
+GOAL_B = NodePath("../../GoalB")
+
+[node name="Walls" type="CSGCombiner3D" parent="."]
+material_override = SubResource("StandardMaterial3D_7n2vf")
+use_collision = true
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="Fill" type="CSGBox3D" parent="Walls"]
+size = Vector3(80, 60, 110)
+
+[node name="Space" type="CSGBox3D" parent="Walls"]
+material_override = SubResource("StandardMaterial3D_7n2vf")
+operation = 2
+size = Vector3(65, 98, 105)
+
+[node name="Floor" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+material_override = SubResource("StandardMaterial3D_ej27l")
+use_collision = true
+size = Vector3(65, 1, 105)
+metadata/_edit_lock_ = true
+
+[node name="GoalA" parent="." instance=ExtResource("4_bcydl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -45)
+metadata/_edit_lock_ = true
+
+[node name="GoalB" parent="." instance=ExtResource("4_bcydl")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 45)
+metadata/_edit_lock_ = true
+
+[node name="SpawnPoints" type="Node3D" parent="."]
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="BallSpawn" type="Marker3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.313, 0)
+metadata/_edit_lock_ = true
+
+[node name="SpawnsA" type="Node3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="Spawn1" type="Marker3D" parent="SpawnPoints/SpawnsA"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 40)
+
+[node name="Spawn2" type="Marker3D" parent="SpawnPoints/SpawnsA"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 25)
+
+[node name="Spawn3" type="Marker3D" parent="SpawnPoints/SpawnsA"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 25)
+
+[node name="Spawn4" type="Marker3D" parent="SpawnPoints/SpawnsA"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12)
+
+[node name="SpawnsB" type="Node3D" parent="SpawnPoints"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1, 0)
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="Spawn1" type="Marker3D" parent="SpawnPoints/SpawnsB"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 40)
+
+[node name="Spawn2" type="Marker3D" parent="SpawnPoints/SpawnsB"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 25)
+
+[node name="Spawn3" type="Marker3D" parent="SpawnPoints/SpawnsB"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 25)
+
+[node name="Spawn4" type="Marker3D" parent="SpawnPoints/SpawnsB"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12)
+
+[node name="Players" type="Node" parent="."]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://dsjen3mvwpnu8")
+spawn_path = NodePath("../Players")
+spawn_limit = 8
+
+[editable path="GameHandler"]

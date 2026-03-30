@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://dsjen3mvwpnu8"]
+[gd_scene load_steps=5 format=3 uid="uid://dsjen3mvwpnu8"]
 
 [ext_resource type="PackedScene" uid="uid://bx8b8yvq5h1jd" path="res://player/player.tscn" id="1_seaqv"]
 [ext_resource type="Script" uid="uid://cjcx1v2edipow" path="res://multiplayer/players/multiplayer_controller.gd" id="2_6b4kk"]
+[ext_resource type="Script" uid="uid://d35fknec1dwo4" path="res://multiplayer/players/camera_spring_multiplayer.gd" id="3_clgf8"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_5aan2"]
 properties/0/path = NodePath(".:position")
@@ -10,11 +11,20 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
+properties/2/path = NodePath("Label3D:text")
+properties/2/spawn = true
+properties/2/replication_mode = 2
+properties/3/path = NodePath("Mage:rotation")
+properties/3/spawn = true
+properties/3/replication_mode = 1
 
 [node name="MultiplayerPlayer" instance=ExtResource("1_seaqv")]
 script = ExtResource("2_6b4kk")
 PLAYER_ID = 1
 TEAM = "A"
+
+[node name="CameraSpring" parent="." index="5"]
+script = ExtResource("3_clgf8")
 
 [node name="Label3D" type="Label3D" parent="." index="7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.347304, 0)
