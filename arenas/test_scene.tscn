@@ -36,15 +36,6 @@ SPAWNERS = NodePath("../../SpawnPoints")
 GOAL_A = NodePath("../../GoalA")
 GOAL_B = NodePath("../../GoalB")
 
-[node name="Player" parent="GameHandler/TeamA" index="0" instance=ExtResource("3_sasra")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.16494, 7.29029)
-
-[node name="Pusher" parent="GameHandler/TeamB" index="0" instance=ExtResource("8_njel3")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -11.5052, 1.97, -22.0322)
-
-[node name="Grabber" parent="GameHandler/TeamB" index="1" instance=ExtResource("9_njel3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0941, 1.97, -23.9635)
-
 [node name="Walls" type="CSGCombiner3D" parent="."]
 material_override = SubResource("StandardMaterial3D_buypi")
 use_collision = true
@@ -115,5 +106,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 25)
 
 [node name="Spawn4" type="Marker3D" parent="SpawnPoints/SpawnsB"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12)
+
+[node name="Players" type="Node" parent="."]
+
+[node name="Player" parent="Players" instance=ExtResource("3_sasra")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.16494, 7.29029)
+
+[node name="Pusher" parent="Players" instance=ExtResource("8_njel3")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -11.5052, 1.97, -22.0322)
+
+[node name="Grabber" parent="Players" instance=ExtResource("9_njel3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0941, 1.97, -23.9635)
 
 [editable path="GameHandler"]

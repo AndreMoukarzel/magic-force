@@ -6,6 +6,7 @@ extends CharacterBody3D
 @export var ACC_AIR: float = 2.0
 @export var RISE_ACC: float = 10.0
 @export var FALL_ACC: float = 18.5
+@export var MASS: float = 45.0
 @export var KNOCKBACK_DECAY: float = 15.0
 var KNOCKBACK: Vector3 = Vector3.ZERO
 
@@ -45,6 +46,10 @@ func _apply_gravity(delta: float) -> void:
 	else:
 		# Descending: higher gravity for faster, snappier fall
 		velocity.y -= FALL_ACC * delta
+
+
+func apply_impulse(force: Vector3) -> void:
+	apply_knockback(force/MASS)
 
 
 func apply_knockback(force: Vector3) -> void:

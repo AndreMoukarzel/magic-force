@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://bx8b8yvq5h1jd"]
 
-[ext_resource type="Script" uid="uid://b3wb426fydlox" path="res://entity/player_controller.gd" id="1_qjkh3"]
+[ext_resource type="Script" uid="uid://b3wb426fydlox" path="res://player/player_controller.gd" id="1_qjkh3"]
 [ext_resource type="PackedScene" uid="uid://bbhhjkh6mw2xv" path="res://base_mage.tscn" id="2_qjkh3"]
 [ext_resource type="Script" uid="uid://c4cdd4kueepxk" path="res://spells/float.gd" id="3_g6k8r"]
 [ext_resource type="PackedScene" uid="uid://7w2a5k2w72i7" path="res://spells/force_grab.tscn" id="4_g6k8r"]
@@ -33,7 +33,7 @@ radius = 0.35
 height = 0.675
 
 [node name="Player" type="CharacterBody3D"]
-collision_layer = 4
+collision_layer = 6
 collision_mask = 3
 script = ExtResource("1_qjkh3")
 

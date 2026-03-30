@@ -1,4 +1,4 @@
-extends "res://entity/player_controller.gd"
+extends "res://player/player_controller.gd"
 
 
 # Properties must be exported to be synced

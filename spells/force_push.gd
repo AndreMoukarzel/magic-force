@@ -14,7 +14,7 @@ func area_push() -> void:
 	
 	var bodies: Array[Node3D] = $Area3D.get_overlapping_bodies()
 	for body in bodies:
-		if body.has_method("apply_impulse"):
+		if body != get_parent() and body.has_method("apply_impulse"):
 			push_away(body)
 			
 			if body.has_method("clear_all_grabbers"):
@@ -25,21 +25,22 @@ func area_push() -> void:
 		push_player()
 
 
-func _get_push_direction(object: RigidBody3D) -> Vector3:
+func _get_push_direction(object: Node3D) -> Vector3:
 	if CAM:
 		return CAM.global_position.direction_to(object.global_position).normalized()
 	return self.global_position.direction_to(object.global_position).normalized()
 
 
-func push_away(object: RigidBody3D) -> void:
+func push_away(object: Node3D) -> void:
 	var direction: Vector3 = _get_push_direction(object)
-	object.linear_velocity = Vector3(0, 10, 0)
+	if "linear_velocity" in object:
+		object.linear_velocity = Vector3(0, 10, 0)
 	object.apply_impulse(direction * PUSH_FORCE)
 
 
 func push_player() -> void:
 	# Forward vector of the camera (where it is looking)
-	var cam_forward: Vector3 = -CAM.global_transform.basis.z.normalized()
+	var cam_forward: Vector3 = -global_transform.basis.z.normalized()
 	
 	# Opposite direction (push AWAY from where camera is looking)
 	var push_dir: Vector3 = -cam_forward

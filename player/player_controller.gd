@@ -8,11 +8,16 @@ extends CharacterBody3D
 @export var KNOCKBACK_DECAY: float = 15.0
 @export var ROT_ACC: float = 3.5
 @export var ROT_ACC_AIR: float = 1.2
+@export var MASS: float = 45.0
 
 @onready var CAM: Camera3D = $CameraSpring/Camera3D
 @onready var CHAR: Node3D = $Mage
 @onready var HAND_SPRING: SpringArm3D = $HandSpring
 var KNOCKBACK: Vector3 = Vector3.ZERO
+
+
+func apply_impulse(force: Vector3) -> void:
+	apply_knockback(force/MASS)
 
 
 func apply_knockback(force: Vector3) -> void:
@@ -41,14 +46,7 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, direction.z * SPEED, ACC_AIR * delta)
 		CHAR.global_rotation.x = move_toward(CHAR.global_rotation.x, cam_rot.x, ROT_ACC_AIR * delta)
 		CHAR.global_rotation.z = move_toward(CHAR.global_rotation.z, cam_rot.z, ROT_ACC_AIR * delta)
-		if velocity.y > 0:
-			# Ascending: lower gravity for slower upward deceleration
-			velocity.y -= RISE_ACC * delta
-		else:
-			# Descending: higher gravity for faster, snappier fall
-			velocity.y -= FALL_ACC * delta
-			if $Float.is_active and velocity.y <= -$Float.FLOAT_SPEED:
-				velocity.y = -$Float.FLOAT_SPEED
+		_apply_gravity(delta)
 	
 	# Apply knockback
 	if KNOCKBACK.length() > 0.1:
@@ -65,6 +63,17 @@ func _physics_process(delta: float) -> void:
 		KNOCKBACK = KNOCKBACK.lerp(Vector3.ZERO, delta * KNOCKBACK_DECAY) # smooth decay
 	
 	move_and_slide()
+
+
+func _apply_gravity(delta: float) -> void:
+	if velocity.y > 0:
+		# Ascending: lower gravity for slower upward deceleration
+		velocity.y -= RISE_ACC * delta
+	else:
+		# Descending: higher gravity for faster, snappier fall
+		velocity.y -= FALL_ACC * delta
+		if $Float.is_active and velocity.y <= -$Float.FLOAT_SPEED:
+				velocity.y = -$Float.FLOAT_SPEED
 
 
 func inverted_rotation(base_rotation: Vector3) -> Vector3:
