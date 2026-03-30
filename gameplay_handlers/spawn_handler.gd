@@ -1,6 +1,5 @@
 extends Node
 
-@export var BALL_SCN: PackedScene
 @export var POINT_HANDLER: Control
 @export var SPAWNERS: Node3D
 @onready var ACTIVE_BALL: RigidBody3D = get_node("Ball")
