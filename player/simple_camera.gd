@@ -3,7 +3,7 @@ extends SpringArm3D
 
 @export var SENS: float = 0.005
 @export_range(-90.0, 0.0, 0.1, "radians_as_degrees") var MIN_V_ANGLE: float = -PI/2
-@export_range(-90.0, 0.0, 0.1, "radians_as_degrees") var MAX_V_ANGLE: float = PI/4
+@export_range(0.0, 90.0, 0.1, "radians_as_degrees") var MAX_V_ANGLE: float = PI/4
 
 
 func _ready() -> void:

@@ -55,10 +55,12 @@ PLAYER = NodePath("..")
 CAM = NodePath("../CameraSpring/Camera3D")
 
 [node name="CameraSpring" type="SpringArm3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 0.9848077, 0.17364818, 0, -0.17364818, 0.9848077, 0, 3, 0)
 shape = SubResource("SphereShape3D_qjkh3")
 spring_length = 6.0
 script = ExtResource("4_yw30f")
+MIN_V_ANGLE = -1.4922565104551517
+MAX_V_ANGLE = 1.4922565104551517
 
 [node name="Camera3D" type="Camera3D" parent="CameraSpring"]
 current = true
