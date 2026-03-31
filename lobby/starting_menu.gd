@@ -4,6 +4,8 @@ func _ready() -> void:
 	%BaseMenuError.text = ""
 	Steam.lobby_created.connect(_on_steam_lobby_created)
 	Steam.lobby_match_list.connect(_on_lobby_match_list)
+	
+	multiplayer.connected_to_server.connect(_on_connected_to_server)
 
 
 func _on_test_scene_pressed() -> void:
@@ -11,9 +13,6 @@ func _on_test_scene_pressed() -> void:
 
 
 func _on_host_pressed() -> void:
-	#Network.create_lobby()
-	#%HostRetryTimer.start()
-	#%Host.disabled = true
 	$Multiplayer.become_host()
 	_on_steam_lobby_created(1, 1)
 
@@ -62,5 +61,23 @@ func _on_join_pressed() -> void:
 
 
 func _on_join_test_pressed() -> void:
+	%BaseMenuError.text = "Looking for host..."
 	$Multiplayer.join_as_client()
+	%ConnectionTimeout.start()
+
+
+func _on_connected_to_server() -> void:
+	print("Connected successfully!")
+	%ConnectionTimeout.stop()
 	_on_steam_lobby_created(1, 1)
+
+
+func _on_connection_timeout_timeout() -> void:
+	print("Connection timed out")
+	
+	# Clean up the failed peer
+	if multiplayer.multiplayer_peer:
+		multiplayer.multiplayer_peer.close()
+		multiplayer.multiplayer_peer = null
+	
+	%BaseMenuError.text = "Failed to connect. No host found."
