@@ -24,4 +24,42 @@ func _physics_process(delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if is_multiplayer_authority():
-		super(event)
+		#super(event)
+		if event.is_action_pressed("primary_action"):
+			force_grab_multiplayer.rpc()
+		elif event.is_action_released("primary_action"):
+			force_release_multiplayer.rpc()
+		
+		if event.is_action_pressed("secondary_action"):
+			#$ForcePush.area_push()
+			force_push_multiplayer.rpc()
+		
+		if event.is_action_pressed("float"):
+			float_activate_multiplayer.rpc()
+		elif event.is_action_released("float"):
+			float_deactivate_multiplayer.rpc()
+
+
+@rpc("call_local")
+func force_grab_multiplayer() -> void:
+	$ForceGrab.grab()
+
+
+@rpc("call_local")
+func force_release_multiplayer() -> void:
+	$ForceGrab.release()
+
+
+@rpc("call_local")
+func force_push_multiplayer() -> void:
+	$ForcePush.area_push()
+
+
+@rpc("call_local")
+func float_activate_multiplayer() -> void:
+	$Float.activate()
+
+
+@rpc("call_local")
+func float_deactivate_multiplayer() -> void:
+	$Float.deactivate()

@@ -20,6 +20,15 @@ properties/3/replication_mode = 1
 properties/4/path = NodePath("ForcePush:rotation")
 properties/4/spawn = true
 properties/4/replication_mode = 1
+properties/5/path = NodePath("CameraSpring:position")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath("CameraSpring:rotation")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("HandSpring:rotation")
+properties/7/spawn = true
+properties/7/replication_mode = 1
 
 [node name="MultiplayerPlayer" instance=ExtResource("1_seaqv")]
 script = ExtResource("2_6b4kk")
