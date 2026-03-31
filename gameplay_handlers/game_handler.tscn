@@ -9,7 +9,3 @@
 POINT_HANDLER = NodePath("../PointHandler")
 
 [node name="PointHandler" parent="." instance=ExtResource("3_3awm7")]
-
-[node name="TeamA" type="Node" parent="."]
-
-[node name="TeamB" type="Node" parent="."]

@@ -2,6 +2,7 @@ extends Node
 
 @export var POINT_HANDLER: Control
 @export var SPAWNERS: Node3D
+@export var PLAYERS: Node
 @onready var ACTIVE_BALL: RigidBody3D = get_node("Ball")
 var UNAVAILABLE_SPAWNS: Dictionary[String, Array] = {
 	"A": [],
@@ -23,15 +24,14 @@ func spawn_ball() -> void:
 
 
 func spawn_players() -> void:
-	for player in $"../TeamA".get_children():
-		spawn_player(player, "A")
-	for player in $"../TeamB".get_children():
-		spawn_player(player, "B")
+	for Player in PLAYERS.get_children():
+		if "TEAM" in Player:
+			spawn_player(Player, Player.TEAM)
 
 
-func spawn_player(player: Node3D, team: String="A") -> void:
+func spawn_player(Player: Node3D, team: String="A") -> void:
 	var timer := get_tree().create_timer(SPAWN_COOLDOWN)
-	var player_pos: Vector3 = player.global_position
+	var player_pos: Vector3 = Player.global_position
 	var closest_available_spawn: Marker3D = _get_closest_available_spawn(player_pos, team)
 	
 	# Makes timer unavailable
@@ -40,7 +40,7 @@ func spawn_player(player: Node3D, team: String="A") -> void:
 		_release_spawn(closest_available_spawn, team)
 	)
 	
-	player.global_position = closest_available_spawn.global_position
+	Player.global_position = closest_available_spawn.global_position
 
 
 func goal_was_scored() -> void:

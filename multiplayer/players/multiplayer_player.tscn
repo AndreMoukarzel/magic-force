@@ -22,10 +22,8 @@ properties/4/spawn = true
 properties/4/replication_mode = 1
 
 [node name="MultiplayerPlayer" instance=ExtResource("1_seaqv")]
-collision_layer = 6
 script = ExtResource("2_6b4kk")
 PLAYER_ID = 1
-TEAM = "A"
 
 [node name="CameraSpring" parent="." index="5"]
 script = ExtResource("3_clgf8")

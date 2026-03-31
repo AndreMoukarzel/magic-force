@@ -3,7 +3,6 @@ extends "res://player/player_controller.gd"
 
 # Properties must be exported to be synced
 @export var PLAYER_ID: int = 1
-@export var TEAM: String = "A"
 
 
 func set_player_id(id: int) -> void:
@@ -13,7 +12,6 @@ func set_player_id(id: int) -> void:
 
 func _ready():
 	if multiplayer.get_unique_id() == PLAYER_ID:
-		set_multiplayer_authority(PLAYER_ID)
 		CAM.make_current()
 	else:
 		CAM.current = false

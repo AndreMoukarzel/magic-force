@@ -29,8 +29,9 @@ shadow_enabled = true
 
 [node name="GameHandler" parent="." instance=ExtResource("1_vr1i5")]
 
-[node name="SpawnHandler" parent="GameHandler" index="0" node_paths=PackedStringArray("SPAWNERS")]
+[node name="SpawnHandler" parent="GameHandler" index="0" node_paths=PackedStringArray("SPAWNERS", "PLAYERS")]
 SPAWNERS = NodePath("../../SpawnPoints")
+PLAYERS = NodePath("../../Players")
 
 [node name="PointHandler" parent="GameHandler" index="1" node_paths=PackedStringArray("GOAL_A", "GOAL_B")]
 GOAL_A = NodePath("../../GoalA")
@@ -114,8 +115,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.16494, 7.29029)
 
 [node name="Pusher" parent="Players" instance=ExtResource("8_njel3")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -11.5052, 1.97, -22.0322)
+TEAM = "B"
 
 [node name="Grabber" parent="Players" instance=ExtResource("9_njel3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0941, 1.97, -23.9635)
+TEAM = "B"
 
 [editable path="GameHandler"]

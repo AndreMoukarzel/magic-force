@@ -1,5 +1,6 @@
 extends CharacterBody3D
 
+@export_enum("A", "B") var TEAM: String = "A"
 
 @export var SPEED: float = 5.0
 @export var ACC: float = 15.0
