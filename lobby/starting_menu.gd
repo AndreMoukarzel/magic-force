@@ -6,6 +6,8 @@ func _ready() -> void:
 	Steam.lobby_match_list.connect(_on_lobby_match_list)
 	
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
+	
+	Network.steam_lobby_joined.connect(_on_steam_lobby_created.bind(1, Network.LOBBY_ID))
 
 
 func _on_test_scene_pressed() -> void:
@@ -46,18 +48,15 @@ func _on_lobby_match_list(lobbies: Array) -> void:
 			lobby_button.add_theme_font_size_override("font_size", 8)
 			lobby_button.set_name("lobby_%s" % lobby)
 			lobby_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
-			lobby_button.connect("pressed", Callable(self, "join_lobby").bind(lobby))
+			lobby_button.pressed.connect(join_lobby.bind(lobby))
 			
 			%LoadedLobbies.add_child(lobby_button)
 
 
-func join_lobby(lobby_id):
+func join_lobby(lobby_id: int):
+	print("Joining lobby %d" % lobby_id)
 	Network.join_lobby(lobby_id)
 	%BaseMenuError.text = ""
-
-
-func _on_join_pressed() -> void:
-	pass
 
 
 func _on_join_test_pressed() -> void:
@@ -81,3 +80,7 @@ func _on_connection_timeout_timeout() -> void:
 		multiplayer.multiplayer_peer = null
 	
 	%BaseMenuError.text = "Failed to connect. No host found."
+
+
+func _on_host_steam_pressed() -> void:
+	Network.create_lobby()

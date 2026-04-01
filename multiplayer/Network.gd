@@ -1,5 +1,7 @@
 extends Node
 
+signal steam_lobby_joined
+
 const PACKET_READ_LIMIT: int = 32
 
 var IS_HOST: bool = false
@@ -48,6 +50,9 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 		
 		get_lobby_members()
 		make_p2p_handshake()
+		
+		if not IS_HOST:
+			emit_signal("steam_lobby_joined")
 
 
 func get_lobby_members() -> void:
@@ -69,9 +74,9 @@ func send_p2p_packet(this_target: int, packet_data: Dictionary, send_type: int =
 	this_data.append_array(var_to_bytes(packet_data))
 	
 	if this_target == 0: # 0 is an arbitrary code for "everyone"
-		if LOBBY_MEMBERS.size() > 1:
+		#if LOBBY_MEMBERS.size() > 1:
 			for member in LOBBY_MEMBERS:
-				if member["steam_id"] != Global.STEAM_ID:
+				#if member["steam_id"] != Global.STEAM_ID:
 					Steam.sendP2PPacket(member["steam_id"], this_data, send_type, channel)
 	else:
 		Steam.sendP2PPacket(this_target, this_data, send_type, channel)
@@ -104,9 +109,6 @@ func read_p2p_packet() -> void:
 		var _packet_sender: int = this_packet["remote_steam_id"]
 		var packet_code: PackedByteArray = this_packet["data"]
 		var readable_data: Dictionary = bytes_to_var(packet_code)
-		
-		print("Received package")
-		print(readable_data.has("message"))
 		
 		if readable_data.has("message"):
 			match readable_data["message"]:
