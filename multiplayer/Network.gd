@@ -34,6 +34,7 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 
 
 func get_lobby_members() -> void:
+	## Updates lobby member's information
 	LOBBY_MEMBERS.clear()
 	
 	var num_members: int = Steam.getNumLobbyMembers(LOBBY_ID)

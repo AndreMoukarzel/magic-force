@@ -7,7 +7,7 @@ var PLAYER_SCN := preload("res://multiplayer/players/lobby_player.tscn")
 func _ready() -> void:
 	multiplayer.peer_connected.connect(_add_lobby_player)
 	multiplayer.peer_disconnected.connect(_remove_lobby_player)
-	if not multiplayer.is_server():
+	if not multiplayer.is_server() or not Network.IS_HOST:
 		multiplayer.server_disconnected.connect(_on_server_disconnected)
 	
 	if not OS.has_feature("dedicated_server"):
@@ -17,7 +17,7 @@ func _ready() -> void:
 
 
 func _add_lobby_player(id: int) -> void:
-	if not multiplayer.is_server():
+	if not multiplayer.is_server() or not Network.IS_HOST:
 		# Only the server spawns the players
 		# Clients are updated by signals from the MultiplayerSpawner and RPCs
 		return

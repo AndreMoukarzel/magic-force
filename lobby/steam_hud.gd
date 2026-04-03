@@ -57,6 +57,8 @@ func _on_lobby_created(connect_value: int, lobby_id: int) -> void:
 		peer.create_host(Network.LOBBY_MEMBERS_MAX)
 		multiplayer.multiplayer_peer = peer
 		
+		Network.get_lobby_members()
+		
 		get_tree().change_scene_to_file("res://lobby/lobby.tscn")
 
 
@@ -72,6 +74,8 @@ func _on_connected_to_server(lobby_id: int, _permissions: int, _locked: bool, re
 		multiplayer.multiplayer_peer = peer
 		
 		IS_JOINING = false
+		
+		Network.get_lobby_members()
 		
 		change_to_lobby_scn()
 

@@ -9,6 +9,7 @@ var ENET_PEER: ENetMultiplayerPeer = ENetMultiplayerPeer.new()
 func become_host() -> void:
 	print("Starting host!")
 	
+	Network.IS_HOST = true
 	ENET_PEER.create_server(SERVER_PORT)
 	multiplayer.multiplayer_peer = ENET_PEER
 
