@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://dnh47e40ql5yd"]
+[gd_scene format=3 uid="uid://dnh47e40ql5yd"]
 
 [ext_resource type="Script" uid="uid://bomfbjmj3p8um" path="res://multiplayer/players/lobby_player.gd" id="1_opu37"]
 
@@ -12,9 +12,12 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath(".:READY")
 properties/2/spawn = true
 properties/2/replication_mode = 1
+properties/3/path = NodePath(".:STEAM_NAME")
+properties/3/spawn = true
+properties/3/replication_mode = 1
 
-[node name="LobbyPlayer" type="Node"]
+[node name="LobbyPlayer" type="Node" unique_id=1648648633]
 script = ExtResource("1_opu37")
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=711533865]
 replication_config = SubResource("SceneReplicationConfig_opu37")

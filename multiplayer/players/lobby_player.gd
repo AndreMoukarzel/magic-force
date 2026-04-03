@@ -5,6 +5,7 @@ extends Node
 @export var PLAYER_ID: int = 1
 @export var TEAM: String = "A"
 @export var READY: bool = false
+@export var STEAM_NAME: String = ""
 
 
 func set_player_id(id: int) -> void:

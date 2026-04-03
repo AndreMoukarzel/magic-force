@@ -1,16 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://d1p60ysr3u25t"]
+[gd_scene format=3 uid="uid://d1p60ysr3u25t"]
 
 [ext_resource type="Script" uid="uid://cba0erhu6tsc3" path="res://lobby/player_label.gd" id="1_22v78"]
 
-[node name="PlayerLabel" type="HFlowContainer"]
+[node name="PlayerLabel" type="HFlowContainer" unique_id=1919461366]
 offset_right = 133.0
 offset_bottom = 24.0
 script = ExtResource("1_22v78")
 
-[node name="Name" type="Label" parent="."]
+[node name="Name" type="Label" parent="." unique_id=1048479691]
 layout_mode = 2
 text = "Player Name"
 
-[node name="Ready" type="CheckBox" parent="."]
+[node name="Ready" type="CheckBox" parent="." unique_id=377169581]
 layout_mode = 2
 button_mask = 0

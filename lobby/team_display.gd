@@ -34,11 +34,15 @@ func find_player_label(Player: Node) -> PlayerLabel:
 	return null
 
 
-func add_player_label(player_id: int, player_name: String, team: String, is_ready: bool=false) -> void:
+func add_player_label(
+	player_id: int, player_name: String, team: String, is_ready: bool=false, steam_name: String=""
+	) -> void:
 	## Adds PlayerLabel object to specified Team's Members Panel
 	var NewLabel := PLAYER_LABEL_SCN.instantiate()
 	NewLabel.name = str(player_id)
 	NewLabel.set_player_name(player_name)
+	if steam_name != "":
+		NewLabel.set_player_name(steam_name)
 	if is_ready:
 		NewLabel.toggle_player_ready()
 	

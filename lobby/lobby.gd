@@ -25,23 +25,27 @@ func _add_lobby_player(id: int) -> void:
 	
 	var player_to_add = PLAYER_SCN.instantiate()
 	var player_team: String = %TeamDisplay.get_less_populous_team()
+	var player_steam_name: String = Network.get_steam_name(id)
 	player_to_add.name = str(id)
 	player_to_add.TEAM = player_team
+	player_to_add.STEAM_NAME = player_steam_name
 	player_to_add.set_player_id(id)
 	
 	$Players.add_child(player_to_add, true)
-	%TeamDisplay.add_player_label(id, str(id), player_team)
+	%TeamDisplay.add_player_label(id, str(id), player_team, false, player_steam_name)
 	
 	# Signals the client that its new player was added, so it can add its own copies of Player Labels
 	if id != multiplayer.get_unique_id():
 		# For all players, adds new Player
 		for Player in $Players.get_children():
 			var player_id: int = int(Player.name)
-			_add_each_player_in_client.rpc_id(id, Player.name, Player.TEAM, Player.READY)
+			_add_each_player_in_client.rpc_id(id, Player.name, Player.TEAM, Player.READY, Player.STEAM_NAME)
 			
 			# For other clients that already exist, also add the newly connected Player
 			if player_id != 1 and player_id != id:
-				_add_each_player_in_client.rpc_id(player_id, player_to_add.name, player_to_add.TEAM, player_to_add.READY)
+				_add_each_player_in_client.rpc_id(
+					player_id, player_to_add.name, player_to_add.TEAM, player_to_add.READY, player_steam_name
+				)
 
 
 func _remove_lobby_player(id: int) -> void:
@@ -67,13 +71,13 @@ func remove_player_label(Player: Node) -> void:
 
 
 @rpc
-func _add_each_player_in_client(player_name, player_team, player_ready) -> void:
+func _add_each_player_in_client(player_name, player_team, player_ready, player_steam_name) -> void:
 	print(
 		"\t[%s] Adding %s | Team: %s | Ready: %s" %
 		[str(multiplayer.get_unique_id()), player_name, player_team, player_ready]
 	)
 	$Players.get_node(str(player_name)).TEAM = player_team
-	%TeamDisplay.add_player_label(int(player_name), player_name, player_team, player_ready)
+	%TeamDisplay.add_player_label(int(player_name), player_name, player_team, player_ready, player_steam_name)
 
 
 @rpc("any_peer", "call_local")
@@ -174,6 +178,7 @@ func _on_start_pressed() -> void:
 
 func _on_server_disconnected() -> void:
 	print("Server lost")
+	multiplayer.multiplayer_peer.close()
 	if get_tree():
 		get_tree().change_scene_to_file("res://lobby/starting_menu.tscn")
 

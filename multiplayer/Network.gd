@@ -64,7 +64,18 @@ func get_lobby_members() -> void:
 		var member_steam_id: int = Steam.getLobbyMemberByIndex(LOBBY_ID, member)
 		var member_steam_name: String = Steam.getFriendPersonaName(member_steam_id)
 		
-		LOBBY_MEMBERS.append({"steam_id": member_steam_id, "steam_name": member_steam_name})
+		LOBBY_MEMBERS.append({
+			"multiplayer_id": multiplayer.get_unique_id(),
+			"steam_id": member_steam_id,
+			"steam_name": member_steam_name
+		})
+
+
+func get_steam_name(multiplayer_id: int) -> String:
+	for member in LOBBY_MEMBERS:
+		if member["multiplayer_id"] == multiplayer_id:
+			return member["steam_name"]
+	return ""
 
 
 func send_p2p_packet(this_target: int, packet_data: Dictionary, send_type: int = 0) -> void:

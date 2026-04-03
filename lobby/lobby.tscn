@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://c67bb553mf8lh"]
+[gd_scene format=3 uid="uid://c67bb553mf8lh"]
 
 [ext_resource type="Script" uid="uid://l64y7c1wjkps" path="res://lobby/lobby.gd" id="1_ll2xe"]
 [ext_resource type="Script" uid="uid://bwcqt5iw3tocy" path="res://lobby/team_display.gd" id="2_mnguq"]
 
-[node name="Lobby" type="Control"]
+[node name="Lobby" type="Control" unique_id=827044749]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,7 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ll2xe")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=2070492877]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,33 +24,33 @@ theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 50
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1781101225]
 layout_mode = 2
 
-[node name="LobbyId" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="LobbyId" type="Label" parent="MarginContainer/VBoxContainer" unique_id=614405741]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Session ID:"
 
-[node name="TeamDisplay" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="TeamDisplay" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1918383306]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 script = ExtResource("2_mnguq")
 
-[node name="TeamA" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TeamDisplay"]
+[node name="TeamA" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TeamDisplay" unique_id=1299908873]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamA"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamA" unique_id=1411733400]
 layout_mode = 2
 text = "Team Red"
 
-[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamA"]
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamA" unique_id=1427991958]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TeamAMembers" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamA/Panel"]
+[node name="TeamAMembers" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamA/Panel" unique_id=1695811806]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -59,25 +59,25 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ChangeTeam" type="Button" parent="MarginContainer/VBoxContainer/TeamDisplay"]
+[node name="ChangeTeam" type="Button" parent="MarginContainer/VBoxContainer/TeamDisplay" unique_id=2044628709]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 4
 text = "Change Team"
 
-[node name="TeamB" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TeamDisplay"]
+[node name="TeamB" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TeamDisplay" unique_id=972434469]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamB"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamB" unique_id=1542189251]
 layout_mode = 2
 text = "Team Blue"
 
-[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamB"]
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamB" unique_id=1763502740]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TeamBMembers" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamB/Panel"]
+[node name="TeamBMembers" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamB/Panel" unique_id=413994118]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -86,29 +86,29 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Buttons" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="Buttons" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1880581729]
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="Ready" type="Button" parent="MarginContainer/VBoxContainer/Buttons"]
+[node name="Ready" type="Button" parent="MarginContainer/VBoxContainer/Buttons" unique_id=658967567]
 layout_mode = 2
 text = "Ready"
 
-[node name="Start" type="Button" parent="MarginContainer/VBoxContainer/Buttons"]
+[node name="Start" type="Button" parent="MarginContainer/VBoxContainer/Buttons" unique_id=153019040]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "The host may start the game when everyone is ready"
 disabled = true
 text = "Start"
 
-[node name="Exit" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Exit" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1963657954]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Exit"
 
-[node name="Players" type="Node" parent="."]
+[node name="Players" type="Node" parent="." unique_id=848201236]
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=275088346]
 _spawnable_scenes = PackedStringArray("uid://dnh47e40ql5yd")
 spawn_path = NodePath("../Players")
 spawn_limit = 8
