@@ -178,7 +178,8 @@ func _on_start_pressed() -> void:
 
 func _on_server_disconnected() -> void:
 	print("Server lost")
-	multiplayer.multiplayer_peer.close()
+	if multiplayer:
+		multiplayer.multiplayer_peer.close()
 	if get_tree():
 		get_tree().change_scene_to_file("res://lobby/starting_menu.tscn")
 

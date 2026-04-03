@@ -29,7 +29,7 @@ func create_lobby() -> void:
 
 
 func _on_lobby_created(connect_value: int, this_lobby_id: int) -> void:
-	if connect_value == 1:
+	if connect_value == Steam.Result.RESULT_OK:
 		LOBBY_ID = this_lobby_id
 		
 		Steam.setLobbyJoinable(LOBBY_ID, true)

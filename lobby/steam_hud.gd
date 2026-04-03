@@ -2,6 +2,9 @@ extends Control
 
 
 func _ready() -> void:
+	var init_response: Dictionary = Steam.steamInitEx()
+	if init_response["status"] != 0:
+		self.visible = false
 	Steam.lobby_created.connect(_on_steam_lobby_created)
 	Steam.lobby_match_list.connect(_on_lobby_match_list)
 	multiplayer.connected_to_server.connect(_on_steam_lobby_created)
