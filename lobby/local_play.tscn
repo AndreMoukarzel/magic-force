@@ -8,13 +8,24 @@ size_flags_horizontal = 6
 size_flags_vertical = 4
 script = ExtResource("1_ocnod")
 
-[node name="TestScene" type="Button" parent="." unique_id=1807980717]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=445838246]
+layout_mode = 2
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="TestScene" type="Button" parent="MarginContainer" unique_id=1807980717]
 layout_mode = 2
 text = "Test Scene"
 
 [node name="Host" type="Button" parent="." unique_id=1530725898]
 layout_mode = 2
 text = "Host"
+
+[node name="JoinIP" type="LineEdit" parent="." unique_id=146255123]
+layout_mode = 2
+placeholder_text = "127.0.0.1"
+alignment = 1
+max_length = 15
 
 [node name="JoinMultiplayer" type="Button" parent="." unique_id=1231746939]
 layout_mode = 2
@@ -36,6 +47,6 @@ vertical_alignment = 1
 [node name="MultiplayerLocal" type="Node" parent="." unique_id=818525699]
 script = ExtResource("1_bexgp")
 
-[connection signal="pressed" from="TestScene" to="." method="_on_test_scene_pressed"]
+[connection signal="pressed" from="MarginContainer/TestScene" to="." method="_on_test_scene_pressed"]
 [connection signal="pressed" from="Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="JoinMultiplayer" to="." method="_on_join_multiplayer_pressed"]

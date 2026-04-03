@@ -1,4 +1,4 @@
-extends VBoxContainer
+extends Control
 
 
 func _ready() -> void:
@@ -16,8 +16,16 @@ func _on_host_pressed() -> void:
 
 
 func _on_join_multiplayer_pressed() -> void:
+	var ip_to_join: String = $JoinIP.text
+	if ip_to_join == "":
+		ip_to_join = $JoinIP.placeholder_text
+	
+	if not ip_to_join.is_valid_ip_address():
+		%BaseMenuError.text = "Invalid IP to join!"
+		return
+	
 	%BaseMenuError.text = "Looking for host..."
-	$MultiplayerLocal.join_as_client()
+	$MultiplayerLocal.join_as_client(ip_to_join)
 	%ConnectionTimeout.start()
 
 
