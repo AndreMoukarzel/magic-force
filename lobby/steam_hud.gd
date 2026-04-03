@@ -1,18 +1,23 @@
 extends Control
 
+var IS_JOINING: bool = false
+
 
 func _ready() -> void:
 	var init_response: Dictionary = Steam.steamInitEx()
 	if init_response["status"] != 0:
 		self.visible = false
-	Steam.lobby_created.connect(_on_steam_lobby_created)
+		return
+	Steam.initRelayNetworkAccess()
+	Steam.lobby_created.connect(_on_lobby_created)
 	Steam.lobby_match_list.connect(_on_lobby_match_list)
-	multiplayer.connected_to_server.connect(_on_steam_lobby_created)
-	Network.steam_lobby_joined.connect(_on_steam_lobby_created.bind(1, Network.LOBBY_ID))
+	Steam.lobby_joined.connect(_on_connected_to_server)
 
 
 func _on_host_pressed() -> void:
-	Network.create_lobby()
+	if Network.LOBBY_ID == 0:
+		Network.IS_HOST = true
+		Steam.createLobby(Steam.LOBBY_TYPE_PUBLIC, Network.LOBBY_MEMBERS_MAX)
 
 
 func _on_list_lobbies_pressed() -> void:
@@ -40,12 +45,42 @@ func _on_lobby_match_list(lobbies: Array) -> void:
 			%LoadedLobbies.add_child(lobby_button)
 
 
-func _on_steam_lobby_created(connect_value: int, _this_lobby_id: int) -> void:
-	if connect_value == 1:
+func _on_lobby_created(connect_value: int, lobby_id: int) -> void:
+	if connect_value == Steam.Result.RESULT_OK:
+		Network.LOBBY_ID = lobby_id
+		
+		Steam.setLobbyJoinable(lobby_id, true)
+		Steam.setLobbyData(lobby_id, "name", Global.STEAM_LOBBY_NAME)
+		Steam.setLobbyData(lobby_id, "mode", "Test")
+		
+		var peer: SteamMultiplayerPeer = SteamMultiplayerPeer.new()
+		peer.create_host(Network.LOBBY_MEMBERS_MAX)
+		multiplayer.multiplayer_peer = peer
+		
 		get_tree().change_scene_to_file("res://lobby/lobby.tscn")
+
+
+func _on_connected_to_server(lobby_id: int, _permissions: int, _locked: bool, response: int) -> void:
+	if !IS_JOINING:
+		return
+	if response == Steam.CHAT_ROOM_ENTER_RESPONSE_SUCCESS:
+		print("Connected to Steam server %d!" % lobby_id)
+		Network.LOBBY_ID = lobby_id
+		
+		var peer: SteamMultiplayerPeer = SteamMultiplayerPeer.new()
+		peer.create_client(Steam.getLobbyOwner(lobby_id), Network.LOBBY_MEMBERS_MAX)
+		multiplayer.multiplayer_peer = peer
+		
+		IS_JOINING = false
+		
+		change_to_lobby_scn()
 
 
 func join_lobby(lobby_id: int):
 	print("Joining lobby %d" % lobby_id)
-	Network.join_lobby(lobby_id)
-	
+	IS_JOINING = true
+	Steam.joinLobby(lobby_id)
+
+
+func change_to_lobby_scn() -> void:
+	get_tree().change_scene_to_file("res://lobby/lobby.tscn")

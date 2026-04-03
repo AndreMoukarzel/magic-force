@@ -9,6 +9,8 @@ var STEAM_CONNECTED: bool = false
 
 
 func _init() -> void:
+	Steam.steamInit(STEAM_APP_ID, true)
+	Steam.initRelayNetworkAccess()
 	OS.set_environment("SteamAppID", str(STEAM_APP_ID))
 	OS.set_environment("SteamGameID", str(STEAM_APP_ID))
 
@@ -25,7 +27,3 @@ func _ready() -> void:
 		if not owns_game:
 			print("User does not own game!")
 			get_tree().quit()
-
-
-func _process(_delta: float) -> void:
-	Steam.run_callbacks()

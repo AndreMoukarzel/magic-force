@@ -1,19 +1,15 @@
 extends Node
 
-signal steam_lobby_joined
-
 const PACKET_READ_LIMIT: int = 32
 
 var IS_HOST: bool = false
 var LOBBY_ID: int = 0
 var LOBBY_MEMBERS: Array = []
-var LOBBY_MEMBERS_MAX: int = 10
+var LOBBY_MEMBERS_MAX: int = 12
 var PLAYER_TEAMS = {}
 
 
 func _ready() -> void:
-	Steam.lobby_created.connect(_on_lobby_created)
-	Steam.lobby_joined.connect(_on_lobby_joined)
 	Steam.p2p_session_request.connect(_on_p2p_session_request)
 
 
@@ -22,37 +18,19 @@ func _process(_delta: float) -> void:
 		read_all_p2p_packets()
 
 
-func create_lobby() -> void:
-	if LOBBY_ID == 0:
-		IS_HOST = true
-		Steam.createLobby(Steam.LOBBY_TYPE_PUBLIC, LOBBY_MEMBERS_MAX)
-
-
-func _on_lobby_created(connect_value: int, this_lobby_id: int) -> void:
-	if connect_value == Steam.Result.RESULT_OK:
-		LOBBY_ID = this_lobby_id
-		
-		Steam.setLobbyJoinable(LOBBY_ID, true)
-		Steam.setLobbyData(LOBBY_ID, "name", Global.STEAM_LOBBY_NAME)
-		Steam.setLobbyData(LOBBY_ID, "mode", "Test")
-		
-		print("CREATED LOBBY: ", LOBBY_ID)
-		var _set_relay: bool = Steam.allowP2PPacketRelay(true)
-
-
-func join_lobby(this_lobby_id: int) -> void:
-	Steam.joinLobby(this_lobby_id)
-
-
 func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, response: int) -> void:
 	if response == Steam.CHAT_ROOM_ENTER_RESPONSE_SUCCESS:
 		LOBBY_ID = this_lobby_id
 		
-		get_lobby_members()
-		make_p2p_handshake()
-		
-		if not IS_HOST:
-			emit_signal("steam_lobby_joined")
+		var peer: SteamMultiplayerPeer = SteamMultiplayerPeer.new()
+		peer.create_client(Steam.getLobbyOwner(this_lobby_id))
+		multiplayer.multiplayer_peer = peer
+		#
+		#get_lobby_members()
+		#make_p2p_handshake()
+		#
+		#if not IS_HOST:
+			#emit_signal("steam_lobby_joined")
 
 
 func get_lobby_members() -> void:

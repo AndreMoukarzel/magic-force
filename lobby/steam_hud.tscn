@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://ccqkiop2b4ieq"]
 
 [ext_resource type="Script" uid="uid://buinaap842mrl" path="res://lobby/steam_hud.gd" id="1_vd173"]
-[ext_resource type="Script" uid="uid://c40ofeaqbiuu" path="res://multiplayer/steam_multiplayer.gd" id="2_h55eu"]
 
 [node name="SteamHud" type="VBoxContainer" unique_id=300595889]
 offset_right = 120.0
@@ -38,9 +37,6 @@ layout_mode = 2
 [node name="ListLobbies" type="Button" parent="HBoxContainer" unique_id=1353306642]
 layout_mode = 2
 text = "List Lobbies"
-
-[node name="MultiplayerSteam" type="Node" parent="." unique_id=1907871742]
-script = ExtResource("2_h55eu")
 
 [connection signal="pressed" from="Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="HBoxContainer/ListLobbies" to="." method="_on_list_lobbies_pressed"]
