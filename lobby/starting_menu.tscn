@@ -1,8 +1,7 @@
 [gd_scene format=3 uid="uid://0mk7es65ny1j"]
 
-[ext_resource type="Script" uid="uid://dp6vkq6jtsvky" path="res://lobby/starting_menu.gd" id="1_fhbbh"]
-[ext_resource type="Script" uid="uid://bngi2ui34dc5n" path="res://multiplayer/enet_multiplayer.gd" id="2_78thc"]
-[ext_resource type="Script" uid="uid://c40ofeaqbiuu" path="res://multiplayer/steam_multiplayer.gd" id="3_67a7l"]
+[ext_resource type="PackedScene" uid="uid://bnimf6pdpvl35" path="res://lobby/local_play.tscn" id="2_3dfk4"]
+[ext_resource type="PackedScene" uid="uid://ccqkiop2b4ieq" path="res://lobby/steam_hud.tscn" id="3_3dfk4"]
 
 [node name="StartingMenu" type="Control" unique_id=2012985928]
 layout_mode = 3
@@ -11,102 +10,23 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_fhbbh")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=844510862]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = 14
+anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 0.5
+offset_top = -85.0
+offset_bottom = 85.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BaseMenu" type="VBoxContainer" parent="HBoxContainer" unique_id=2003325103]
+[node name="LocalPlay" parent="HBoxContainer" unique_id=91199678 instance=ExtResource("2_3dfk4")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="SteamHud" parent="HBoxContainer" unique_id=2099867935 instance=ExtResource("3_3dfk4")]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 6
-size_flags_vertical = 4
-
-[node name="TestScene" type="Button" parent="HBoxContainer/BaseMenu" unique_id=165050109]
-layout_mode = 2
-text = "Test Scene"
-
-[node name="Host" type="Button" parent="HBoxContainer/BaseMenu" unique_id=56288377]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Host"
-
-[node name="HostRetryTimer" type="Timer" parent="HBoxContainer/BaseMenu/Host" unique_id=1567584037]
-unique_name_in_owner = true
-wait_time = 3.0
-one_shot = true
-
-[node name="JoinTest" type="Button" parent="HBoxContainer/BaseMenu" unique_id=1710550532]
-layout_mode = 2
-text = "Join"
-
-[node name="ConnectionTimeout" type="Timer" parent="HBoxContainer/BaseMenu/JoinTest" unique_id=2105497281]
-unique_name_in_owner = true
-wait_time = 3.0
-one_shot = true
-
-[node name="BaseMenuError" type="Label" parent="HBoxContainer/BaseMenu" unique_id=1054220658]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0, 0, 1)
-text = "Error Example"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="SteamHud" type="Control" parent="HBoxContainer" unique_id=1565408600]
-layout_mode = 2
-size_flags_horizontal = 2
-size_flags_vertical = 4
-
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/SteamHud" unique_id=868047090]
-layout_mode = 0
-offset_top = -1.0
-offset_right = 40.0
-offset_bottom = 39.0
-
-[node name="HostSteam" type="Button" parent="HBoxContainer/SteamHud/VBoxContainer" unique_id=190505979]
-layout_mode = 2
-text = "Host Steam"
-
-[node name="Panel" type="Panel" parent="HBoxContainer/SteamHud/VBoxContainer" unique_id=814027124]
-custom_minimum_size = Vector2(120, 100)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-
-[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/SteamHud/VBoxContainer/Panel" unique_id=1303031252]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="LoadedLobbies" type="VBoxContainer" parent="HBoxContainer/SteamHud/VBoxContainer/Panel/ScrollContainer" unique_id=2062103908]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/SteamHud/VBoxContainer" unique_id=643538679]
-layout_mode = 2
-
-[node name="ListLobbies" type="Button" parent="HBoxContainer/SteamHud/VBoxContainer/HBoxContainer" unique_id=1232672847]
-layout_mode = 2
-text = "List Lobbies"
-
-[node name="Multiplayer" type="Node" parent="." unique_id=715778733]
-script = ExtResource("2_78thc")
-
-[node name="MultiplayerSteam" type="Node" parent="." unique_id=57409622]
-script = ExtResource("3_67a7l")
-
-[connection signal="pressed" from="HBoxContainer/BaseMenu/TestScene" to="." method="_on_test_scene_pressed"]
-[connection signal="pressed" from="HBoxContainer/BaseMenu/Host" to="." method="_on_host_pressed"]
-[connection signal="timeout" from="HBoxContainer/BaseMenu/Host/HostRetryTimer" to="." method="_on_host_retry_timer_timeout"]
-[connection signal="pressed" from="HBoxContainer/BaseMenu/JoinTest" to="." method="_on_join_test_pressed"]
-[connection signal="timeout" from="HBoxContainer/BaseMenu/JoinTest/ConnectionTimeout" to="." method="_on_connection_timeout_timeout"]
-[connection signal="pressed" from="HBoxContainer/SteamHud/VBoxContainer/HostSteam" to="." method="_on_host_steam_pressed"]
-[connection signal="pressed" from="HBoxContainer/SteamHud/VBoxContainer/HBoxContainer/ListLobbies" to="." method="_on_list_lobbies_pressed"]

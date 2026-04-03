@@ -18,5 +18,5 @@ func become_host():
 func join_as_client(lobby_id: int=1):
 	print("Joining lobby %s" % lobby_id)
 	
-	STEAM_PEER.create_client(0)
+	STEAM_PEER.create_client(lobby_id)
 	multiplayer.multiplayer_peer = STEAM_PEER

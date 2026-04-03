@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://ccqkiop2b4ieq"]
+
+[ext_resource type="Script" uid="uid://buinaap842mrl" path="res://lobby/steam_hud.gd" id="1_vd173"]
+[ext_resource type="Script" uid="uid://c40ofeaqbiuu" path="res://multiplayer/steam_multiplayer.gd" id="2_h55eu"]
+
+[node name="SteamHud" type="VBoxContainer" unique_id=300595889]
+offset_right = 120.0
+offset_bottom = 170.0
+size_flags_horizontal = 2
+size_flags_vertical = 4
+script = ExtResource("1_vd173")
+
+[node name="Host" type="Button" parent="." unique_id=928222978]
+layout_mode = 2
+text = "Host Steam"
+
+[node name="Panel" type="Panel" parent="." unique_id=1374165066]
+custom_minimum_size = Vector2(120, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel" unique_id=1517892223]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LoadedLobbies" type="VBoxContainer" parent="Panel/ScrollContainer" unique_id=1251490348]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1538895427]
+layout_mode = 2
+
+[node name="ListLobbies" type="Button" parent="HBoxContainer" unique_id=1353306642]
+layout_mode = 2
+text = "List Lobbies"
+
+[node name="MultiplayerSteam" type="Node" parent="." unique_id=1907871742]
+script = ExtResource("2_h55eu")
+
+[connection signal="pressed" from="Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="HBoxContainer/ListLobbies" to="." method="_on_list_lobbies_pressed"]

@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://bnimf6pdpvl35"]
+
+[ext_resource type="Script" uid="uid://bngi2ui34dc5n" path="res://multiplayer/enet_multiplayer.gd" id="1_bexgp"]
+[ext_resource type="Script" uid="uid://v7xsxuki0erb" path="res://lobby/local_play.gd" id="1_ocnod"]
+
+[node name="LocalPlay" type="VBoxContainer" unique_id=91199678]
+size_flags_horizontal = 6
+size_flags_vertical = 4
+script = ExtResource("1_ocnod")
+
+[node name="TestScene" type="Button" parent="." unique_id=1807980717]
+layout_mode = 2
+text = "Test Scene"
+
+[node name="Host" type="Button" parent="." unique_id=1530725898]
+layout_mode = 2
+text = "Host"
+
+[node name="JoinMultiplayer" type="Button" parent="." unique_id=1231746939]
+layout_mode = 2
+text = "Join Online"
+
+[node name="ConnectionTimeout" type="Timer" parent="JoinMultiplayer" unique_id=592596892]
+unique_name_in_owner = true
+wait_time = 3.0
+one_shot = true
+
+[node name="BaseMenuError" type="Label" parent="." unique_id=126418095]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+text = "Error Example"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MultiplayerLocal" type="Node" parent="." unique_id=818525699]
+script = ExtResource("1_bexgp")
+
+[connection signal="pressed" from="TestScene" to="." method="_on_test_scene_pressed"]
+[connection signal="pressed" from="Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="JoinMultiplayer" to="." method="_on_join_multiplayer_pressed"]
