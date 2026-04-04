@@ -44,7 +44,7 @@ func _add_lobby_player(id: int) -> void:
 			# For other clients that already exist, also add the newly connected Player
 			if player_id != 1 and player_id != id:
 				_add_each_player_in_client.rpc_id(
-					player_id, player_to_add.name, player_to_add.TEAM, player_to_add.READY, player_steam_name
+					player_id, player_to_add.name, player_to_add.TEAM, player_to_add.READY, Player.STEAM_NAME
 				)
 
 
