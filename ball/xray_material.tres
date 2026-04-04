@@ -1,4 +1,4 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bcin3ddwkaiwl"]
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bcin3ddwkaiwl"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pwunn"]
 no_depth_test = true

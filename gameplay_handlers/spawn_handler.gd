@@ -19,6 +19,8 @@ func _ready() -> void:
 
 func spawn_ball() -> void:
 	var pos: Vector3 = SPAWNERS.get_node("BallSpawn").global_position
+	ACTIVE_BALL.linear_velocity = Vector3(0, 0, 0)
+	ACTIVE_BALL.angular_velocity = Vector3(0, 0, 0)
 	ACTIVE_BALL.set_collision_layer_value(2, true) # Makes the ball interactable
 	ACTIVE_BALL.global_position = pos
 

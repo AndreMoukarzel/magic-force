@@ -77,6 +77,7 @@ float={
 3d_physics/layer_1="Floor"
 3d_physics/layer_2="pushable"
 3d_physics/layer_3="player"
+3d_physics/layer_4="Ball"
 3d_physics/layer_16="CapeBlocks"
 
 [rendering]

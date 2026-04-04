@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://clg21jobsftmx"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://clg21jobsftmx"]
 
 [ext_resource type="Shader" uid="uid://qyyju1ohkit7" path="res://ball/perfect_outline.gdshader" id="1_euukt"]
 

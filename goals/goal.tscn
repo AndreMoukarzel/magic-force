@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cj03l5kvgpert"]
+[gd_scene format=3 uid="uid://cj03l5kvgpert"]
 
 [ext_resource type="Script" uid="uid://bpqmu8gqq8gea" path="res://goals/goal.gd" id="1_gvldf"]
 
@@ -19,41 +19,41 @@ size = Vector2(9, 9)
 subdivide_width = 5
 subdivide_depth = 5
 
-[node name="Goal" type="Node3D"]
+[node name="Goal" type="Node3D" unique_id=505847798]
 script = ExtResource("1_gvldf")
 
-[node name="Area3D" type="Area3D" parent="."]
+[node name="Area3D" type="Area3D" parent="." unique_id=1055833980]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -1.5)
 collision_layer = 0
-collision_mask = 2
+collision_mask = 8
 monitorable = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1990951165]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
 shape = SubResource("BoxShape3D_chmpl")
 
-[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="." unique_id=861177556]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 use_collision = true
 collision_layer = 7
 collision_mask = 6
 
-[node name="Front" type="CSGBox3D" parent="CSGCombiner3D"]
+[node name="Front" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1113100199]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.25)
 material_override = SubResource("StandardMaterial3D_chmpl")
 size = Vector3(9, 6, 0.5)
 
-[node name="Back" type="CSGBox3D" parent="CSGCombiner3D"]
+[node name="Back" type="CSGBox3D" parent="CSGCombiner3D" unique_id=484057856]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.25)
 material_override = SubResource("StandardMaterial3D_gvldf")
 size = Vector3(9, 6.54, 0.5)
 
-[node name="Space" type="CSGBox3D" parent="CSGCombiner3D"]
+[node name="Space" type="CSGBox3D" parent="CSGCombiner3D" unique_id=946701301]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0)
 operation = 2
 size = Vector3(8.4, 5.6, 1)
 
-[node name="Net" type="SoftBody3D" parent="."]
+[node name="Net" type="SoftBody3D" parent="." unique_id=472197314]
 transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 3, -3.5)
 material_override = SubResource("StandardMaterial3D_11adn")
 mesh = SubResource("QuadMesh_gvldf")
