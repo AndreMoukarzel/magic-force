@@ -14,6 +14,7 @@ var SPAWN_COOLDOWN: float = 1.5
 func _ready() -> void:
 	spawn_ball()
 	POINT_HANDLER.goal_scored.connect(goal_was_scored)
+	POINT_HANDLER.reactivate_goals()
 	spawn_players()
 
 

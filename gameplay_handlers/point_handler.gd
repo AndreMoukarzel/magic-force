@@ -22,3 +22,9 @@ func goal_was_scored(team: String) -> void:
 		SCORE_B += 1
 		$HBoxContainer/ScoreB.text = str(SCORE_B)
 	emit_signal("goal_scored")
+
+
+func reactivate_goals() -> void:
+	## A goal is disabled after scoring. This reactivates them
+	GOAL_A.activate()
+	GOAL_B.activate()

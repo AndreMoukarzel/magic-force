@@ -10,3 +10,12 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 	
 	if dot_val > 0: # Ball entered from the front
 		emit_signal("goal_scored")
+		deactivate()
+
+
+func deactivate() -> void:
+	$Area3D.monitoring = false
+
+
+func activate() -> void:
+	$Area3D.monitoring = true
