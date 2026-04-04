@@ -5,7 +5,7 @@ var IS_JOINING: bool = false
 
 func _ready() -> void:
 	var init_response: Dictionary = Steam.steamInitEx()
-	if init_response["status"] != 0:
+	if init_response["status"] != Steam.STEAM_API_INIT_RESULT_OK:
 		self.visible = false
 		return
 	Steam.initRelayNetworkAccess()
