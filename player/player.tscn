@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://bx8b8yvq5h1jd"]
+[gd_scene format=3 uid="uid://bx8b8yvq5h1jd"]
 
 [ext_resource type="Script" uid="uid://b3wb426fydlox" path="res://player/player_controller.gd" id="1_qjkh3"]
 [ext_resource type="PackedScene" uid="uid://bbhhjkh6mw2xv" path="res://base_mage.tscn" id="2_qjkh3"]
 [ext_resource type="Script" uid="uid://c4cdd4kueepxk" path="res://spells/float.gd" id="3_g6k8r"]
+[ext_resource type="Script" uid="uid://bq54vimdbhgli" path="res://spells/jump.gd" id="4_boad6"]
 [ext_resource type="PackedScene" uid="uid://7w2a5k2w72i7" path="res://spells/force_grab.tscn" id="4_g6k8r"]
 [ext_resource type="Script" uid="uid://bp7a0kn6v5jk4" path="res://player/simple_camera.gd" id="4_yw30f"]
 [ext_resource type="PackedScene" uid="uid://bv2hfx1pmunvp" path="res://spells/force_push.tscn" id="5_g6k8r"]
@@ -32,52 +33,52 @@ albedo_color = Color(0.392157, 1, 1, 1)
 radius = 0.35
 height = 0.675
 
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D" unique_id=1131201457]
 collision_layer = 6
 collision_mask = 3
 script = ExtResource("1_qjkh3")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1557392162]
 shape = SubResource("CapsuleShape3D_rkbax")
 
-[node name="Mage" type="Node3D" parent="."]
+[node name="Mage" type="Node3D" parent="." unique_id=779672179]
 
-[node name="BaseMage" parent="Mage" instance=ExtResource("2_qjkh3")]
+[node name="BaseMage" parent="Mage" unique_id=212133338 instance=ExtResource("2_qjkh3")]
 
-[node name="Float" type="Node" parent="."]
+[node name="Float" type="Node" parent="." unique_id=1385153191]
 script = ExtResource("3_g6k8r")
 
-[node name="ForceGrab" parent="." node_paths=PackedStringArray("HAND") instance=ExtResource("4_g6k8r")]
-HAND = NodePath("../HandSpring/Hand")
-
-[node name="ForcePush" parent="." node_paths=PackedStringArray("PLAYER", "CAM") instance=ExtResource("5_g6k8r")]
+[node name="Jump" type="Node" parent="." unique_id=355986633 node_paths=PackedStringArray("PLAYER", "CAM")]
+script = ExtResource("4_boad6")
 PLAYER = NodePath("..")
 CAM = NodePath("../CameraSpring/Camera3D")
 
-[node name="CameraSpring" type="SpringArm3D" parent="."]
+[node name="ForceGrab" parent="." unique_id=251236768 node_paths=PackedStringArray("HAND") instance=ExtResource("4_g6k8r")]
+HAND = NodePath("../HandSpring/Hand")
+
+[node name="ForcePush" parent="." unique_id=1400789119 node_paths=PackedStringArray("PLAYER", "CAM") instance=ExtResource("5_g6k8r")]
+PLAYER = NodePath("..")
+CAM = NodePath("../CameraSpring/Camera3D")
+
+[node name="CameraSpring" type="SpringArm3D" parent="." unique_id=1227559401]
 transform = Transform3D(1, 0, 0, 0, 0.9848077, 0.17364818, 0, -0.17364818, 0.9848077, 0, 3, 0)
 shape = SubResource("SphereShape3D_qjkh3")
 spring_length = 6.0
 script = ExtResource("4_yw30f")
-MIN_V_ANGLE = -1.4922565104551517
-MAX_V_ANGLE = 1.4922565104551517
+MIN_V_ANGLE = -1.4922565104551515
+MAX_V_ANGLE = 1.4922565104551515
 
-[node name="Camera3D" type="Camera3D" parent="CameraSpring"]
+[node name="Camera3D" type="Camera3D" parent="CameraSpring" unique_id=648918122]
 current = true
 
-[node name="RayCast3D" type="RayCast3D" parent="CameraSpring/Camera3D"]
-target_position = Vector3(0, 0, -12)
-collision_mask = 2
-debug_shape_custom_color = Color(1, 0, 0, 1)
-
-[node name="HandSpring" type="SpringArm3D" parent="."]
+[node name="HandSpring" type="SpringArm3D" parent="." unique_id=1320492819]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2, 0)
 shape = SubResource("SphereShape3D_g6k8r")
 spring_length = 4.0
 
-[node name="Hand" type="Node3D" parent="HandSpring"]
+[node name="Hand" type="Node3D" parent="HandSpring" unique_id=734748686]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="HandSpring/Hand"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="HandSpring/Hand" unique_id=112600404]
 material_override = SubResource("StandardMaterial3D_boad6")
 material_overlay = SubResource("StandardMaterial3D_rgyib")
 mesh = SubResource("SphereMesh_hg6s5")

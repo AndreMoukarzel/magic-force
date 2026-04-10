@@ -5,12 +5,10 @@ var DIR: Vector3 = Vector3()
 var SENS: float = 0.12
 @onready var CAM :SpringArm3D = $SpringArm3D
 @onready var CHAR: CharacterBody3D = $".."
-@onready var RAYCAST: RayCast3D = $SpringArm3D/Camera3D/RayCast3D
 @onready var HAND: Node3D = $SpringArm3D/Camera3D/Hand
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	RAYCAST.add_exception(CHAR)
 
 func _process(_delta):
 	CAM.rotation_degrees.x = DIR.x

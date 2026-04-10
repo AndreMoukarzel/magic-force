@@ -15,7 +15,9 @@ extends CharacterBody3D
 @onready var CAM: Camera3D = $CameraSpring/Camera3D
 @onready var CHAR: Node3D = $Mage
 @onready var HAND_SPRING: SpringArm3D = $HandSpring
+
 var KNOCKBACK: Vector3 = Vector3.ZERO
+var MOVE_DIR: Vector2 = Vector2.ZERO
 
 
 func apply_impulse(force: Vector3) -> void:
@@ -27,8 +29,8 @@ func apply_knockback(force: Vector3) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	var input_dir = Input.get_vector("left", "right", "forward", "back")
-	var direction: Vector3 = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	MOVE_DIR = Input.get_vector("left", "right", "forward", "back")
+	var direction: Vector3 = (transform.basis * Vector3(MOVE_DIR.x, 0, MOVE_DIR.y)).normalized()
 	var cam_rot: Vector3 = CAM.global_rotation
 	var inv_rot: Vector3 = inverted_rotation(cam_rot)
 	
@@ -93,7 +95,11 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("secondary_action"):
 		$ForcePush.area_push()
 	
-	if event.is_action_pressed("float"):
-		$Float.activate()
-	elif event.is_action_released("float"):
-		$Float.deactivate()
+	if event.is_action_pressed("movement_action"):
+		if is_on_floor():
+			$Jump.jump(MOVE_DIR)
+		else:
+			$Float.activate()
+	elif event.is_action_released("movement_action"):
+		if not is_on_floor():
+			$Float.deactivate()
