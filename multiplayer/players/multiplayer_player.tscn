@@ -4,23 +4,23 @@
 [ext_resource type="Script" uid="uid://cjcx1v2edipow" path="res://multiplayer/players/multiplayer_controller.gd" id="2_6b4kk"]
 [ext_resource type="Script" uid="uid://d35fknec1dwo4" path="res://multiplayer/players/camera_spring_multiplayer.gd" id="3_clgf8"]
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_5aan2"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_clgf8"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
 properties/1/path = NodePath("Label3D:text")
 properties/1/spawn = true
 properties/1/replication_mode = 2
-properties/2/path = NodePath("Mage:rotation")
+properties/2/path = NodePath(".:rotation")
 properties/2/spawn = true
 properties/2/replication_mode = 1
-properties/3/path = NodePath("ForceGrab:rotation")
+properties/3/path = NodePath("Mage:rotation")
 properties/3/spawn = true
 properties/3/replication_mode = 1
-properties/4/path = NodePath("ForcePush:rotation")
+properties/4/path = NodePath("ProjectileGrab:rotation")
 properties/4/spawn = true
 properties/4/replication_mode = 1
-properties/5/path = NodePath("CameraSpring:position")
+properties/5/path = NodePath("ForcePush:rotation")
 properties/5/spawn = true
 properties/5/replication_mode = 1
 properties/6/path = NodePath("CameraSpring:rotation")
@@ -37,14 +37,14 @@ PLAYER_ID = 1
 [node name="CameraSpring" parent="." index="6" unique_id=1227559401]
 script = ExtResource("3_clgf8")
 
-[node name="Label3D" type="Label3D" parent="." index="7" unique_id=432943743]
+[node name="HandSpring" parent="." index="7" unique_id=1320492819]
+visible = false
+
+[node name="Label3D" type="Label3D" parent="." index="8" unique_id=432943743]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.347304, 0)
 billboard = 1
 text = "Example Text"
 font_size = 52
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="8" unique_id=161656857]
-replication_config = SubResource("SceneReplicationConfig_5aan2")
-
-[node name="HandSpring" parent="." index="9" unique_id=1320492819]
-visible = false
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="9" unique_id=909334934]
+replication_config = SubResource("SceneReplicationConfig_clgf8")

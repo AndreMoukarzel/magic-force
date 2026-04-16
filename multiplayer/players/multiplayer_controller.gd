@@ -26,8 +26,6 @@ func _input(event: InputEvent) -> void:
 	if is_multiplayer_authority():
 		if event.is_action_pressed("primary_action"):
 			force_grab_multiplayer.rpc()
-		elif event.is_action_released("primary_action"):
-			force_release_multiplayer.rpc()
 		
 		if event.is_action_pressed("secondary_action"):
 			#$ForcePush.area_push()
@@ -45,12 +43,7 @@ func _input(event: InputEvent) -> void:
 
 @rpc("call_local")
 func force_grab_multiplayer() -> void:
-	$ForceGrab.grab()
-
-
-@rpc("call_local")
-func force_release_multiplayer() -> void:
-	$ForceGrab.release()
+	$ProjectileGrab.grab()
 
 
 @rpc("call_local")
