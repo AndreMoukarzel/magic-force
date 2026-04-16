@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://pnabqdq6vid7"]
+
+[ext_resource type="Script" uid="uid://bmpo2dly27ox5" path="res://spells/grab/projectile_grab.gd" id="1_i47cf"]
+[ext_resource type="PackedScene" uid="uid://boyu38edxvh7h" path="res://spells/grab/GrabbingHand.glb" id="1_ogxal"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_i47cf"]
+
+[node name="ProjectileGrab" type="Node3D" unique_id=619064259]
+script = ExtResource("1_i47cf")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="." unique_id=1188899338]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.5, -0.5)
+shape = SubResource("SphereShape3D_i47cf")
+
+[node name="GrabbingHand" parent="SpringArm3D" unique_id=1075162967 instance=ExtResource("1_ogxal")]
+transform = Transform3D(-0.405, 0, 6.11533e-08, 0, 0.405, 0, -6.11533e-08, 0, -0.405, 0, 0, 0)
+
+[node name="Cooldown" type="Timer" parent="." unique_id=1745650259]
+wait_time = 1.2
+one_shot = true
+
+[connection signal="timeout" from="Cooldown" to="." method="_on_cooldown_timeout"]

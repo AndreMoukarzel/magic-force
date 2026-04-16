@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://cuv7votg32piy"]
+
+[ext_resource type="PackedScene" uid="uid://boyu38edxvh7h" path="res://spells/grab/GrabbingHand.glb" id="1_rdevt"]
+[ext_resource type="Script" uid="uid://b8ph8repxpafy" path="res://spells/grab/hand_projectile.gd" id="1_twi8u"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_twi8u"]
+size = Vector3(3.81, 4.735, 1)
+
+[node name="HandProjectile" type="Area3D" unique_id=872276772]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("1_twi8u")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1147794612]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = SubResource("BoxShape3D_twi8u")
+debug_color = Color(0.9031998, 0.00015093804, 0.75554323, 0.41960785)
+
+[node name="GrabbingHand" parent="." unique_id=1075162967 instance=ExtResource("1_rdevt")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -0.365, -1.765, 0)
+
+[node name="Timer" type="Timer" parent="." unique_id=821415857]
+wait_time = 0.8
+one_shot = true
+autostart = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
