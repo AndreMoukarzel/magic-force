@@ -1,5 +1,19 @@
 [gd_scene format=4 uid="uid://2n83ncdt0vl0"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i1g2w"]
+transparency = 2
+alpha_scissor_threshold = 0.465
+alpha_antialiasing_mode = 0
+blend_mode = 4
+shading_mode = 2
+specular_mode = 2
+disable_ambient_light = true
+albedo_color = Color(0.5411765, 0.40392157, 1, 1)
+emission_enabled = true
+emission = Color(0.054241963, 0.29207325, 1, 1)
+emission_energy_multiplier = 1.4
+disable_receive_shadows = true
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5r5a1"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_inbyd"]
@@ -38,5 +52,7 @@ shadow_mesh = SubResource("ArrayMesh_inbyd")
 
 [node name="Fist" type="MeshInstance3D" parent="." unique_id=450465250]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.4792674, 0)
+material_override = SubResource("StandardMaterial3D_i1g2w")
+cast_shadow = 0
 mesh = SubResource("ArrayMesh_exnky")
 skeleton = NodePath("")

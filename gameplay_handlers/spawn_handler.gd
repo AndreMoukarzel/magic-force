@@ -71,6 +71,7 @@ func _get_closest_available_spawn(pos: Vector3, team: String) -> Marker3D:
 func _on_respawn_timer_timeout() -> void:
 	spawn_ball()
 	spawn_players()
+	POINT_HANDLER.reactivate_goals()
 
 
 func _release_spawn(spawn: Marker3D, team: String) -> void:
