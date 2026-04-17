@@ -34,6 +34,9 @@ properties/7/replication_mode = 1
 script = ExtResource("2_6b4kk")
 PLAYER_ID = 1
 
+[node name="ProjectileGrab" parent="." index="4" unique_id=619064259 node_paths=PackedStringArray("HAND")]
+HAND = NodePath("../../../../../../../../../../../../../../../../../@SceneImportSettingsDialog@2714/@VBoxContainer@2307/@HSplitContainer@2319/@HSplitContainer@2324/@VBoxContainer@2364/@SubViewportContainer@2365/@SubViewport@2366/GrabbingHand")
+
 [node name="CameraSpring" parent="." index="6" unique_id=1227559401]
 script = ExtResource("3_clgf8")
 

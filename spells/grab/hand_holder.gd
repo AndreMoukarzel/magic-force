@@ -7,6 +7,10 @@ var TARGET: Node3D = null
 var _prev_pos: Vector3
 
 
+func _ready() -> void:
+	$GrabbingHand/AnimationPlayer.play("hold")
+
+
 func _physics_process(delta: float) -> void:
 	if TARGET:
 		if not _prev_pos:

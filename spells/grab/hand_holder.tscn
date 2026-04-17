@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://sfuv6qw0dur3"]
 
-[ext_resource type="PackedScene" uid="uid://boyu38edxvh7h" path="res://spells/grab/GrabbingHand.glb" id="1_ljney"]
 [ext_resource type="Script" uid="uid://c1ub8qa8jpkn2" path="res://spells/grab/hand_holder.gd" id="1_v83qe"]
+[ext_resource type="PackedScene" uid="uid://c8svwkke0sc3s" path="res://spells/grab/grabbing_hand.tscn" id="2_v83qe"]
 
 [node name="HandHolder" type="Node3D" unique_id=629150667]
 script = ExtResource("1_v83qe")
 
-[node name="GrabbingHand" parent="." unique_id=1075162967 instance=ExtResource("1_ljney")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.075, 0)
+[node name="GrabbingHand" parent="." unique_id=1521011657 instance=ExtResource("2_v83qe")]
+transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, 0, -3, -0.5)
