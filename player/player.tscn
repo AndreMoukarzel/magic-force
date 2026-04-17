@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://c4cdd4kueepxk" path="res://spells/float.gd" id="3_g6k8r"]
 [ext_resource type="Script" uid="uid://bq54vimdbhgli" path="res://spells/jump.gd" id="4_boad6"]
 [ext_resource type="Script" uid="uid://bp7a0kn6v5jk4" path="res://player/simple_camera.gd" id="4_yw30f"]
-[ext_resource type="PackedScene" uid="uid://bv2hfx1pmunvp" path="res://spells/force_push.tscn" id="5_g6k8r"]
+[ext_resource type="PackedScene" uid="uid://eqcasgxqrfho" path="res://spells/push/fist_push.tscn" id="7_rgyib"]
 [ext_resource type="PackedScene" uid="uid://pnabqdq6vid7" path="res://spells/grab/projectile_grab.tscn" id="8_rgyib"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rkbax"]
@@ -56,9 +56,8 @@ CAM = NodePath("../CameraSpring/Camera3D")
 [node name="ProjectileGrab" parent="." unique_id=619064259 node_paths=PackedStringArray("HAND") instance=ExtResource("8_rgyib")]
 HAND = NodePath("../HandSpring/Hand")
 
-[node name="ForcePush" parent="." unique_id=1400789119 node_paths=PackedStringArray("PLAYER", "CAM") instance=ExtResource("5_g6k8r")]
+[node name="FistPush" parent="." unique_id=364835585 node_paths=PackedStringArray("PLAYER") instance=ExtResource("7_rgyib")]
 PLAYER = NodePath("..")
-CAM = NodePath("../CameraSpring/Camera3D")
 
 [node name="CameraSpring" type="SpringArm3D" parent="." unique_id=1227559401]
 transform = Transform3D(1, 0, 0, 0, 0.9848077, 0.17364818, 0, -0.17364818, 0.9848077, 0, 3, 0)

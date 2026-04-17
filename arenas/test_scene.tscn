@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dlf2cy08l0smq"]
+[gd_scene format=3 uid="uid://dlf2cy08l0smq"]
 
 [ext_resource type="Texture2D" uid="uid://lgsidpu2qvf0" path="res://texture_04.png" id="1_ia1lp"]
 [ext_resource type="PackedScene" uid="uid://qmir5vg1sis3" path="res://gameplay_handlers/game_handler.tscn" id="1_vr1i5"]
@@ -18,16 +18,16 @@ uv1_triplanar = true
 albedo_texture = ExtResource("1_ia1lp")
 uv1_triplanar = true
 
-[node name="TestScene" type="Node3D"]
+[node name="TestScene" type="Node3D" unique_id=455164184]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2012922639]
 environment = SubResource("Environment_coq8p")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment" unique_id=1152604189]
 transform = Transform3D(1, 0, 0, 0, 0.278689, 0.960381, 0, -0.960381, 0.278689, 0, 14.3357, 0)
 shadow_enabled = true
 
-[node name="GameHandler" parent="." instance=ExtResource("1_vr1i5")]
+[node name="GameHandler" parent="." unique_id=1697309742 instance=ExtResource("1_vr1i5")]
 
 [node name="SpawnHandler" parent="GameHandler" index="0" node_paths=PackedStringArray("SPAWNERS", "PLAYERS")]
 SPAWNERS = NodePath("../../SpawnPoints")
@@ -37,87 +37,87 @@ PLAYERS = NodePath("../../Players")
 GOAL_A = NodePath("../../GoalA")
 GOAL_B = NodePath("../../GoalB")
 
-[node name="Walls" type="CSGCombiner3D" parent="."]
+[node name="Walls" type="CSGCombiner3D" parent="." unique_id=753072609]
 material_override = SubResource("StandardMaterial3D_buypi")
 use_collision = true
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
-[node name="Fill" type="CSGBox3D" parent="Walls"]
+[node name="Fill" type="CSGBox3D" parent="Walls" unique_id=1927977458]
 size = Vector3(80, 60, 110)
 
-[node name="Space" type="CSGBox3D" parent="Walls"]
+[node name="Space" type="CSGBox3D" parent="Walls" unique_id=305088825]
 material_override = SubResource("StandardMaterial3D_buypi")
 operation = 2
 size = Vector3(65, 98, 105)
 
-[node name="Floor" type="CSGBox3D" parent="."]
+[node name="Floor" type="CSGBox3D" parent="." unique_id=481714533]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 material_override = SubResource("StandardMaterial3D_sasra")
 use_collision = true
 size = Vector3(65, 1, 105)
 metadata/_edit_lock_ = true
 
-[node name="GoalA" parent="." instance=ExtResource("4_coq8p")]
+[node name="GoalA" parent="." unique_id=2123749448 instance=ExtResource("4_coq8p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -45)
 metadata/_edit_lock_ = true
 
-[node name="GoalB" parent="." instance=ExtResource("4_coq8p")]
+[node name="GoalB" parent="." unique_id=2049963090 instance=ExtResource("4_coq8p")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 45)
 metadata/_edit_lock_ = true
 
-[node name="SpawnPoints" type="Node3D" parent="."]
+[node name="SpawnPoints" type="Node3D" parent="." unique_id=1915680425]
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
-[node name="BallSpawn" type="Marker3D" parent="SpawnPoints"]
+[node name="BallSpawn" type="Marker3D" parent="SpawnPoints" unique_id=864193743]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.313, 0)
 metadata/_edit_lock_ = true
 
-[node name="SpawnsA" type="Node3D" parent="SpawnPoints"]
+[node name="SpawnsA" type="Node3D" parent="SpawnPoints" unique_id=239789778]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
-[node name="Spawn1" type="Marker3D" parent="SpawnPoints/SpawnsA"]
+[node name="Spawn1" type="Marker3D" parent="SpawnPoints/SpawnsA" unique_id=907398277]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 40)
 
-[node name="Spawn2" type="Marker3D" parent="SpawnPoints/SpawnsA"]
+[node name="Spawn2" type="Marker3D" parent="SpawnPoints/SpawnsA" unique_id=1468093049]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 25)
 
-[node name="Spawn3" type="Marker3D" parent="SpawnPoints/SpawnsA"]
+[node name="Spawn3" type="Marker3D" parent="SpawnPoints/SpawnsA" unique_id=1688432554]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 25)
 
-[node name="Spawn4" type="Marker3D" parent="SpawnPoints/SpawnsA"]
+[node name="Spawn4" type="Marker3D" parent="SpawnPoints/SpawnsA" unique_id=2015254490]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12)
 
-[node name="SpawnsB" type="Node3D" parent="SpawnPoints"]
+[node name="SpawnsB" type="Node3D" parent="SpawnPoints" unique_id=1741851354]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1, 0)
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
-[node name="Spawn1" type="Marker3D" parent="SpawnPoints/SpawnsB"]
+[node name="Spawn1" type="Marker3D" parent="SpawnPoints/SpawnsB" unique_id=1872298996]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 40)
 
-[node name="Spawn2" type="Marker3D" parent="SpawnPoints/SpawnsB"]
+[node name="Spawn2" type="Marker3D" parent="SpawnPoints/SpawnsB" unique_id=1142301202]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 25)
 
-[node name="Spawn3" type="Marker3D" parent="SpawnPoints/SpawnsB"]
+[node name="Spawn3" type="Marker3D" parent="SpawnPoints/SpawnsB" unique_id=1588724347]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 25)
 
-[node name="Spawn4" type="Marker3D" parent="SpawnPoints/SpawnsB"]
+[node name="Spawn4" type="Marker3D" parent="SpawnPoints/SpawnsB" unique_id=734003847]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12)
 
-[node name="Players" type="Node" parent="."]
+[node name="Players" type="Node" parent="." unique_id=1048540685]
 
-[node name="Player" parent="Players" instance=ExtResource("3_sasra")]
+[node name="Player" parent="Players" unique_id=970914139 instance=ExtResource("3_sasra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.16494, 7.29029)
 
-[node name="Pusher" parent="Players" instance=ExtResource("8_njel3")]
+[node name="Pusher" parent="Players" unique_id=1131929673 instance=ExtResource("8_njel3")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -11.5052, 1.97, -22.0322)
 TEAM = "B"
 
-[node name="Grabber" parent="Players" instance=ExtResource("9_njel3")]
+[node name="Grabber" parent="Players" unique_id=85401171 instance=ExtResource("9_njel3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0941, 1.97, -23.9635)
 TEAM = "B"
 

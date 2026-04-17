@@ -27,7 +27,9 @@ Network="*res://multiplayer/Network.gd"
 [file_customization]
 
 folder_colors={
-"res://addons/": "gray"
+"res://addons/": "gray",
+"res://spells/grab/": "yellow",
+"res://spells/push/": "red"
 }
 
 [global_group]

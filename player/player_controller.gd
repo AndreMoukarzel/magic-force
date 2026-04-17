@@ -37,8 +37,8 @@ func _physics_process(delta: float) -> void:
 	direction = direction.rotated(Vector3.UP, cam_rot.y)
 	CHAR.global_rotation.y = cam_rot.y
 	HAND_SPRING.rotation = inv_rot
-	$ForcePush.rotation = cam_rot
 	$ProjectileGrab.rotation = cam_rot
+	$FistPush.rotation = cam_rot
 
 	if is_on_floor():
 		velocity.x = move_toward(velocity.x, direction.x * SPEED, ACC * delta)
@@ -91,7 +91,9 @@ func _input(event: InputEvent) -> void:
 		$ProjectileGrab.grab()
 	
 	if event.is_action_pressed("secondary_action"):
-		$ForcePush.area_push()
+		$FistPush.activate()
+	elif event.is_action_released("secondary_action"):
+		$FistPush.release()
 	
 	if event.is_action_pressed("movement_action"):
 		if is_on_floor():

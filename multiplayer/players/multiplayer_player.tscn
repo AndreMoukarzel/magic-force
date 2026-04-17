@@ -8,19 +8,19 @@
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
-properties/1/path = NodePath("Label3D:text")
+properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
-properties/1/replication_mode = 2
-properties/2/path = NodePath(".:rotation")
+properties/1/replication_mode = 1
+properties/2/path = NodePath("Label3D:text")
 properties/2/spawn = true
-properties/2/replication_mode = 1
+properties/2/replication_mode = 2
 properties/3/path = NodePath("Mage:rotation")
 properties/3/spawn = true
 properties/3/replication_mode = 1
 properties/4/path = NodePath("ProjectileGrab:rotation")
 properties/4/spawn = true
 properties/4/replication_mode = 1
-properties/5/path = NodePath("ForcePush:rotation")
+properties/5/path = NodePath("FistPush:rotation")
 properties/5/spawn = true
 properties/5/replication_mode = 1
 properties/6/path = NodePath("CameraSpring:rotation")
@@ -34,9 +34,6 @@ properties/7/replication_mode = 1
 script = ExtResource("2_6b4kk")
 PLAYER_ID = 1
 
-[node name="ProjectileGrab" parent="." index="4" unique_id=619064259 node_paths=PackedStringArray("HAND")]
-HAND = NodePath("../../../../../../../../../../../../../../../../../@SceneImportSettingsDialog@2714/@VBoxContainer@2307/@HSplitContainer@2319/@HSplitContainer@2324/@VBoxContainer@2364/@SubViewportContainer@2365/@SubViewport@2366/GrabbingHand")
-
 [node name="CameraSpring" parent="." index="6" unique_id=1227559401]
 script = ExtResource("3_clgf8")
 
@@ -49,5 +46,5 @@ billboard = 1
 text = "Example Text"
 font_size = 52
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="9" unique_id=909334934]
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="9" unique_id=586341697]
 replication_config = SubResource("SceneReplicationConfig_clgf8")

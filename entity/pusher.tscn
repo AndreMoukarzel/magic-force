@@ -1,8 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://yyhv57x8ch56"]
+[gd_scene format=3 uid="uid://yyhv57x8ch56"]
 
 [ext_resource type="PackedScene" uid="uid://bbhhjkh6mw2xv" path="res://base_mage.tscn" id="1_4tdr0"]
 [ext_resource type="Script" uid="uid://brwn87v41ipic" path="res://entity/pusher.gd" id="1_5hkf7"]
-[ext_resource type="PackedScene" uid="uid://bv2hfx1pmunvp" path="res://spells/force_push.tscn" id="3_gyt0c"]
+[ext_resource type="PackedScene" uid="uid://bv2hfx1pmunvp" path="res://spells/push/force_push.tscn" id="3_gyt0c"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5hkf7"]
 

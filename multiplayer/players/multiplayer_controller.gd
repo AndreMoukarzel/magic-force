@@ -28,8 +28,9 @@ func _input(event: InputEvent) -> void:
 			force_grab_multiplayer.rpc()
 		
 		if event.is_action_pressed("secondary_action"):
-			#$ForcePush.area_push()
-			force_push_multiplayer.rpc()
+			activate_fist_multiplayer.rpc()
+		elif event.is_action_released("secondary_action"):
+			release_fist_multiplayer.rpc()
 		
 		if event.is_action_pressed("movement_action"):
 			if is_on_floor():
@@ -47,8 +48,13 @@ func force_grab_multiplayer() -> void:
 
 
 @rpc("call_local")
-func force_push_multiplayer() -> void:
-	$ForcePush.area_push()
+func activate_fist_multiplayer() -> void:
+	$FistPush.activate()
+
+
+@rpc("call_local")
+func release_fist_multiplayer() -> void:
+	$FistPush.release()
 
 
 @rpc("call_local")
