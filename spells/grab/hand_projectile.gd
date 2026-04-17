@@ -8,6 +8,10 @@ signal timeout
 var INHERITED_VELOCITY: Vector3 = Vector3.ZERO
 
 
+func _ready() -> void:
+	$GrabbingHand/AnimationPlayer.play("grab")
+
+
 func _physics_process(delta: float) -> void:
 	var direction = -transform.basis.z
 	var base_velocity = direction * SPEED
