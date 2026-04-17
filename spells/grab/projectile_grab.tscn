@@ -3,17 +3,11 @@
 [ext_resource type="Script" uid="uid://bmpo2dly27ox5" path="res://spells/grab/projectile_grab.gd" id="1_i47cf"]
 [ext_resource type="PackedScene" uid="uid://c8svwkke0sc3s" path="res://spells/grab/grabbing_hand.tscn" id="2_i47cf"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_i47cf"]
-
 [node name="ProjectileGrab" type="Node3D" unique_id=619064259]
 script = ExtResource("1_i47cf")
 
-[node name="SpringArm3D" type="SpringArm3D" parent="." unique_id=1188899338]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.5, -0.5)
-shape = SubResource("SphereShape3D_i47cf")
-
-[node name="GrabbingHand" parent="SpringArm3D" unique_id=1521011657 instance=ExtResource("2_i47cf")]
-transform = Transform3D(-0.4, 0, -3.4969112e-08, 0, 0.4, 0, 3.4969112e-08, 0, -0.4, 0, 0, 0)
+[node name="GrabbingHand" parent="." unique_id=1521011657 instance=ExtResource("2_i47cf")]
+transform = Transform3D(-0.4, 0, -3.4969112e-08, 0, 0.4, 0, 3.4969112e-08, 0, -0.4, -3, 1, 1.6)
 
 [node name="Cooldown" type="Timer" parent="." unique_id=1745650259]
 wait_time = 1.2

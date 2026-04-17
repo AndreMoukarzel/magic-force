@@ -28,6 +28,7 @@ Network="*res://multiplayer/Network.gd"
 
 folder_colors={
 "res://addons/": "gray",
+"res://arenas/zoos/": "blue",
 "res://spells/grab/": "yellow",
 "res://spells/push/": "red"
 }

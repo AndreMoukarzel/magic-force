@@ -1,0 +1,158 @@
+[gd_scene format=3 uid="uid://b36gtywvck18y"]
+
+[ext_resource type="Script" uid="uid://hrshhttjx7at" path="res://arenas/zoos/grab_zoo.gd" id="1_c53w5"]
+[ext_resource type="PackedScene" uid="uid://bx8b8yvq5h1jd" path="res://player/player.tscn" id="1_j8jxi"]
+[ext_resource type="PackedScene" uid="uid://bbhhjkh6mw2xv" path="res://base_mage.tscn" id="2_uc3ch"]
+[ext_resource type="PackedScene" uid="uid://pnabqdq6vid7" path="res://spells/grab/projectile_grab.tscn" id="3_gcqjj"]
+[ext_resource type="PackedScene" uid="uid://cbq8n0y1yl5u0" path="res://ball/ball.tscn" id="4_gcqjj"]
+
+[sub_resource type="Environment" id="Environment_gvo0v"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gvo0v"]
+load_path = "res://.godot/imported/texture_04.png-34578e7776d6f085b4b8d987d19bb039.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j8jxi"]
+albedo_texture = SubResource("CompressedTexture2D_gvo0v")
+uv1_scale = Vector3(0.2, 0.2, 0.2)
+uv1_triplanar = true
+
+[node name="GrabZoo" type="Node3D" unique_id=807756647]
+script = ExtResource("1_c53w5")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=967697422]
+environment = SubResource("Environment_gvo0v")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment" unique_id=300844521]
+transform = Transform3D(1, 0, 0, 0, 0.278689, 0.960381, 0, -0.960381, 0.278689, 0, 14.3357, 0)
+shadow_enabled = true
+
+[node name="Player" parent="." unique_id=1131201457 instance=ExtResource("1_j8jxi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7621632, 18.00018)
+
+[node name="Distances" type="Node3D" parent="." unique_id=285191714]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.424288, 0, -20.21764)
+
+[node name="Mage1" type="Node3D" parent="Distances" unique_id=1594244266]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 6.0194206, 2, 0.21763992)
+
+[node name="BaseMage" parent="Distances/Mage1" unique_id=1144612537 instance=ExtResource("2_uc3ch")]
+
+[node name="ProjectileGrab" parent="Distances/Mage1" unique_id=619064259 node_paths=PackedStringArray("HAND") instance=ExtResource("3_gcqjj")]
+HAND = NodePath("../Marker3D")
+
+[node name="Marker3D" type="Marker3D" parent="Distances/Mage1" unique_id=411810735]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -6.1052732)
+
+[node name="Ball1" parent="Distances" unique_id=576115631 instance=ExtResource("4_gcqjj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.02385521, 4.837365, 1.3569984)
+
+[node name="Mage2" type="Node3D" parent="Distances" unique_id=2113680772]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 6.0194206, 2, -9.433098)
+
+[node name="BaseMage" parent="Distances/Mage2" unique_id=1769620395 instance=ExtResource("2_uc3ch")]
+
+[node name="ProjectileGrab" parent="Distances/Mage2" unique_id=1981868458 node_paths=PackedStringArray("HAND") instance=ExtResource("3_gcqjj")]
+HAND = NodePath("../Marker3D")
+
+[node name="Marker3D" type="Marker3D" parent="Distances/Mage2" unique_id=833293779]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9073486e-06, 3, -11.547597)
+
+[node name="Ball2" parent="Distances" unique_id=595937841 instance=ExtResource("4_gcqjj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.4610443, 4.837365, -8.293739)
+
+[node name="Mage3" type="Node3D" parent="Distances" unique_id=712533587]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 6.0194206, 2, -17.479862)
+
+[node name="BaseMage" parent="Distances/Mage3" unique_id=1470943067 instance=ExtResource("2_uc3ch")]
+
+[node name="ProjectileGrab" parent="Distances/Mage3" unique_id=741586256 node_paths=PackedStringArray("HAND") instance=ExtResource("3_gcqjj")]
+HAND = NodePath("../Marker3D")
+
+[node name="Marker3D" type="Marker3D" parent="Distances/Mage3" unique_id=576735640]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -19.16544)
+
+[node name="Ball3" parent="Distances" unique_id=1848565983 instance=ExtResource("4_gcqjj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.583597, 4.837365, -16.340504)
+
+[node name="Label3D" type="Label3D" parent="Distances" unique_id=219699137]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.6240044, 7.9221926, -8.073101)
+pixel_size = 0.06
+text = "Grab Distance Test"
+
+[node name="Conflict" type="Node3D" parent="." unique_id=1119720715]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.586555, 0, -29.179033)
+
+[node name="Mage1" type="Node3D" parent="Conflict" unique_id=2026364024]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -9.160055, 2, 0.58875847)
+
+[node name="BaseMage" parent="Conflict/Mage1" unique_id=1367012143 instance=ExtResource("2_uc3ch")]
+
+[node name="ProjectileGrab" parent="Conflict/Mage1" unique_id=675891825 node_paths=PackedStringArray("HAND") instance=ExtResource("3_gcqjj")]
+HAND = NodePath("../Marker3D")
+
+[node name="Marker3D" type="Marker3D" parent="Conflict/Mage1" unique_id=416460269]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -8)
+
+[node name="Mage2" type="Node3D" parent="Conflict" unique_id=87545033]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8.839945, 2, 0.58875847)
+
+[node name="BaseMage" parent="Conflict/Mage2" unique_id=618636685 instance=ExtResource("2_uc3ch")]
+
+[node name="ProjectileGrab" parent="Conflict/Mage2" unique_id=837775076 node_paths=PackedStringArray("HAND") instance=ExtResource("3_gcqjj")]
+HAND = NodePath("../Marker3D")
+
+[node name="Marker3D" type="Marker3D" parent="Conflict/Mage2" unique_id=1250379313]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -8)
+
+[node name="Ball2" parent="Conflict" unique_id=1452190905 instance=ExtResource("4_gcqjj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0038452148, 4.837365, 1.7892971)
+
+[node name="Label3D" type="Label3D" parent="Conflict" unique_id=1093557857]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38202095, 7.101203, 0)
+pixel_size = 0.06
+text = "Grab Conflict Test"
+
+[node name="Hold" type="Node3D" parent="." unique_id=1813986913]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60.204876, 0, -26.707905)
+
+[node name="Mage1" type="Node3D" parent="Hold" unique_id=1244591619]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 6.0194206, 2, 0.21763992)
+
+[node name="BaseMage" parent="Hold/Mage1" unique_id=2133697378 instance=ExtResource("2_uc3ch")]
+
+[node name="ProjectileGrab" parent="Hold/Mage1" unique_id=446231822 node_paths=PackedStringArray("HAND") instance=ExtResource("3_gcqjj")]
+HAND = NodePath("../Marker3D")
+
+[node name="Marker3D" type="Marker3D" parent="Hold/Mage1" unique_id=29261181]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9073486e-06, 3, -13.171352)
+
+[node name="Ball1" parent="Hold" unique_id=899898762 instance=ExtResource("4_gcqjj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.02385521, 4.837365, 1.3569984)
+
+[node name="Label3D" type="Label3D" parent="Hold" unique_id=252830908]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.3019485, 6.8168755, 0)
+pixel_size = 0.06
+text = "Tilt Visuals"
+
+[node name="DistancesTimer" type="Timer" parent="." unique_id=100420353]
+wait_time = 5.0
+autostart = true
+
+[node name="ConflictTimer" type="Timer" parent="." unique_id=1032889677]
+wait_time = 5.0
+autostart = true
+
+[node name="Floor" type="CSGBox3D" parent="." unique_id=1035164728]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.709442, -0.5, -28.914978)
+use_collision = true
+size = Vector3(127.74701, 1, 32.900024)
+material = SubResource("StandardMaterial3D_j8jxi")
+
+[node name="Floor2" type="CSGBox3D" parent="." unique_id=854533219]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.125946, -0.5, 14.02449)
+use_collision = true
+size = Vector3(122.58002, 1, 38.10669)
+material = SubResource("StandardMaterial3D_j8jxi")
+
+[connection signal="timeout" from="DistancesTimer" to="." method="_on_distances_timer_timeout"]
+[connection signal="timeout" from="ConflictTimer" to="." method="_on_conflict_timer_timeout"]

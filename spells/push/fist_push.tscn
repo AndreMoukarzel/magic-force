@@ -166,7 +166,7 @@ wait_time = 1.2
 one_shot = true
 
 [node name="PowerUpTimer2" type="Timer" parent="." unique_id=37945087]
-wait_time = 1.5999999999999999
+wait_time = 1.6
 one_shot = true
 
 [node name="Cooldown" type="Timer" parent="." unique_id=1895838905]

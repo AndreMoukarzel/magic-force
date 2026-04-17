@@ -2,6 +2,7 @@ extends Node3D
 
 @export var MAX_TILT := 0.4
 @export var TILT_SMOOTH := 6.0
+@export var TILT_STRENGHT := 0.5
 
 var TARGET: Node3D = null
 var _prev_pos: Vector3
@@ -30,8 +31,8 @@ func _apply_tilt(velocity: Vector3, delta: float) -> void:
 	var lateral = -velocity
 
 	# Clamp influence so it doesn't go crazy
-	var tilt_x = clamp(-lateral.z * 0.2, -MAX_TILT, MAX_TILT)
-	var tilt_z = clamp(lateral.x * 0.2, -MAX_TILT, MAX_TILT)
+	var tilt_x = clamp(-lateral.z * TILT_STRENGHT, -MAX_TILT, MAX_TILT)
+	var tilt_z = clamp(lateral.x * TILT_STRENGHT, -MAX_TILT, MAX_TILT)
 
 	var target_rotation = Vector3(tilt_x, 0.0, tilt_z)
 

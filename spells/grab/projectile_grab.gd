@@ -52,7 +52,8 @@ func grab():
 		-global_transform.basis.z * PROJECTILE_SPAWN_OFFSET
 	)
 	Proj.grabbed.connect(grabbed_body)
-	Proj.INHERITED_VELOCITY = get_parent().velocity
+	if "velocity" in get_parent():
+		Proj.INHERITED_VELOCITY = get_parent().velocity
 	get_tree().current_scene.add_child(Proj)
 	
 	$Cooldown.start()
@@ -60,6 +61,11 @@ func grab():
 
 
 func grabbed_body(body: Node3D) -> void:
+	if body.has_method("add_grabber"):
+		if len(body.GRABBERS) > 0:
+			body.clear_all_grabbers()
+			return
+	
 	$Cooldown.stop()
 	GRABBED_OBJECT = body
 	GRAB_FORCE_PER_MASS = GRAB_FORCE / GRABBED_OBJECT.mass
