@@ -148,11 +148,12 @@ collision_mask = 2
 shape = SubResource("BoxShape3D_0b086")
 
 [node name="AreaFloorPush" type="Area3D" parent="." unique_id=47088153]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, -1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.86963755, -2.6118944)
 collision_layer = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AreaFloorPush" unique_id=806841172]
 shape = SubResource("BoxShape3D_prruw")
+debug_color = Color(0.9165845, 7.7394245e-05, 0.71055794, 0.41960785)
 
 [node name="Fist" parent="." unique_id=111403762 instance=ExtResource("2_kc705")]
 transform = Transform3D(0.6, 5.2453668e-08, -5.2453668e-08, -5.2453668e-08, 0.6, 0, -5.2453668e-08, -4.5856454e-15, -0.6, 3, 1.2, 1.6)
