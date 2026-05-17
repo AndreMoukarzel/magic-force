@@ -8,7 +8,7 @@ const COLORS: Array = [
 ]
 const HEAD_ROTATION_SPEED: float = 6.0
 @onready var CAPE: SoftBody3D = $Cape/SoftBody3D
-@onready var HAT: MeshInstance3D = $metarig/Skeleton3D/HeadPivot/Head/Hat
+@onready var HAT: MeshInstance3D = $HeadPivot/Hat
 @onready var ANIM_TREE: AnimationTree = $AnimationTree
 
 
@@ -16,6 +16,11 @@ func _ready() -> void:
 	lock_cape_to_node()
 	set_clothes_material()
 	set_clothes_color(COLORS[1])
+
+
+func _physics_process(_delta: float) -> void:
+	update_head_pivot_position()
+	update_cape_position()
 
 
 func lock_cape_to_node(target_node: Node3D=self) -> void:
@@ -38,8 +43,32 @@ func set_clothes_color(color: Color) -> void:
 	hat_material.albedo_color = color
 
 
+func update_head_pivot_position() -> void:
+	var head: Node3D = $HeadPivot
+	var body: MeshInstance3D = $metarig/Skeleton3D/Torso
+	var head_bone_idx: int = $metarig/Skeleton3D.find_bone("spine.006")
+	var head_bone_pose: Transform3D = $metarig/Skeleton3D.get_bone_global_pose(head_bone_idx)
+	var bone_global: Transform3D = $metarig/Skeleton3D.global_transform * head_bone_pose
+	
+	# Positions
+	var head_pos = bone_global.origin
+	
+	# Body forward direction
+	var body_forward = body.global_transform.basis.z
+	body_forward.y = 0
+	body_forward = body_forward.normalized()
+	
+	# Base HeadPivot location
+	var offset = Vector3(0, 0.1, 0.1)
+	head.global_position = head_pos + bone_global.basis * offset
+
+
+func update_cape_position() -> void:
+	pass
+
+
 func direct_head(target: Node3D, delta: float) -> void:
-	var head: Node3D = $metarig/Skeleton3D/HeadPivot
+	var head: Node3D = $HeadPivot
 	var body: MeshInstance3D = $metarig/Skeleton3D/Torso
 	
 	# Positions
@@ -102,3 +131,4 @@ func update_animation_parameters(direction: Vector3, is_on_floor: bool, is_jumpi
 	ANIM_TREE["parameters/conditions/is_moving"] = (direction != Vector3.ZERO) and is_on_floor
 	ANIM_TREE["parameters/conditions/jumping"] = is_jumping
 	ANIM_TREE["parameters/conditions/on_floor"] = is_on_floor
+	ANIM_TREE["parameters/conditions/on_air"] = not is_on_floor
