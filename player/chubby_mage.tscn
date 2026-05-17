@@ -73,6 +73,9 @@ height = 2.61
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dwept"]
 height = 1.71
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_dwept"]
+radius = 0.68
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vjbag"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_u8wtw"]
@@ -687,6 +690,44 @@ _data = {
 &"walk": SubResource("Animation_8wf6t")
 }
 
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_dwept"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_me220"]
+animation = &"walk"
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_rox8n"]
+graph_offset = Vector2(96.913025, 48.146973)
+nodes/output/position = Vector2(660, 160)
+nodes/walk/node = SubResource("AnimationNodeAnimation_me220")
+nodes/walk/position = Vector2(180, 140)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_dwept")
+nodes/TimeScale/position = Vector2(400, 140)
+node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"walk"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bok63"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_w5bcw"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_wdxxg"]
+xfade_time = 0.5
+advance_mode = 2
+advance_condition = &"is_moving"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_pcyca"]
+xfade_time = 0.2
+advance_mode = 2
+advance_condition = &"idle"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ryu1e"]
+states/Start/position = Vector2(197, 103)
+states/fast_walk/node = SubResource("AnimationNodeBlendTree_rox8n")
+states/fast_walk/position = Vector2(628, 100)
+states/idle/node = SubResource("AnimationNodeAnimation_bok63")
+states/idle/position = Vector2(343, 100)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_w5bcw"), "idle", "fast_walk", SubResource("AnimationNodeStateMachineTransition_wdxxg"), "fast_walk", "idle", SubResource("AnimationNodeStateMachineTransition_pcyca")]
+
 [node name="ChubbyMage" type="Node3D" unique_id=1006046310]
 script = ExtResource("1_dwept")
 
@@ -764,6 +805,14 @@ collision_mask = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cape/SoftBodyBlocker2" unique_id=1080022934]
 transform = Transform3D(-4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0, 0, 0, 1, 0, 0.42445207, 0.043536425)
 shape = SubResource("CapsuleShape3D_dwept")
+
+[node name="SoftBodyBlocker3" type="StaticBody3D" parent="Cape" unique_id=952595044]
+collision_layer = 32768
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Cape/SoftBodyBlocker3" unique_id=1894883827]
+transform = Transform3D(-4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0, 0, 0, 1, 0.074821234, 2.5835416, -0.009290457)
+shape = SubResource("SphereShape3D_dwept")
 
 [node name="metarig" type="Node3D" parent="." unique_id=1160495956]
 
@@ -952,11 +1001,16 @@ skin = SubResource("Skin_dwept")
 mesh = SubResource("ArrayMesh_me220")
 skin = SubResource("Skin_dwept")
 
-[node name="Head" type="MeshInstance3D" parent="metarig/Skeleton3D" unique_id=693090535]
+[node name="HeadPivot" type="Node3D" parent="metarig/Skeleton3D" unique_id=1920003789]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8775862, -0.039599597)
+
+[node name="Head" type="MeshInstance3D" parent="metarig/Skeleton3D/HeadPivot" unique_id=693090535]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.8775862, 0.039599597)
 mesh = SubResource("ArrayMesh_rox8n")
 skin = SubResource("Skin_dwept")
+skeleton = NodePath("../..")
 
-[node name="Hat" type="MeshInstance3D" parent="metarig/Skeleton3D/Head" unique_id=2009213767]
+[node name="Hat" type="MeshInstance3D" parent="metarig/Skeleton3D/HeadPivot/Head" unique_id=2009213767]
 mesh = SubResource("ArrayMesh_dwept")
 skeleton = NodePath("")
 
@@ -970,3 +1024,10 @@ skin = SubResource("Skin_dwept")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1002325330]
 libraries/ = SubResource("AnimationLibrary_wdxxg")
+
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1812265231]
+tree_root = SubResource("AnimationNodeStateMachine_ryu1e")
+anim_player = NodePath("../AnimationPlayer")
+parameters/conditions/idle = true
+parameters/conditions/is_moving = false
+parameters/fast_walk/TimeScale/scale = 2.3999999999999986

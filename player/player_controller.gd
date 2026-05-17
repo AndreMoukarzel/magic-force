@@ -35,20 +35,36 @@ func _physics_process(delta: float) -> void:
 	var inv_rot: Vector3 = inverted_rotation(cam_rot)
 	
 	direction = direction.rotated(Vector3.UP, cam_rot.y)
-	CHAR.global_rotation.y = cam_rot.y
+	#CHAR.global_rotation.y = cam_rot.y
 	HAND_SPRING.rotation = inv_rot
 	$ProjectileGrab.rotation = cam_rot
 	$FistPush.rotation = cam_rot
-
+	$Mage/ChubbyMage.direct_head($HandSpring/Hand, delta)
+	#$Mage/ChubbyMage.other_direct_head($HandSpring/Hand, delta)
+	
+	
 	if is_on_floor():
 		velocity.x = move_toward(velocity.x, direction.x * SPEED, ACC * delta)
 		velocity.z = move_toward(velocity.z, direction.z * SPEED, ACC * delta)
+		
+		# Keep character upright
 		CHAR.global_rotation.x = move_toward(CHAR.global_rotation.x, 0.0, ROT_ACC * delta)
 		CHAR.global_rotation.z = move_toward(CHAR.global_rotation.z, 0.0, ROT_ACC * delta)
+
+		# Rotate toward movement direction
+		if direction.length() > 0.01:
+			var target_yaw := atan2(-direction.x, -direction.z)
+
+			CHAR.global_rotation.y = rotate_toward(
+				CHAR.global_rotation.y,
+				target_yaw,
+				ROT_ACC * delta
+		)
 	else:
 		velocity.x = move_toward(velocity.x, direction.x * SPEED, ACC_AIR * delta)
 		velocity.z = move_toward(velocity.z, direction.z * SPEED, ACC_AIR * delta)
 		CHAR.global_rotation.x = move_toward(CHAR.global_rotation.x, cam_rot.x, ROT_ACC_AIR * delta)
+		CHAR.global_rotation.y = move_toward(CHAR.global_rotation.y, cam_rot.y, ROT_ACC_AIR * delta)
 		CHAR.global_rotation.z = move_toward(CHAR.global_rotation.z, cam_rot.z, ROT_ACC_AIR * delta)
 		_apply_gravity(delta)
 	
