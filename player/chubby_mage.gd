@@ -13,7 +13,7 @@ const HEAD_ROTATION_SPEED: float = 6.0
 
 
 func _ready() -> void:
-	lock_cape_to_node()
+	lock_cape_to_node($Cape)
 	set_clothes_material()
 	set_clothes_color(COLORS[1])
 
@@ -45,7 +45,6 @@ func set_clothes_color(color: Color) -> void:
 
 func update_head_pivot_position() -> void:
 	var head: Node3D = $HeadPivot
-	var body: MeshInstance3D = $metarig/Skeleton3D/Torso
 	var head_bone_idx: int = $metarig/Skeleton3D.find_bone("spine.006")
 	var head_bone_pose: Transform3D = $metarig/Skeleton3D.get_bone_global_pose(head_bone_idx)
 	var bone_global: Transform3D = $metarig/Skeleton3D.global_transform * head_bone_pose
@@ -53,18 +52,25 @@ func update_head_pivot_position() -> void:
 	# Positions
 	var head_pos = bone_global.origin
 	
-	# Body forward direction
-	var body_forward = body.global_transform.basis.z
-	body_forward.y = 0
-	body_forward = body_forward.normalized()
-	
 	# Base HeadPivot location
 	var offset = Vector3(0, 0.1, 0.1)
 	head.global_position = head_pos + bone_global.basis * offset
 
 
 func update_cape_position() -> void:
-	pass
+	var cape: Node3D = $Cape
+	var head_bone_idx: int = $metarig/Skeleton3D.find_bone("spine.006")
+	var head_bone_pose: Transform3D = $metarig/Skeleton3D.get_bone_global_pose(head_bone_idx)
+	var bone_global: Transform3D = $metarig/Skeleton3D.global_transform * head_bone_pose
+	
+	# Positions
+	var head_pos = bone_global.origin
+	var head_rot = bone_global.basis.get_euler()
+	
+	# Base HeadPivot location
+	var offset = Vector3(0, 0.15, 0.0)
+	cape.global_position = head_pos + bone_global.basis * offset
+	cape.global_rotation = head_rot
 
 
 func direct_head(target: Node3D, delta: float) -> void:
