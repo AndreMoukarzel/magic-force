@@ -40,8 +40,7 @@ func _physics_process(delta: float) -> void:
 	$ProjectileGrab.rotation = cam_rot
 	$FistPush.rotation = cam_rot
 	$Mage/ChubbyMage.direct_head($HandSpring/Hand, delta)
-	#$Mage/ChubbyMage.other_direct_head($HandSpring/Hand, delta)
-	
+	$Mage/ChubbyMage.update_animation_parameters(velocity, is_on_floor(), is_on_floor() and velocity.y > 0)
 	
 	if is_on_floor():
 		velocity.x = move_toward(velocity.x, direction.x * SPEED, ACC * delta)

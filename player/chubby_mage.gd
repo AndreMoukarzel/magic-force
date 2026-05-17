@@ -97,6 +97,8 @@ func direct_head(target: Node3D, delta: float) -> void:
 	)
 
 
-func update_animation_parameters() -> void:
-	ANIM_TREE["parameters/conditions/idle"] = true
-	#velocity == Vector2.ZERO
+func update_animation_parameters(direction: Vector3, is_on_floor: bool, is_jumping: bool) -> void:
+	ANIM_TREE["parameters/conditions/idle"] = (direction == Vector3.ZERO) and is_on_floor
+	ANIM_TREE["parameters/conditions/is_moving"] = (direction != Vector3.ZERO) and is_on_floor
+	ANIM_TREE["parameters/conditions/jumping"] = is_jumping
+	ANIM_TREE["parameters/conditions/on_floor"] = is_on_floor
