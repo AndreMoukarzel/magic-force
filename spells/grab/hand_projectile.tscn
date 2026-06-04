@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b8ph8repxpafy" path="res://spells/grab/hand_projectile.gd" id="1_twi8u"]
 [ext_resource type="PackedScene" uid="uid://c8svwkke0sc3s" path="res://spells/grab/grabbing_hand.tscn" id="2_twi8u"]
+[ext_resource type="AudioStream" uid="uid://umfe5e6da1l" path="res://spells/grab/dragon-studio-epic-whoosh-478371.mp3" id="3_mqvie"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_twi8u"]
 size = Vector3(3.81, 4.735, 1)
@@ -23,6 +24,10 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -0.3
 wait_time = 0.8
 one_shot = true
 autostart = true
+
+[node name="Woosh" type="AudioStreamPlayer3D" parent="." unique_id=32823849]
+stream = ExtResource("3_mqvie")
+volume_db = -5.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

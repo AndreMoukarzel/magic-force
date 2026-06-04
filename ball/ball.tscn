@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://daxbco1ixnqf2" path="res://ball/ball.gd" id="1_pwunn"]
 [ext_resource type="Material" uid="uid://clg21jobsftmx" path="res://ball/xray_and_outline_material.tres" id="2_biv8x"]
 [ext_resource type="Material" uid="uid://bcin3ddwkaiwl" path="res://ball/xray_material.tres" id="3_biv8x"]
+[ext_resource type="AudioStream" uid="uid://brkhsvbnl553e" path="res://ball/BallBounce.mp3" id="4_6xd6y"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_cbx31"]
 bounce = 0.85
@@ -24,6 +25,8 @@ collision_mask = 3
 mass = 15.0
 physics_material_override = SubResource("PhysicsMaterial_cbx31")
 gravity_scale = 1.5
+contact_monitor = true
+max_contacts_reported = 1
 script = ExtResource("1_pwunn")
 HIGHLIGHT = ExtResource("2_biv8x")
 XRAY = ExtResource("3_biv8x")
@@ -35,3 +38,9 @@ shape = SubResource("SphereShape3D_41u45")
 material_override = SubResource("StandardMaterial3D_ktgx5")
 material_overlay = ExtResource("3_biv8x")
 mesh = SubResource("SphereMesh_n5601")
+
+[node name="BounceSFX" type="AudioStreamPlayer3D" parent="." unique_id=1115311306]
+stream = ExtResource("4_6xd6y")
+volume_db = -11.0
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

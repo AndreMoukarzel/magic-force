@@ -79,6 +79,7 @@ func release() -> void:
 	$Cooldown.start()
 	$CooldownEffect.play_full_cooldown_effect()
 	$AnimationPlayer.play("release")
+	$Woosh.play()
 	
 	await $AnimationPlayer.animation_finished
 	$Fist.hide()

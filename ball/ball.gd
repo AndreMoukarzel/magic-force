@@ -30,3 +30,6 @@ func remove_grabber(grabber) -> void:
 func clear_all_grabbers() -> void:
 	for grabber in GRABBERS:
 		remove_grabber(grabber)
+
+func _on_body_entered(body: Node) -> void:
+	$BounceSFX.play()
