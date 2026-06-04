@@ -1,18 +1,6 @@
 [gd_scene format=4 uid="uid://c8svwkke0sc3s"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gr0hj"]
-transparency = 2
-alpha_scissor_threshold = 0.465
-alpha_antialiasing_mode = 0
-blend_mode = 4
-shading_mode = 2
-specular_mode = 2
-disable_ambient_light = true
-albedo_color = Color(0.5411765, 0.40392157, 1, 1)
-emission_enabled = true
-emission = Color(0.054241963, 0.29207325, 1, 1)
-emission_energy_multiplier = 1.4
-disable_receive_shadows = true
+[ext_resource type="Material" uid="uid://c5ghkj8evt0iy" path="res://spells/hand_material.tres" id="1_ydq0l"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_psayh"]
 
@@ -1078,7 +1066,7 @@ bones/22/rotation = Quaternion(0, 0, 0, 1)
 bones/22/scale = Vector3(1, 1, 1)
 
 [node name="Hand" type="MeshInstance3D" parent="Armature/Skeleton3D" unique_id=835173064]
-material_override = SubResource("StandardMaterial3D_gr0hj")
+material_override = ExtResource("1_ydq0l")
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_locid")
 skin = SubResource("Skin_cs2y6")

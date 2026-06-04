@@ -2,6 +2,7 @@ extends Node3D
 
 
 @export var HAND: Node3D
+@export var COOLDOWN: float = 2.5
 
 var PROJECTILE_SCN: Resource = load("res://spells/grab/hand_projectile.tscn")
 var HOLDER_SCN: Resource = load("res://spells/grab/hand_holder.tscn")
@@ -11,6 +12,11 @@ var PROJECTILE_SPAWN_OFFSET: float = 1.0
 var SNAP_LERP: float = 5.0
 var GRAB_FORCE: float = 18.0
 var GRAB_FORCE_PER_MASS: float = 0.0 # Updated when a new object is grabbed
+
+
+func _ready():
+	$Cooldown.wait_time = COOLDOWN
+	$CooldownEffect.set_cooldown_duration(COOLDOWN)
 
 
 func _physics_process(delta: float) -> void:
@@ -28,6 +34,7 @@ func release():
 		HOLDER_OBJECT = null
 	
 	$Cooldown.start()
+	$CooldownEffect.continue_playing()
 
 
 func forced_release():
@@ -37,6 +44,7 @@ func forced_release():
 	GRABBED_OBJECT = null
 	
 	$Cooldown.start()
+	$CooldownEffect.continue_playing()
 
 
 func grab():
@@ -56,8 +64,9 @@ func grab():
 		Proj.INHERITED_VELOCITY = get_parent().velocity
 	get_tree().current_scene.add_child(Proj)
 	
+	$CooldownEffect.play_full_cooldown_effect()
 	$Cooldown.start()
-	hide()
+	$GrabbingHand.hide()
 
 
 func grabbed_body(body: Node3D) -> void:
@@ -67,6 +76,9 @@ func grabbed_body(body: Node3D) -> void:
 			return
 	
 	$Cooldown.stop()
+	$CooldownEffect.stop()
+	
+	
 	GRABBED_OBJECT = body
 	GRAB_FORCE_PER_MASS = GRAB_FORCE / GRABBED_OBJECT.mass
 	if body.has_method("add_grabber"):
@@ -90,4 +102,4 @@ func hold_object(grabbed_obj: RigidBody3D, delta: float) -> void:
 
 
 func _on_cooldown_timeout() -> void:
-	show()
+	$GrabbingHand.show()

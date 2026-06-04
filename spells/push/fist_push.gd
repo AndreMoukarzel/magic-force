@@ -2,6 +2,7 @@ extends Node3D
 
 
 @export var PLAYER: CharacterBody3D
+@export var COOLDOWN: float = 2.5
 
 var PUSH_FORCE: float = 220.0
 var SELF_PUSH_FORCE: float = 4.3
@@ -14,6 +15,11 @@ var POWER_LEVEL: int = 0
 var SHAKE_SPEED: float = 20.0
 var SHAKE_OFFSET: Vector3 = Vector3.ZERO
 @onready var BASE_POSITION: Vector3 = $Fist/Fist.position
+
+
+func _ready():
+	$Cooldown.wait_time = COOLDOWN
+	$CooldownEffect.set_cooldown_duration(COOLDOWN)
 
 
 func _process(delta: float) -> void:
@@ -71,6 +77,7 @@ func release() -> void:
 	IS_RELEASED = true
 	area_push()
 	$Cooldown.start()
+	$CooldownEffect.play_full_cooldown_effect()
 	$AnimationPlayer.play("release")
 	
 	await $AnimationPlayer.animation_finished

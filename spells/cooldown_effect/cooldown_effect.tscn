@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://d2gida27aiyuc"]
+
+[ext_resource type="PackedScene" uid="uid://dq70k68es2xh0" path="res://spells/cooldown_effect/broken.tscn" id="1_5djf1"]
+[ext_resource type="Script" uid="uid://brk8asatj0kqn" path="res://spells/cooldown_effect/cooldown_effect.gd" id="1_opg1m"]
+[ext_resource type="AudioStream" uid="uid://bwfbtgt6pujh8" path="res://spells/cooldown_effect/11325622-glass-breaking-sound-effect-240679.mp3" id="3_gujkx"]
+
+[node name="CooldownEffect" type="Node3D" unique_id=931489955]
+script = ExtResource("1_opg1m")
+
+[node name="Broken" parent="." unique_id=630375637 instance=ExtResource("1_5djf1")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+
+[node name="GlassBreaking" type="AudioStreamPlayer3D" parent="." unique_id=745559222]
+stream = ExtResource("3_gujkx")
+volume_db = -5.0

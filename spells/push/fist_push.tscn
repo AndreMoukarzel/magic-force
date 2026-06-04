@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://06mj5muecc6n" path="res://spells/push/fist_push.gd" id="1_csrks"]
 [ext_resource type="PackedScene" uid="uid://2n83ncdt0vl0" path="res://spells/push/fist.tscn" id="2_kc705"]
+[ext_resource type="PackedScene" uid="uid://d2gida27aiyuc" path="res://spells/cooldown_effect/cooldown_effect.tscn" id="3_kc705"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0b086"]
 size = Vector3(7, 4.6, 4)
@@ -148,7 +149,7 @@ collision_mask = 2
 shape = SubResource("BoxShape3D_0b086")
 
 [node name="AreaFloorPush" type="Area3D" parent="." unique_id=47088153]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.86963755, -2.6118944)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, -3.4)
 collision_layer = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AreaFloorPush" unique_id=806841172]
@@ -173,6 +174,9 @@ one_shot = true
 [node name="Cooldown" type="Timer" parent="." unique_id=1895838905]
 wait_time = 1.5
 one_shot = true
+
+[node name="CooldownEffect" parent="." unique_id=931489955 instance=ExtResource("3_kc705")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 2.785, 1.795, 1.6)
 
 [connection signal="timeout" from="PowerUpTimer1" to="." method="_on_power_up_timer_1_timeout"]
 [connection signal="timeout" from="PowerUpTimer2" to="." method="_on_power_up_timer_2_timeout"]

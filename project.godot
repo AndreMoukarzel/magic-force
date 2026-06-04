@@ -29,9 +29,14 @@ Network="*res://multiplayer/Network.gd"
 folder_colors={
 "res://addons/": "gray",
 "res://arenas/zoos/": "blue",
+"res://spells/cooldown_effect/": "green",
 "res://spells/grab/": "yellow",
 "res://spells/push/": "red"
 }
+
+[filesystem]
+
+import/blender/enabled=false
 
 [global_group]
 
