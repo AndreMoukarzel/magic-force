@@ -23,6 +23,10 @@ func _physics_process(_delta: float) -> void:
 	update_cape_position()
 
 
+func _play_footstep() -> void:
+	$FootstepsSFX.play()
+
+
 func lock_cape_to_node(target_node: Node3D=self) -> void:
 	var target_path: NodePath = target_node.get_path()
 	
