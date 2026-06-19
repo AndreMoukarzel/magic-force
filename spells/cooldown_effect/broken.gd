@@ -60,3 +60,9 @@ func set_animation_duration(anim_duration: float) -> void:
 	var anim_speed: float = default_duration / anim_duration
 	
 	set_animation_speed(anim_speed)
+
+
+func get_anim_percentage_played() -> float:
+	var AnimPlayer: AnimationPlayer = $AnimationPlayer
+	
+	return AnimPlayer.get_current_animation_position() / AnimPlayer.get_current_animation_length()

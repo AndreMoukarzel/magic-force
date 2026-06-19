@@ -17,6 +17,7 @@ func play_cooldown_effect() -> void:
 	$Broken.show()
 	$Broken.play_animation()
 	$GlassBreaking.play()
+	$Riser.play()
 
 
 func play_cooldown_reverse_effect() -> void:
@@ -36,9 +37,14 @@ func play_full_cooldown_effect() -> void:
 func stop() -> void:
 	# Stops the playing animation
 	$Broken.set_animation_speed(0.0)
+	$Riser.stop()
 
 
 func continue_playing() -> void:
 	# Resets animation speed so animations keep playing
 	if ANIM_DURATION:
+		var anim_left_percentage: float = $Broken.get_anim_percentage_played()
+		var riser_position: float = $Riser.stream.get_length() * anim_left_percentage
+		
 		$Broken.set_animation_speed(ANIM_DURATION)
+		$Riser.play(riser_position)
