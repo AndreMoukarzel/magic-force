@@ -4,6 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://2n83ncdt0vl0" path="res://spells/push/fist.tscn" id="2_kc705"]
 [ext_resource type="PackedScene" uid="uid://d2gida27aiyuc" path="res://spells/cooldown_effect/cooldown_effect.tscn" id="3_kc705"]
 [ext_resource type="AudioStream" uid="uid://b0yekix1hbkm1" path="res://spells/push/Short Woosh.mp3" id="4_0b086"]
+[ext_resource type="AudioStream" uid="uid://d0oupjwjkg5yk" path="res://spells/push/van_wiese-bass-ui-298402.mp3" id="5_ma580"]
+[ext_resource type="AudioStream" uid="uid://4kjt7k7ro8ln" path="res://spells/push/universfield-impact-cinematic-boom-02-487858.mp3" id="6_prruw"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0b086"]
 size = Vector3(7, 4.6, 4)
@@ -182,6 +184,14 @@ transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 2.785, 1.795, 1.6)
 
 [node name="Woosh" type="AudioStreamPlayer3D" parent="." unique_id=1495657656]
 stream = ExtResource("4_0b086")
+volume_db = -5.0
+
+[node name="PowerUp" type="AudioStreamPlayer3D" parent="." unique_id=812328369]
+stream = ExtResource("5_ma580")
+volume_db = -15.0
+
+[node name="Impact" type="AudioStreamPlayer3D" parent="." unique_id=1680297583]
+stream = ExtResource("6_prruw")
 volume_db = -5.0
 
 [connection signal="timeout" from="PowerUpTimer1" to="." method="_on_power_up_timer_1_timeout"]

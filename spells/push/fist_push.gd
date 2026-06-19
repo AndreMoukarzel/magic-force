@@ -123,6 +123,7 @@ func push_player() -> void:
 	var push_dir: Vector3 = -cam_forward
 	var power_multiplier: float = SELF_PUSH_MULTIPLIER[POWER_LEVEL]
 	PLAYER.apply_knockback(push_dir * SELF_PUSH_FORCE * power_multiplier)
+	$Impact.play()
 
 
 func _on_cooldown_timeout() -> void:
@@ -139,6 +140,7 @@ func _on_power_up_timer_1_timeout() -> void:
 	$Fist/Fist.material_override.albedo_color = Color(0.9, 0.4, 1.0)
 	$Fist/Fist.material_override.emission = Color(0.7, 0.2, 0.5)
 	$PowerUpTimer2.start()
+	$PowerUp.play()
 
 
 func _on_power_up_timer_2_timeout() -> void:
@@ -146,3 +148,4 @@ func _on_power_up_timer_2_timeout() -> void:
 	$Fist/Fist.scale = Vector3(1.5, 1.5, 1.5)
 	$Fist/Fist.material_override.albedo_color = Color(1.0, 0.2, 0.2)
 	$Fist/Fist.material_override.emission = Color(1.0, 0.2, 0.2)
+	$PowerUp.play()
