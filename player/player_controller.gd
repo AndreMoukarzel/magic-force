@@ -16,6 +16,11 @@ extends CharacterBody3D
 @onready var CHAR: Node3D = $Mage
 @onready var HAND_SPRING: SpringArm3D = $HandSpring
 
+const BASE_FOV := 75.0
+const MAX_EXTRA_FOV := 20.0
+const SPEED_FOR_MAX_FOV := 25.0
+const FOV_SMOOTHNESS := 8.0
+
 var KNOCKBACK: Vector3 = Vector3.ZERO
 var MOVE_DIR: Vector2 = Vector2.ZERO
 
@@ -59,6 +64,11 @@ func _physics_process(delta: float) -> void:
 				target_yaw,
 				ROT_ACC * delta
 		)
+		
+		# Resets camera's FOV
+		CAM.fov = lerp(CAM.fov, 75.0, FOV_SMOOTHNESS * delta)
+		# Resets air audio
+		$AirSpeedSFX.volume_db = lerp($AirSpeedSFX.volume_db, -80.0, FOV_SMOOTHNESS * delta)
 	else:
 		velocity.x = move_toward(velocity.x, direction.x * SPEED, ACC_AIR * delta)
 		velocity.z = move_toward(velocity.z, direction.z * SPEED, ACC_AIR * delta)
@@ -66,6 +76,7 @@ func _physics_process(delta: float) -> void:
 		CHAR.global_rotation.y = move_toward(CHAR.global_rotation.y, cam_rot.y, ROT_ACC_AIR * delta)
 		CHAR.global_rotation.z = move_toward(CHAR.global_rotation.z, cam_rot.z, ROT_ACC_AIR * delta)
 		_apply_gravity(delta)
+		_update_fov(CAM, delta)
 	
 	# Apply knockback
 	if KNOCKBACK.length() > 0.1:
@@ -93,6 +104,41 @@ func _apply_gravity(delta: float) -> void:
 		velocity.y -= FALL_ACC * delta
 		if $Float.is_active and velocity.y <= -$Float.FLOAT_SPEED:
 				velocity.y = -$Float.FLOAT_SPEED
+
+
+func _update_fov(Cam: Camera3D, delta: float) -> void:
+	## Changes the Camera's FOV based on the user's speed in the air
+	var speed := velocity.length()
+	
+	# Convert speed into a 0-1 range
+	var speed_ratio: float = clamp(speed / SPEED_FOR_MAX_FOV, 0.0, 1.0)
+	
+	# Calculate desired FOV
+	var target_fov: float = BASE_FOV + (MAX_EXTRA_FOV * speed_ratio)
+	
+	# Smoothly interpolate to target
+	Cam.fov = lerp(Cam.fov, target_fov, FOV_SMOOTHNESS * delta)
+	
+	_adjust_air_speed_sfx(speed_ratio, delta)
+
+
+func _adjust_air_speed_sfx(speed_ratio: float, delta: float) -> void:
+	if !$AirSpeedSFX.playing:
+		$AirSpeedSFX.play()
+	
+	var target_volume_db := -80.0
+
+	var volume_ratio: float = clampf(
+		inverse_lerp(0.0, .8, speed_ratio),
+		0.0, 1.0
+	)
+	target_volume_db = lerp(-80.0, -20.0, volume_ratio)
+
+	$AirSpeedSFX.volume_db = lerp(
+		$AirSpeedSFX.volume_db,
+		target_volume_db,
+		FOV_SMOOTHNESS * delta
+	)
 
 
 func inverted_rotation(base_rotation: Vector3) -> Vector3:

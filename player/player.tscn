@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://bq54vimdbhgli" path="res://spells/jump.gd" id="4_boad6"]
 [ext_resource type="Script" uid="uid://bp7a0kn6v5jk4" path="res://player/simple_camera.gd" id="4_yw30f"]
 [ext_resource type="PackedScene" uid="uid://eqcasgxqrfho" path="res://spells/push/fist_push.tscn" id="7_rgyib"]
+[ext_resource type="AudioStream" uid="uid://fo1amq5dt2gj" path="res://spells/wind.mp3" id="8_hg6s5"]
 [ext_resource type="PackedScene" uid="uid://pnabqdq6vid7" path="res://spells/grab/projectile_grab.tscn" id="8_rgyib"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rkbax"]
@@ -84,3 +85,7 @@ spring_length = 4.0
 material_override = SubResource("StandardMaterial3D_boad6")
 material_overlay = SubResource("StandardMaterial3D_rgyib")
 mesh = SubResource("SphereMesh_hg6s5")
+
+[node name="AirSpeedSFX" type="AudioStreamPlayer3D" parent="." unique_id=298976679]
+stream = ExtResource("8_hg6s5")
+volume_db = -20.0
