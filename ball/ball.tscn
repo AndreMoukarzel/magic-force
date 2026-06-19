@@ -13,6 +13,7 @@ radius = 1.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ktgx5"]
 transparency = 4
+specular_mode = 1
 albedo_color = Color(0.297199, 0.000964348, 0.715262, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_n5601"]
@@ -41,6 +42,6 @@ mesh = SubResource("SphereMesh_n5601")
 
 [node name="BounceSFX" type="AudioStreamPlayer3D" parent="." unique_id=1115311306]
 stream = ExtResource("4_6xd6y")
-volume_db = -11.0
+volume_db = -13.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

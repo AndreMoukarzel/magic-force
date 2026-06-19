@@ -63,6 +63,7 @@ func activate() -> void:
 	POWER_LEVEL = 1
 	$Fist/Fist.scale = Vector3(1, 1, 1)
 	$PowerUpTimer1.start()
+	$Charge1.play()
 	
 	$PowerUpTimer2.stop()
 
@@ -70,9 +71,16 @@ func activate() -> void:
 func release() -> void:
 	if not $Cooldown.is_stopped():
 		return
+	if POWER_LEVEL == 0:
+		# Action button was held during cooldown and released with no activation
+		return
 	
 	$PowerUpTimer1.stop()
 	$PowerUpTimer2.stop()
+	
+	$Charge1.stop()
+	$Charge2.stop()
+	$Charge3.stop()
 	
 	IS_RELEASED = true
 	area_push()
@@ -141,6 +149,8 @@ func _on_power_up_timer_1_timeout() -> void:
 	$Fist/Fist.material_override.emission = Color(0.7, 0.2, 0.5)
 	$PowerUpTimer2.start()
 	$PowerUp.play()
+	$Charge1.stop()
+	$Charge2.play()
 
 
 func _on_power_up_timer_2_timeout() -> void:
@@ -149,3 +159,5 @@ func _on_power_up_timer_2_timeout() -> void:
 	$Fist/Fist.material_override.albedo_color = Color(1.0, 0.2, 0.2)
 	$Fist/Fist.material_override.emission = Color(1.0, 0.2, 0.2)
 	$PowerUp.play()
+	$Charge2.stop()
+	$Charge3.play()

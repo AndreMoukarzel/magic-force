@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://b0yekix1hbkm1" path="res://spells/push/Short Woosh.mp3" id="4_0b086"]
 [ext_resource type="AudioStream" uid="uid://d0oupjwjkg5yk" path="res://spells/push/van_wiese-bass-ui-298402.mp3" id="5_ma580"]
 [ext_resource type="AudioStream" uid="uid://4kjt7k7ro8ln" path="res://spells/push/universfield-impact-cinematic-boom-02-487858.mp3" id="6_prruw"]
+[ext_resource type="AudioStream" uid="uid://ce1qp21s5qf4c" path="res://spells/push/freesound_community-062708_laser-charging-81968.mp3" id="7_prruw"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0b086"]
 size = Vector3(7, 4.6, 4)
@@ -193,6 +194,19 @@ volume_db = -15.0
 [node name="Impact" type="AudioStreamPlayer3D" parent="." unique_id=1680297583]
 stream = ExtResource("6_prruw")
 volume_db = -5.0
+
+[node name="Charge1" type="AudioStreamPlayer3D" parent="." unique_id=1885040495]
+stream = ExtResource("7_prruw")
+volume_db = -5.0
+
+[node name="Charge2" type="AudioStreamPlayer3D" parent="." unique_id=1685838263]
+stream = ExtResource("7_prruw")
+volume_db = -3.0
+pitch_scale = 0.55
+
+[node name="Charge3" type="AudioStreamPlayer3D" parent="." unique_id=1586280119]
+stream = ExtResource("7_prruw")
+pitch_scale = 0.3
 
 [connection signal="timeout" from="PowerUpTimer1" to="." method="_on_power_up_timer_1_timeout"]
 [connection signal="timeout" from="PowerUpTimer2" to="." method="_on_power_up_timer_2_timeout"]
