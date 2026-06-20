@@ -85,7 +85,6 @@ func grabbed_body(body: Node3D) -> void:
 	$Cooldown.stop()
 	$CooldownEffect.stop()
 	
-	
 	GRABBED_OBJECT = body
 	GRAB_FORCE_PER_MASS = GRAB_FORCE / GRABBED_OBJECT.mass
 	if body.has_method("add_grabber"):

@@ -11,6 +11,7 @@ var INHERITED_VELOCITY: Vector3 = Vector3.ZERO
 func _ready() -> void:
 	$GrabbingHand/AnimationPlayer.play("grab")
 	$Woosh.play()
+	highlight_off()
 
 
 func _physics_process(delta: float) -> void:
@@ -29,3 +30,11 @@ func _on_body_entered(body: Node3D) -> void:
 	if body.has_method("add_grabber"):
 		emit_signal("grabbed", body)
 		queue_free()
+
+
+func highlight_on() -> void:
+	$GrabbingHand/Armature/Skeleton3D/Hand/Outline.show()
+
+
+func highlight_off() -> void:
+	$GrabbingHand/Armature/Skeleton3D/Hand/Outline.hide()

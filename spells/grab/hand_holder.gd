@@ -10,6 +10,7 @@ var _prev_pos: Vector3
 
 func _ready() -> void:
 	$GrabbingHand/AnimationPlayer.play("hold")
+	highlight_off()
 
 
 func _physics_process(delta: float) -> void:
@@ -37,3 +38,11 @@ func _apply_tilt(velocity: Vector3, delta: float) -> void:
 	var target_rotation = Vector3(tilt_x, 0.0, tilt_z)
 
 	global_rotation = global_rotation.lerp(target_rotation, TILT_SMOOTH * delta)
+
+
+func highlight_on() -> void:
+	$GrabbingHand/Armature/Skeleton3D/Hand/Outline.show()
+
+
+func highlight_off() -> void:
+	$GrabbingHand/Armature/Skeleton3D/Hand/Outline.hide()
