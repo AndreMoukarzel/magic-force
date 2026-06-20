@@ -25,6 +25,10 @@ var KNOCKBACK: Vector3 = Vector3.ZERO
 var MOVE_DIR: Vector2 = Vector2.ZERO
 
 
+func _ready() -> void:
+	$FistPush.connect("pushed_self", $Mage/ChubbyMage.push_cape_up)
+
+
 func apply_impulse(force: Vector3) -> void:
 	apply_knockback(force/MASS)
 
@@ -159,6 +163,7 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("movement_action"):
 		if is_on_floor():
 			$Jump.jump(MOVE_DIR)
+			$Mage/ChubbyMage.push_cape_up()
 		else:
 			$Float.activate()
 	elif event.is_action_released("movement_action"):

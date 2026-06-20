@@ -77,6 +77,13 @@ func update_cape_position() -> void:
 	cape.global_rotation = head_rot
 
 
+func push_cape_up() -> void:
+	## Generate "wind" that pushes the cape up
+	var local_impulse = Vector3(0.0, 350.0, 10.0)
+	var world_impulse = global_transform.basis * local_impulse
+	$Cape/SoftBody3D.apply_central_impulse(world_impulse)
+
+
 func direct_head(target: Node3D, delta: float) -> void:
 	var head: Node3D = $HeadPivot
 	var body: MeshInstance3D = $metarig/Skeleton3D/Torso

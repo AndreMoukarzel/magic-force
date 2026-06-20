@@ -1,6 +1,8 @@
 extends Node3D
 
 
+signal pushed_self
+
 @export var PLAYER: CharacterBody3D
 @export var COOLDOWN: float = 2.5
 
@@ -141,6 +143,8 @@ func push_player() -> void:
 	var power_multiplier: float = SELF_PUSH_MULTIPLIER[POWER_LEVEL]
 	PLAYER.apply_knockback(push_dir * SELF_PUSH_FORCE * power_multiplier)
 	$Impact.play()
+	
+	emit_signal("pushed_self")
 
 
 func _on_cooldown_timeout() -> void:
