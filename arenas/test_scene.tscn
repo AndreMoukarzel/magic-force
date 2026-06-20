@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://dlf2cy08l0smq"]
 
+[ext_resource type="Shader" uid="uid://b3cewpk8rgkox" path="res://arenas/sky.tres" id="1_2h06a"]
 [ext_resource type="Texture2D" uid="uid://lgsidpu2qvf0" path="res://texture_04.png" id="1_ia1lp"]
 [ext_resource type="PackedScene" uid="uid://qmir5vg1sis3" path="res://gameplay_handlers/game_handler.tscn" id="1_vr1i5"]
 [ext_resource type="PackedScene" uid="uid://bx8b8yvq5h1jd" path="res://player/player.tscn" id="3_sasra"]
@@ -8,7 +9,28 @@
 [ext_resource type="PackedScene" uid="uid://yyhv57x8ch56" path="res://entity/pusher.tscn" id="8_njel3"]
 [ext_resource type="PackedScene" uid="uid://cq82bbnw3xp8x" path="res://entity/grabber.tscn" id="9_njel3"]
 
+[sub_resource type="Gradient" id="Gradient_xpexy"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.5536723, 0.72316384, 1)
+colors = PackedColorArray(0.59489506, 0.88930696, 1, 1, 0.75442404, 0.9527866, 0.99999994, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hdb50"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_sfy3g"]
+noise = SubResource("FastNoiseLite_hdb50")
+color_ramp = SubResource("Gradient_xpexy")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2nwx1"]
+shader = ExtResource("1_2h06a")
+shader_parameter/Texture2DParameter = SubResource("NoiseTexture2D_sfy3g")
+
+[sub_resource type="Sky" id="Sky_k37lj"]
+sky_material = SubResource("ShaderMaterial_2nwx1")
+
 [sub_resource type="Environment" id="Environment_coq8p"]
+background_mode = 2
+sky = SubResource("Sky_k37lj")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_buypi"]
 albedo_texture = ExtResource("4_8pr8v")
@@ -25,7 +47,9 @@ environment = SubResource("Environment_coq8p")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment" unique_id=1152604189]
 transform = Transform3D(1, 0, 0, 0, 0.278689, 0.960381, 0, -0.960381, 0.278689, 0, 14.3357, 0)
+light_color = Color(0.46957296, 0.21469015, 0.12555173, 1)
 shadow_enabled = true
+sky_mode = 1
 
 [node name="GameHandler" parent="." unique_id=1697309742 instance=ExtResource("1_vr1i5")]
 
