@@ -4,7 +4,7 @@ extends Node
 @export var PLAYER: CharacterBody3D
 @export var CAM: Camera3D
 var JUMP_FORCE: float = 11.5
-var MIN_VERTICAL_JUMP: float = 0.3
+var MIN_VERTICAL_JUMP: float = 0.65
 
 
 
