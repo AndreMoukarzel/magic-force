@@ -20,10 +20,19 @@ var SHAKE_OFFSET: Vector3 = Vector3.ZERO
 func _ready():
 	$Cooldown.wait_time = COOLDOWN
 	$CooldownEffect.set_cooldown_duration(COOLDOWN)
+	$Fist/Fist/Outline.hide()
 
 
 func _process(delta: float) -> void:
 	update_shake(delta)
+
+
+func _physics_process(_delta: float) -> void:
+	var floors: Array[Node3D] = $AreaFloorPush.get_overlapping_bodies()
+	if len(floors) > 0:
+		$Fist/Fist/Outline.show()
+	else:
+		$Fist/Fist/Outline.hide()
 
 
 func update_shake(_delta: float) -> void:
