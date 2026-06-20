@@ -82,6 +82,7 @@ spring_length = 4.0
 [node name="Hand" type="Node3D" parent="HandSpring" unique_id=734748686]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="HandSpring/Hand" unique_id=112600404]
+visible = false
 material_override = SubResource("StandardMaterial3D_boad6")
 material_overlay = SubResource("StandardMaterial3D_rgyib")
 mesh = SubResource("SphereMesh_hg6s5")

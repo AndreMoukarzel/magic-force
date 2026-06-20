@@ -17,11 +17,18 @@ var GRAB_FORCE_PER_MASS: float = 0.0 # Updated when a new object is grabbed
 func _ready():
 	$Cooldown.wait_time = COOLDOWN
 	$CooldownEffect.set_cooldown_duration(COOLDOWN)
+	highlight_off()
 
 
 func _physics_process(delta: float) -> void:
 	if GRABBED_OBJECT:
 		hold_object(GRABBED_OBJECT, delta)
+		highlight_off()
+	else:
+		if $BallDetector.is_colliding():
+			highlight_on()
+		else:
+			highlight_off()
 
 
 func release():
@@ -99,6 +106,14 @@ func hold_object(grabbed_obj: RigidBody3D, delta: float) -> void:
 		-direction * distance * GRAB_FORCE_PER_MASS,
 		SNAP_LERP * delta
 	)
+
+
+func highlight_on() -> void:
+	$GrabbingHand/Armature/Skeleton3D/Hand/Outline.show()
+
+
+func highlight_off() -> void:
+	$GrabbingHand/Armature/Skeleton3D/Hand/Outline.hide()
 
 
 func _on_cooldown_timeout() -> void:
