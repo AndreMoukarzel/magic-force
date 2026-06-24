@@ -29,6 +29,24 @@ properties/6/replication_mode = 1
 properties/7/path = NodePath("HandSpring:rotation")
 properties/7/spawn = true
 properties/7/replication_mode = 1
+properties/8/path = NodePath("Mage/ChubbyMage/AnimationTree:parameters/conditions/idle")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath("Mage/ChubbyMage/AnimationTree:parameters/conditions/is_moving")
+properties/9/spawn = true
+properties/9/replication_mode = 1
+properties/10/path = NodePath("Mage/ChubbyMage/AnimationTree:parameters/conditions/jumping")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+properties/11/path = NodePath("Mage/ChubbyMage/AnimationTree:parameters/conditions/on_air")
+properties/11/spawn = true
+properties/11/replication_mode = 1
+properties/12/path = NodePath("Mage/ChubbyMage/AnimationTree:parameters/conditions/on_floor")
+properties/12/spawn = true
+properties/12/replication_mode = 1
+properties/13/path = NodePath("Mage/ChubbyMage/AnimationTree:parameters/fast_walk/TimeScale/scale")
+properties/13/spawn = true
+properties/13/replication_mode = 1
 
 [node name="MultiplayerPlayer" unique_id=611854954 instance=ExtResource("1_seaqv")]
 script = ExtResource("2_6b4kk")
@@ -48,5 +66,7 @@ text = "Example Text"
 font_size = 120
 outline_size = 26
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="9" unique_id=586341697]
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="10" unique_id=586341697]
 replication_config = SubResource("SceneReplicationConfig_clgf8")
+
+[editable path="Mage/ChubbyMage"]
