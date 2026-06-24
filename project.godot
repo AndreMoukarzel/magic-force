@@ -28,6 +28,7 @@ Network="*res://multiplayer/Network.gd"
 
 folder_colors={
 "res://addons/": "gray",
+"res://arenas/walls/": "orange",
 "res://arenas/zoos/": "blue",
 "res://player/models/": "blue",
 "res://spells/": "orange",

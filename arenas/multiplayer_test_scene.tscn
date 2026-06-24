@@ -1,20 +1,33 @@
-[gd_scene load_steps=10 format=3 uid="uid://cy65hxm00y75l"]
+[gd_scene format=3 uid="uid://cy65hxm00y75l"]
 
 [ext_resource type="PackedScene" uid="uid://qmir5vg1sis3" path="res://gameplay_handlers/game_handler.tscn" id="1_a8rpr"]
 [ext_resource type="Script" uid="uid://4h8u23ygpr0s" path="res://multiplayer/multiplayer_test_scene.gd" id="2_3d02y"]
-[ext_resource type="Texture2D" uid="uid://dx8f8idcufjnf" path="res://texture_01.png" id="2_8odck"]
-[ext_resource type="Texture2D" uid="uid://lgsidpu2qvf0" path="res://texture_04.png" id="3_unas5"]
-[ext_resource type="PackedScene" uid="uid://cj03l5kvgpert" path="res://goals/goal.tscn" id="4_bcydl"]
+[ext_resource type="Shader" uid="uid://b3cewpk8rgkox" path="res://arenas/sky.tres" id="2_8odck"]
+[ext_resource type="PackedScene" uid="uid://dyedx7iawobee" path="res://arenas/arena.tscn" id="3_a8rpr"]
+[ext_resource type="PackedScene" uid="uid://dsc4fwneck132" path="res://goals/siege_goal.tscn" id="4_8odck"]
 
-[sub_resource type="Environment" id="Environment_xynlu"]
+[sub_resource type="Gradient" id="Gradient_unas5"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.5536723, 0.72316384, 1)
+colors = PackedColorArray(0.59489506, 0.88930696, 1, 1, 0.75442404, 0.9527866, 0.99999994, 1, 1, 1, 1, 1, 1, 1, 1, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7n2vf"]
-albedo_texture = ExtResource("2_8odck")
-uv1_triplanar = true
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_bcydl"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ej27l"]
-albedo_texture = ExtResource("3_unas5")
-uv1_triplanar = true
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_sfy3g"]
+noise = SubResource("FastNoiseLite_bcydl")
+color_ramp = SubResource("Gradient_unas5")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xynlu"]
+shader = ExtResource("2_8odck")
+shader_parameter/Texture2DParameter = SubResource("NoiseTexture2D_sfy3g")
+
+[sub_resource type="Sky" id="Sky_k37lj"]
+sky_material = SubResource("ShaderMaterial_xynlu")
+
+[sub_resource type="Environment" id="Environment_7n2vf"]
+background_mode = 2
+sky = SubResource("Sky_k37lj")
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8odck"]
 properties/0/path = NodePath("GameHandler/SpawnHandler/Ball:position")
@@ -24,105 +37,89 @@ properties/1/path = NodePath("GameHandler/SpawnHandler/Ball:linear_velocity")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
-[node name="MultiplayerTestScene" type="Node3D"]
+[node name="MultiplayerTestScene" type="Node3D" unique_id=713060461]
 script = ExtResource("2_3d02y")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_xynlu")
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1178186472]
+environment = SubResource("Environment_7n2vf")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
-transform = Transform3D(1, 0, 0, 0, 0.278689, 0.960381, 0, -0.960381, 0.278689, 0, 14.3357, 0)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment" unique_id=1340861140]
+transform = Transform3D(0.83463645, 0.48564997, 0.259858, 0, -0.47178176, 0.8817154, 0.5508013, -0.73591185, -0.39376625, 0, 14.3357, 0)
+light_color = Color(0.46957296, 0.21469015, 0.12555173, 1)
 shadow_enabled = true
+sky_mode = 1
 
-[node name="GameHandler" parent="." instance=ExtResource("1_a8rpr")]
+[node name="GameHandler" parent="." unique_id=1394271651 instance=ExtResource("1_a8rpr")]
 
 [node name="SpawnHandler" parent="GameHandler" index="0" node_paths=PackedStringArray("SPAWNERS", "PLAYERS")]
 SPAWNERS = NodePath("../../SpawnPoints")
 PLAYERS = NodePath("../../Players")
 
 [node name="PointHandler" parent="GameHandler" index="1" node_paths=PackedStringArray("GOAL_A", "GOAL_B")]
-GOAL_A = NodePath("../../GoalA")
-GOAL_B = NodePath("../../GoalB")
+GOAL_A = NodePath("../../SiegeGoalA")
+GOAL_B = NodePath("../../SiegeGoalB")
 
-[node name="Walls" type="CSGCombiner3D" parent="."]
-material_override = SubResource("StandardMaterial3D_7n2vf")
-use_collision = true
+[node name="SpawnPoints" type="Node3D" parent="." unique_id=1290462131]
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
-[node name="Fill" type="CSGBox3D" parent="Walls"]
-size = Vector3(80, 60, 110)
-
-[node name="Space" type="CSGBox3D" parent="Walls"]
-material_override = SubResource("StandardMaterial3D_7n2vf")
-operation = 2
-size = Vector3(65, 98, 105)
-
-[node name="Floor" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-material_override = SubResource("StandardMaterial3D_ej27l")
-use_collision = true
-size = Vector3(65, 1, 105)
-metadata/_edit_lock_ = true
-
-[node name="GoalA" parent="." instance=ExtResource("4_bcydl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -45)
-metadata/_edit_lock_ = true
-
-[node name="GoalB" parent="." instance=ExtResource("4_bcydl")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 45)
-metadata/_edit_lock_ = true
-
-[node name="SpawnPoints" type="Node3D" parent="."]
-metadata/_edit_group_ = true
-metadata/_edit_lock_ = true
-
-[node name="BallSpawn" type="Marker3D" parent="SpawnPoints"]
+[node name="BallSpawn" type="Marker3D" parent="SpawnPoints" unique_id=108863594]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.313, 0)
 metadata/_edit_lock_ = true
 
-[node name="SpawnsA" type="Node3D" parent="SpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+[node name="SpawnsA" type="Node3D" parent="SpawnPoints" unique_id=1853254812]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 40)
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
-[node name="Spawn1" type="Marker3D" parent="SpawnPoints/SpawnsA"]
+[node name="Spawn1" type="Marker3D" parent="SpawnPoints/SpawnsA" unique_id=985220833]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 40)
 
-[node name="Spawn2" type="Marker3D" parent="SpawnPoints/SpawnsA"]
+[node name="Spawn2" type="Marker3D" parent="SpawnPoints/SpawnsA" unique_id=142152799]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 25)
 
-[node name="Spawn3" type="Marker3D" parent="SpawnPoints/SpawnsA"]
+[node name="Spawn3" type="Marker3D" parent="SpawnPoints/SpawnsA" unique_id=1476143198]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 25)
 
-[node name="Spawn4" type="Marker3D" parent="SpawnPoints/SpawnsA"]
+[node name="Spawn4" type="Marker3D" parent="SpawnPoints/SpawnsA" unique_id=551388384]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12)
 
-[node name="SpawnsB" type="Node3D" parent="SpawnPoints"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1, 0)
+[node name="SpawnsB" type="Node3D" parent="SpawnPoints" unique_id=715583501]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1, -40)
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
-[node name="Spawn1" type="Marker3D" parent="SpawnPoints/SpawnsB"]
+[node name="Spawn1" type="Marker3D" parent="SpawnPoints/SpawnsB" unique_id=374994180]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 40)
 
-[node name="Spawn2" type="Marker3D" parent="SpawnPoints/SpawnsB"]
+[node name="Spawn2" type="Marker3D" parent="SpawnPoints/SpawnsB" unique_id=1781416532]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 25)
 
-[node name="Spawn3" type="Marker3D" parent="SpawnPoints/SpawnsB"]
+[node name="Spawn3" type="Marker3D" parent="SpawnPoints/SpawnsB" unique_id=1257831847]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 25)
 
-[node name="Spawn4" type="Marker3D" parent="SpawnPoints/SpawnsB"]
+[node name="Spawn4" type="Marker3D" parent="SpawnPoints/SpawnsB" unique_id=1152901690]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12)
 
-[node name="Players" type="Node" parent="."]
+[node name="Players" type="Node" parent="." unique_id=7436690]
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+[node name="Arena" parent="." unique_id=1462885883 instance=ExtResource("3_a8rpr")]
+metadata/_edit_lock_ = true
+
+[node name="SiegeGoalA" parent="." unique_id=1010639676 instance=ExtResource("4_8odck")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, -165)
+metadata/_edit_lock_ = true
+
+[node name="SiegeGoalB" parent="." unique_id=1011777483 instance=ExtResource("4_8odck")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 165)
+metadata/_edit_lock_ = true
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=846495760]
 _spawnable_scenes = PackedStringArray("uid://dsjen3mvwpnu8")
 spawn_path = NodePath("../Players")
 spawn_limit = 8
 
-[node name="BallSynchronizer" type="MultiplayerSynchronizer" parent="."]
+[node name="BallSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1336673046]
 replication_config = SubResource("SceneReplicationConfig_8odck")
 
 [editable path="GameHandler"]

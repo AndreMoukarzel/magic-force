@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://2n83ncdt0vl0"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i1g2w"]
+resource_local_to_scene = true
 transparency = 2
 alpha_scissor_threshold = 0.465
 alpha_antialiasing_mode = 0

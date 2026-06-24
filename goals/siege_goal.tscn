@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://dsc4fwneck132"]
+
+[ext_resource type="Script" uid="uid://bpqmu8gqq8gea" path="res://goals/goal.gd" id="1_6tec8"]
+[ext_resource type="PackedScene" uid="uid://c1db6lh8cpq0q" path="res://goals/siege_tower_2.tscn" id="3_5t13c"]
+[ext_resource type="PackedScene" uid="uid://dd84r4wq5pwjd" path="res://goals/rocks_large_2.tscn" id="4_5t13c"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ef6tv"]
+size = Vector3(7, 6, 5.235)
+
+[node name="SiegeGoal" type="Node3D" unique_id=1010639676]
+script = ExtResource("1_6tec8")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=2125663779]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 25, -0.5)
+collision_layer = 0
+collision_mask = 8
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=754912634]
+shape = SubResource("BoxShape3D_ef6tv")
+
+[node name="siege-tower2" parent="." unique_id=911201309 instance=ExtResource("3_5t13c")]
+transform = Transform3D(-5.2453663e-07, 0, 12, 0, 12, 0, -12, 0, -5.2453663e-07, 0, 0, 0)
+
+[node name="rocks-large3" parent="." unique_id=657246833 instance=ExtResource("4_5t13c")]
+transform = Transform3D(-12, 0, -1.0490733e-06, 0, 12, 0, 1.0490733e-06, 0, -12, -8, 0, 12)
