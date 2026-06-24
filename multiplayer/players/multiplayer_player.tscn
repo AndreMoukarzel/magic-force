@@ -43,8 +43,10 @@ visible = false
 [node name="Label3D" type="Label3D" parent="." index="8" unique_id=432943743]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.347304, 0)
 billboard = 1
+no_depth_test = true
 text = "Example Text"
-font_size = 52
+font_size = 120
+outline_size = 26
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="9" unique_id=586341697]
 replication_config = SubResource("SceneReplicationConfig_clgf8")
