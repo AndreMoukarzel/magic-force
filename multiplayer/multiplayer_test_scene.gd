@@ -42,6 +42,7 @@ func add_player_mage(player_id: int, team: String) -> void:
 	NewPlayer.set_player_id(player_id)
 	
 	$Players.add_child(NewPlayer, true)
+	NewPlayer.set_color_per_team()
 
 
 func _remove_player(id: int) -> void:
@@ -59,10 +60,12 @@ func _set_name_and_camera(player_name, player_team) -> void:
 		"\t[%s] Syncing %s | Team: %s" %
 		[str(multiplayer.get_unique_id()), player_name, player_team]
 	)
-	$Players.get_node(str(player_name)).TEAM = player_team
-	$Players.get_node(str(player_name)).set_player_id(int(player_name))
+	var ThisPlayer: Node3D = $Players.get_node(str(player_name))
+	ThisPlayer.TEAM = player_team
+	ThisPlayer.set_player_id(int(player_name))
+	ThisPlayer.set_color_per_team()
 	# Set camera correctly of this player
-	$Players.get_node(str(player_name)).get_node("CameraSpring/Camera3D").make_current()
+	ThisPlayer.get_node("CameraSpring/Camera3D").make_current()
 
 
 @rpc("call_local")

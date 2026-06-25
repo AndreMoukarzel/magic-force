@@ -42,6 +42,18 @@ func _input(event: InputEvent) -> void:
 				float_deactivate_multiplayer.rpc()
 
 
+func set_color_per_team() -> void:
+	## Sets the Player's colors based on the Team they are on
+	var MageBody: Node3D = $Mage/ChubbyMage
+	print(self.name)
+	if TEAM == "A":
+		print("Setting color to red")
+		MageBody.set_clothes_color(MageBody.COLORS[0])
+	else:
+		print("Setting color to blue")
+		MageBody.set_clothes_color(MageBody.COLORS[1])
+
+
 @rpc("call_local")
 func force_grab_multiplayer() -> void:
 	$ProjectileGrab.grab()

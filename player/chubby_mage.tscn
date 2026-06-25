@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://dquxv7clkbu6j" path="res://player/data_pion-st1-footstep-sfx-323053.mp3" id="5_w5bcw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7y3md"]
+resource_local_to_scene = true
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_3mms3"]
 _surfaces = [{
@@ -285,6 +286,7 @@ _surfaces = [{
 blend_shape_mode = 0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fehdd"]
+resource_local_to_scene = true
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_3nlp2"]
 _surfaces = [{

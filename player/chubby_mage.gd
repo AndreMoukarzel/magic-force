@@ -15,7 +15,7 @@ const HEAD_ROTATION_SPEED: float = 6.0
 func _ready() -> void:
 	lock_cape_to_node($Cape)
 	set_clothes_material()
-	set_clothes_color(COLORS[1])
+	#set_clothes_color(COLORS[1])
 
 
 func _physics_process(_delta: float) -> void:
@@ -35,8 +35,10 @@ func lock_cape_to_node(target_node: Node3D=self) -> void:
 
 
 func set_clothes_material() -> void:
-	CAPE.mesh.surface_set_material(0, CLOTH_MATERIAL)
-	HAT.mesh.surface_set_material(0, CLOTH_MATERIAL)
+	# We load a copy of the material so different instances can have different colors
+	var LocalMaterial: Material = CLOTH_MATERIAL.duplicate()
+	CAPE.mesh.surface_set_material(0, LocalMaterial)
+	HAT.mesh.surface_set_material(0, LocalMaterial)
 
 
 func set_clothes_color(color: Color) -> void:
