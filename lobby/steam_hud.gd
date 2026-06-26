@@ -4,6 +4,7 @@ var IS_JOINING: bool = false
 
 
 func _ready() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	var init_response: Dictionary = Steam.steamInitEx()
 	if init_response["status"] != Steam.STEAM_API_INIT_RESULT_OK:
 		self.visible = false

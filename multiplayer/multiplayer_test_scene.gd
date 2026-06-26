@@ -75,3 +75,26 @@ func _set_authority_to_client(player_id: int) -> void:
 	if Player.TEAM == "B":
 		Player.get_node("CameraSpring").global_rotation = Vector3(0.0, deg_to_rad(180.0), 0.0)
 	Player.set_multiplayer_authority(player_id)
+
+
+@rpc("call_local")
+func back_to_lobby() -> void:
+	Network.leave_lobby()
+	multiplayer.multiplayer_peer.close()
+	get_tree().change_scene_to_file("res://lobby/starting_menu.tscn")
+
+
+func _on_point_handler_victory(winner_team: String) -> void:
+	$GameHandler/SpawnHandler/GoalRespawnTimer.set_paused(true)
+	$BackToLobby.start()
+	await $BackToLobby.timeout
+	if multiplayer.is_server():
+		back_to_lobby.rpc()
+
+
+func _on_point_handler_brasil() -> void:
+	$CapySpawner.spawn_many_capys.rpc(50)
+
+
+func _on_spawn_handler_respawn() -> void:
+	$CapySpawner.clean_capys.rpc()

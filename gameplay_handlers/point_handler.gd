@@ -1,9 +1,12 @@
 extends Control
 
+signal victory(winner_team: String)
+signal brasil
 signal goal_scored
 
 @export var GOAL_A: Node3D
 @export var GOAL_B: Node3D
+@export var MAX_SCORE: int = 10
 
 var SCORE_A: int = 0
 var SCORE_B: int = 0
@@ -18,9 +21,19 @@ func goal_was_scored(team: String) -> void:
 	if team == "A":
 		SCORE_A += 1
 		$HBoxContainer/ScoreA.text = str(SCORE_A)
+		
+		if SCORE_A >= MAX_SCORE:
+			emit_signal("victory", "A")
+		
 	elif team == "B":
 		SCORE_B += 1
 		$HBoxContainer/ScoreB.text = str(SCORE_B)
+		
+		if SCORE_B >= MAX_SCORE:
+			emit_signal("victory", "B")
+	
+	if (SCORE_A == 7 and SCORE_B == 1) or (SCORE_A == 1 and SCORE_B == 7):
+		emit_signal("brasil")
 	emit_signal("goal_scored")
 
 

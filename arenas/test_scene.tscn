@@ -2,6 +2,7 @@
 
 [ext_resource type="Shader" uid="uid://b3cewpk8rgkox" path="res://arenas/sky.tres" id="1_2h06a"]
 [ext_resource type="PackedScene" uid="uid://qmir5vg1sis3" path="res://gameplay_handlers/game_handler.tscn" id="1_vr1i5"]
+[ext_resource type="Script" uid="uid://bb1pxxxb1c6ai" path="res://arenas/test_scene.gd" id="1_xpexy"]
 [ext_resource type="PackedScene" uid="uid://dyedx7iawobee" path="res://arenas/arena.tscn" id="3_2h06a"]
 [ext_resource type="PackedScene" uid="uid://bx8b8yvq5h1jd" path="res://player/player.tscn" id="3_sasra"]
 [ext_resource type="PackedScene" uid="uid://yyhv57x8ch56" path="res://entity/pusher.tscn" id="8_njel3"]
@@ -32,6 +33,7 @@ background_mode = 2
 sky = SubResource("Sky_k37lj")
 
 [node name="TestScene" type="Node3D" unique_id=455164184]
+script = ExtResource("1_xpexy")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2012922639]
 environment = SubResource("Environment_coq8p")
@@ -51,6 +53,7 @@ PLAYERS = NodePath("../../Players")
 [node name="PointHandler" parent="GameHandler" index="1" node_paths=PackedStringArray("GOAL_A", "GOAL_B")]
 GOAL_A = NodePath("../../SiegeGoalA")
 GOAL_B = NodePath("../../SiegeGoalB")
+MAX_SCORE = 2
 
 [node name="SpawnPoints" type="Node3D" parent="." unique_id=1915680425]
 metadata/_edit_group_ = true
@@ -117,5 +120,7 @@ metadata/_edit_lock_ = true
 [node name="SiegeGoalB" parent="." unique_id=1010639676 instance=ExtResource("8_xpexy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 165)
 metadata/_edit_lock_ = true
+
+[connection signal="victory" from="GameHandler/PointHandler" to="." method="_on_point_handler_victory"]
 
 [editable path="GameHandler"]

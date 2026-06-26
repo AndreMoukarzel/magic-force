@@ -5,6 +5,7 @@ var PLAYER_SCN := preload("res://multiplayer/players/lobby_player.tscn")
 
 
 func _ready() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	multiplayer.peer_connected.connect(_add_lobby_player)
 	multiplayer.peer_disconnected.connect(_remove_lobby_player)
 	if not multiplayer.is_server() or not Network.IS_HOST:
@@ -117,9 +118,6 @@ func get_ready(player_id: int) -> void:
 
 @rpc("call_local")
 func start_game_to_all() -> void:
-	if multiplayer.is_server():
-		pass
-	
 	get_tree().change_scene_to_file("res://arenas/multiplayer_test_scene.tscn")
 
 

@@ -1,5 +1,7 @@
 extends Node
 
+signal respawn
+
 @export var POINT_HANDLER: Control
 @export var SPAWNERS: Node3D
 @export var PLAYERS: Node
@@ -72,6 +74,7 @@ func _on_respawn_timer_timeout() -> void:
 	spawn_ball()
 	spawn_players()
 	POINT_HANDLER.reactivate_goals()
+	emit_signal("respawn")
 
 
 func _release_spawn(spawn: Marker3D, team: String) -> void:
