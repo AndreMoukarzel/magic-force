@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://bb1pxxxb1c6ai" path="res://arenas/test_scene.gd" id="1_xpexy"]
 [ext_resource type="PackedScene" uid="uid://dyedx7iawobee" path="res://arenas/arena.tscn" id="3_2h06a"]
 [ext_resource type="PackedScene" uid="uid://bx8b8yvq5h1jd" path="res://player/player.tscn" id="3_sasra"]
+[ext_resource type="Script" uid="uid://bgnq2a7b0txkb" path="res://arenas/goal_riser_handler.gd" id="4_xpexy"]
 [ext_resource type="PackedScene" uid="uid://yyhv57x8ch56" path="res://entity/pusher.tscn" id="8_njel3"]
 [ext_resource type="PackedScene" uid="uid://dsc4fwneck132" path="res://goals/siege_goal.tscn" id="8_xpexy"]
 [ext_resource type="PackedScene" uid="uid://cq82bbnw3xp8x" path="res://entity/grabber.tscn" id="9_njel3"]
@@ -55,12 +56,15 @@ GOAL_A = NodePath("../../SiegeGoalA")
 GOAL_B = NodePath("../../SiegeGoalB")
 MAX_SCORE = 2
 
+[node name="GoalRiserHandler" type="Node" parent="GameHandler" unique_id=513452643]
+script = ExtResource("4_xpexy")
+
 [node name="SpawnPoints" type="Node3D" parent="." unique_id=1915680425]
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
 [node name="BallSpawn" type="Marker3D" parent="SpawnPoints" unique_id=864193743]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.313, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15, 0)
 metadata/_edit_lock_ = true
 
 [node name="SpawnsA" type="Node3D" parent="SpawnPoints" unique_id=239789778]
@@ -121,6 +125,7 @@ metadata/_edit_lock_ = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 165)
 metadata/_edit_lock_ = true
 
+[connection signal="goal_scored" from="GameHandler/PointHandler" to="GameHandler/GoalRiserHandler" method="_on_point_handler_goal_scored"]
 [connection signal="victory" from="GameHandler/PointHandler" to="." method="_on_point_handler_victory"]
 
 [editable path="GameHandler"]

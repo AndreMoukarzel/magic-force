@@ -2,7 +2,7 @@ extends Control
 
 signal victory(winner_team: String)
 signal brasil
-signal goal_scored
+signal goal_scored(team_that_scored: String)
 
 @export var GOAL_A: Node3D
 @export var GOAL_B: Node3D
@@ -24,6 +24,7 @@ func goal_was_scored(team: String) -> void:
 		
 		if SCORE_A >= MAX_SCORE:
 			emit_signal("victory", "A")
+		emit_signal("goal_scored", "A")
 		
 	elif team == "B":
 		SCORE_B += 1
@@ -31,10 +32,10 @@ func goal_was_scored(team: String) -> void:
 		
 		if SCORE_B >= MAX_SCORE:
 			emit_signal("victory", "B")
+		emit_signal("goal_scored", "B")
 	
 	if (SCORE_A == 7 and SCORE_B == 1) or (SCORE_A == 1 and SCORE_B == 7):
 		emit_signal("brasil")
-	emit_signal("goal_scored")
 
 
 func reactivate_goals() -> void:

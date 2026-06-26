@@ -30,6 +30,8 @@ func spawn_ball() -> void:
 
 func spawn_players() -> void:
 	for Player in PLAYERS.get_children():
+		if "force_release_grab" in Player:
+			Player.force_release_grab.rpc()
 		if "TEAM" in Player:
 			spawn_player(Player, Player.TEAM)
 
@@ -48,7 +50,7 @@ func spawn_player(Player: Node3D, team: String="A") -> void:
 	Player.global_position = closest_available_spawn.global_position
 
 
-func goal_was_scored() -> void:
+func goal_was_scored(_team_that_scored: String) -> void:
 	$GoalRespawnTimer.start()
 	# DOES NOT exclude the ball, but make it so it can't be interacted with
 	ACTIVE_BALL.set_collision_layer_value(2, false)

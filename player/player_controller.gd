@@ -151,6 +151,11 @@ func inverted_rotation(base_rotation: Vector3) -> Vector3:
 	return Vector3(-base_rotation.x, base_rotation.y + PI, 0)
 
 
+@rpc("call_local")
+func force_release_grab():
+	$ProjectileGrab.forced_release()
+
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("primary_action"):
 		$ProjectileGrab.grab()

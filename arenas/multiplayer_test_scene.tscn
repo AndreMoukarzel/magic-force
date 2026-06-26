@@ -5,6 +5,7 @@
 [ext_resource type="Shader" uid="uid://b3cewpk8rgkox" path="res://arenas/sky.tres" id="2_8odck"]
 [ext_resource type="PackedScene" uid="uid://dyedx7iawobee" path="res://arenas/arena.tscn" id="3_a8rpr"]
 [ext_resource type="PackedScene" uid="uid://dsc4fwneck132" path="res://goals/siege_goal.tscn" id="4_8odck"]
+[ext_resource type="Script" uid="uid://bgnq2a7b0txkb" path="res://arenas/goal_riser_handler.gd" id="4_bcydl"]
 [ext_resource type="Script" uid="uid://chgisaopbn87c" path="res://arenas/capy_spawner.gd" id="6_unas5"]
 
 [sub_resource type="Gradient" id="Gradient_unas5"]
@@ -37,6 +38,12 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath("GameHandler/SpawnHandler/Ball:linear_velocity")
 properties/1/spawn = true
 properties/1/replication_mode = 1
+properties/2/path = NodePath("SiegeGoalA:position")
+properties/2/spawn = true
+properties/2/replication_mode = 2
+properties/3/path = NodePath("SiegeGoalB:position")
+properties/3/spawn = true
+properties/3/replication_mode = 2
 
 [node name="MultiplayerTestScene" type="Node3D" unique_id=713060461]
 script = ExtResource("2_3d02y")
@@ -59,6 +66,9 @@ PLAYERS = NodePath("../../Players")
 [node name="PointHandler" parent="GameHandler" index="1" node_paths=PackedStringArray("GOAL_A", "GOAL_B")]
 GOAL_A = NodePath("../../SiegeGoalA")
 GOAL_B = NodePath("../../SiegeGoalB")
+
+[node name="GoalRiserHandler" type="Node" parent="GameHandler" unique_id=2137304286]
+script = ExtResource("4_bcydl")
 
 [node name="SpawnPoints" type="Node3D" parent="." unique_id=1290462131]
 metadata/_edit_group_ = true
@@ -132,6 +142,7 @@ one_shot = true
 
 [connection signal="respawn" from="GameHandler/SpawnHandler" to="." method="_on_spawn_handler_respawn"]
 [connection signal="brasil" from="GameHandler/PointHandler" to="." method="_on_point_handler_brasil"]
+[connection signal="goal_scored" from="GameHandler/PointHandler" to="GameHandler/GoalRiserHandler" method="_on_point_handler_goal_scored"]
 [connection signal="victory" from="GameHandler/PointHandler" to="." method="_on_point_handler_victory"]
 
 [editable path="GameHandler"]
