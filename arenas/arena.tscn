@@ -8,6 +8,9 @@ size = Vector3(150, 1, 400)
 [sub_resource type="BoxShape3D" id="BoxShape3D_qfwod"]
 size = Vector3(150, 1, 400)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_erld0"]
+size = Vector3(10, 200, 430)
+
 [node name="Arena" type="Node3D" unique_id=1462885883]
 
 [node name="Ground" type="StaticBody3D" parent="." unique_id=568705781]
@@ -37,3 +40,35 @@ cell_scale = 6.0
 data = {
 "cells": PackedInt32Array(65523, 0, 1441809, 65524, 0, 1441809, 65525, 0, 1441809, 65526, 0, 1441809, 65527, 0, 1441809, 65528, 0, 1441809, 65529, 0, 1441809, 65530, 0, 1441809, 65530, 1, 655377, 5, 65535, 17, 6, 65535, 1441809, 7, 65535, 1441809, 8, 65535, 1441809, 9, 65535, 1441809, 10, 65535, 1441809, 11, 65535, 1441809, 12, 65535, 1441809, 4, 65531, 1441809, 65530, 2, 17, 65530, 4, 17, 65530, 3, 17, 65531, 4, 1441809, 65532, 4, 1441809, 65533, 4, 1441809, 3, 65531, 1441809, 2, 65531, 1441809, 1, 65531, 1441809, 65534, 4, 1441809, 65535, 4, 1441809, 2, 4, 1441809, 3, 4, 1441809, 4, 4, 1441809, 0, 65531, 1048593, 65532, 65531, 1048593, 65533, 65531, 1048593, 5, 65531, 17, 5, 65532, 17, 5, 65533, 17, 5, 65534, 17, 65530, 65535, 17, 65530, 65534, 17, 65530, 65533, 17, 65530, 65532, 17, 65530, 65531, 17, 5, 0, 17, 5, 1, 17, 5, 2, 17, 5, 3, 17, 5, 4, 17, 65531, 65531, 1441809)
 }
+
+[node name="Wall1" type="StaticBody3D" parent="." unique_id=1272276731]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -87, 100, 0)
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall1" unique_id=1489680765]
+shape = SubResource("BoxShape3D_erld0")
+
+[node name="Wall2" type="StaticBody3D" parent="." unique_id=691380345]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87, 100, 0)
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall2" unique_id=1631588657]
+shape = SubResource("BoxShape3D_erld0")
+
+[node name="Wall3" type="StaticBody3D" parent="." unique_id=505932550]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 100, -207)
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall3" unique_id=1130329401]
+shape = SubResource("BoxShape3D_erld0")
+
+[node name="Wall4" type="StaticBody3D" parent="." unique_id=337351904]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 100, 207)
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall4" unique_id=845983290]
+shape = SubResource("BoxShape3D_erld0")
