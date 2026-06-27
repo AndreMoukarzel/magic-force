@@ -1,42 +1,82 @@
 [gd_scene format=3 uid="uid://ccqkiop2b4ieq"]
 
 [ext_resource type="Script" uid="uid://buinaap842mrl" path="res://lobby/steam_hud.gd" id="1_vd173"]
+[ext_resource type="Texture2D" uid="uid://dlgxkbmhgxx" path="res://lobby/assets/botao.png" id="2_vd173"]
+[ext_resource type="Texture2D" uid="uid://c786exqdh4yni" path="res://lobby/assets/botao_dark.png" id="3_h55eu"]
+[ext_resource type="Texture2D" uid="uid://cky56674m2oh7" path="res://lobby/assets/refresh.png" id="4_35i57"]
+[ext_resource type="Texture2D" uid="uid://cpwab0s6mqsxg" path="res://lobby/assets/refresh_dark.png" id="5_gbpe4"]
+[ext_resource type="Texture2D" uid="uid://uw0y64n0jme1" path="res://lobby/assets/panel.png" id="6_gbpe4"]
 
 [node name="SteamHud" type="VBoxContainer" unique_id=300595889]
 offset_right = 120.0
 offset_bottom = 170.0
+scale = Vector2(0.5, 0.5)
 size_flags_horizontal = 2
 size_flags_vertical = 4
+theme_override_constants/separation = 20
 script = ExtResource("1_vd173")
 
-[node name="Host" type="Button" parent="." unique_id=928222978]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1538895427]
 layout_mode = 2
-text = "Host Steam"
+theme_override_constants/separation = 15
 
-[node name="Panel" type="Panel" parent="." unique_id=1374165066]
-custom_minimum_size = Vector2(120, 100)
+[node name="Host" type="TextureButton" parent="HBoxContainer" unique_id=514054864]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
+texture_normal = ExtResource("2_vd173")
+texture_pressed = ExtResource("3_h55eu")
+texture_hover = ExtResource("2_vd173")
+texture_disabled = ExtResource("2_vd173")
+texture_focused = ExtResource("2_vd173")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Panel" unique_id=1517892223]
+[node name="Label" type="Label" parent="HBoxContainer/Host" unique_id=52423467]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 26
+text = "Host on Steam"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="LoadedLobbies" type="VBoxContainer" parent="Panel/ScrollContainer" unique_id=1251490348]
+[node name="ListLobbies" type="TextureButton" parent="HBoxContainer" unique_id=1597048730]
+layout_mode = 2
+texture_normal = ExtResource("4_35i57")
+texture_pressed = ExtResource("5_gbpe4")
+texture_hover = ExtResource("4_35i57")
+texture_disabled = ExtResource("4_35i57")
+texture_focused = ExtResource("4_35i57")
+
+[node name="Panel" type="TextureRect" parent="." unique_id=1201770869]
+custom_minimum_size = Vector2(120, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+texture = ExtResource("6_gbpe4")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=1884055735]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 8
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer" unique_id=1517892223]
+layout_mode = 2
+
+[node name="LoadedLobbies" type="VBoxContainer" parent="Panel/MarginContainer/ScrollContainer" unique_id=1251490348]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1538895427]
-layout_mode = 2
-
-[node name="ListLobbies" type="Button" parent="HBoxContainer" unique_id=1353306642]
-layout_mode = 2
-text = "List Lobbies"
-
-[connection signal="pressed" from="Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="HBoxContainer/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="HBoxContainer/ListLobbies" to="." method="_on_list_lobbies_pressed"]

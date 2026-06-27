@@ -2,39 +2,98 @@
 
 [ext_resource type="Script" uid="uid://bngi2ui34dc5n" path="res://multiplayer/enet_multiplayer.gd" id="1_bexgp"]
 [ext_resource type="Script" uid="uid://v7xsxuki0erb" path="res://lobby/local_play.gd" id="1_ocnod"]
+[ext_resource type="Texture2D" uid="uid://dlgxkbmhgxx" path="res://lobby/assets/botao.png" id="2_bkxwr"]
+[ext_resource type="Texture2D" uid="uid://c786exqdh4yni" path="res://lobby/assets/botao_dark.png" id="3_xl57g"]
 
 [node name="LocalPlay" type="VBoxContainer" unique_id=91199678]
+scale = Vector2(0.85, 0.85)
 size_flags_horizontal = 6
 size_flags_vertical = 4
+theme_override_constants/separation = 20
+alignment = 1
 script = ExtResource("1_ocnod")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=445838246]
 layout_mode = 2
 theme_override_constants/margin_top = 16
-theme_override_constants/margin_bottom = 16
+theme_override_constants/margin_bottom = 70
 
-[node name="TestScene" type="Button" parent="MarginContainer" unique_id=1807980717]
+[node name="TestScene" type="TextureButton" parent="MarginContainer" unique_id=554732915]
+modulate = Color(1, 1, 1, 0.9019608)
 layout_mode = 2
+texture_normal = ExtResource("2_bkxwr")
+texture_pressed = ExtResource("3_xl57g")
+texture_hover = ExtResource("2_bkxwr")
+texture_disabled = ExtResource("2_bkxwr")
+texture_focused = ExtResource("2_bkxwr")
+
+[node name="Label" type="Label" parent="MarginContainer/TestScene" unique_id=587197065]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 26
 text = "Test Scene"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Host" type="Button" parent="." unique_id=1530725898]
+[node name="Host" type="TextureButton" parent="." unique_id=830060271]
+modulate = Color(1, 1, 1, 0.9019608)
 layout_mode = 2
+texture_normal = ExtResource("2_bkxwr")
+texture_pressed = ExtResource("3_xl57g")
+texture_hover = ExtResource("2_bkxwr")
+texture_disabled = ExtResource("2_bkxwr")
+texture_focused = ExtResource("2_bkxwr")
+
+[node name="Label" type="Label" parent="Host" unique_id=1470018547]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 26
 text = "Host"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="JoinMultiplayer" type="TextureButton" parent="." unique_id=1901349027]
+modulate = Color(1, 1, 1, 0.9019608)
+layout_mode = 2
+texture_normal = ExtResource("2_bkxwr")
+texture_pressed = ExtResource("3_xl57g")
+texture_hover = ExtResource("2_bkxwr")
+texture_disabled = ExtResource("2_bkxwr")
+texture_focused = ExtResource("2_bkxwr")
+
+[node name="ConnectionTimeout" type="Timer" parent="JoinMultiplayer" unique_id=592596892]
+unique_name_in_owner = true
+wait_time = 3.0
+one_shot = true
+
+[node name="Label" type="Label" parent="JoinMultiplayer" unique_id=1410691205]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 26
+text = "Join Online"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="JoinIP" type="LineEdit" parent="." unique_id=146255123]
 layout_mode = 2
 placeholder_text = "127.0.0.1"
 alignment = 1
 max_length = 15
-
-[node name="JoinMultiplayer" type="Button" parent="." unique_id=1231746939]
-layout_mode = 2
-text = "Join Online"
-
-[node name="ConnectionTimeout" type="Timer" parent="JoinMultiplayer" unique_id=592596892]
-unique_name_in_owner = true
-wait_time = 3.0
-one_shot = true
 
 [node name="BaseMenuError" type="Label" parent="." unique_id=126418095]
 unique_name_in_owner = true

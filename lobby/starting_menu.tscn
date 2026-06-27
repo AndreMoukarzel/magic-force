@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://0mk7es65ny1j"]
 
+[ext_resource type="Texture2D" uid="uid://xr4q6kvof51v" path="res://lobby/Realistic Background.png" id="1_67a7l"]
 [ext_resource type="PackedScene" uid="uid://bnimf6pdpvl35" path="res://lobby/local_play.tscn" id="2_3dfk4"]
 [ext_resource type="PackedScene" uid="uid://ccqkiop2b4ieq" path="res://lobby/steam_hud.tscn" id="3_3dfk4"]
 
@@ -10,6 +11,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=940611311]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_67a7l")
+expand_mode = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=844510862]
 layout_mode = 1

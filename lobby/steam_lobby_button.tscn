@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://dn82g8ro8mco7"]
+
+[ext_resource type="Texture2D" uid="uid://jsiudn4a3wci" path="res://lobby/assets/steam_lobby_button.png" id="1_0adhc"]
+[ext_resource type="Texture2D" uid="uid://g31esrq37kcf" path="res://lobby/assets/steam_lobby_button_dark.png" id="2_ri5xa"]
+
+[node name="SteamLobbyButton" type="TextureButton" unique_id=1441265690]
+texture_normal = ExtResource("1_0adhc")
+texture_pressed = ExtResource("2_ri5xa")
+texture_hover = ExtResource("1_0adhc")
+texture_disabled = ExtResource("1_0adhc")
+texture_focused = ExtResource("1_0adhc")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="." unique_id=1303447183]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 26
+text = "Test Scene"
+horizontal_alignment = 1
+vertical_alignment = 1
