@@ -48,10 +48,7 @@ func _on_connection_timeout_timeout() -> void:
 
 
 func change_to_scn(scn_path: String) -> void:
-	var blackout_tween = create_tween()
-	blackout_tween.tween_property($"../../Blackout", "modulate", Color(0.0, 0.0, 0.0, 1.0), 1.0)
-	
-	var tween: Tween = fade_out($"../../AudioStreamPlayer")
+	var tween: Tween = get_parent().get_parent().fade_out()
 	await tween.finished
 	get_tree().change_scene_to_file(scn_path)
 
@@ -60,8 +57,5 @@ func change_to_lobby_scn() -> void:
 	get_tree().change_scene_to_file("res://lobby/lobby.tscn")
 
 
-func fade_out(AudioPlayer: AudioStreamPlayer, duration: float = 1.0) -> Tween:
-	var tween = create_tween()
-	# Transitioning from current volume to -80 dB (which is inaudible)
-	tween.tween_property(AudioPlayer, "volume_db", -80.0, duration)
-	return tween
+func _on_exit_pressed() -> void:
+	get_tree().quit()
