@@ -1,16 +1,46 @@
 [gd_scene format=3 uid="uid://d1p60ysr3u25t"]
 
+[ext_resource type="Texture2D" uid="uid://jsiudn4a3wci" path="res://lobby/assets/steam_lobby_button.png" id="1_6mwb7"]
 [ext_resource type="Script" uid="uid://cba0erhu6tsc3" path="res://lobby/player_label.gd" id="1_22v78"]
 
-[node name="PlayerLabel" type="HFlowContainer" unique_id=1919461366]
-offset_right = 133.0
-offset_bottom = 24.0
+[node name="PlayerLabel" type="Control" unique_id=1372506913]
+custom_minimum_size = Vector2(250, 40)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 200.0
+offset_bottom = 40.0
 script = ExtResource("1_22v78")
 
-[node name="Name" type="Label" parent="." unique_id=1048479691]
+[node name="Container" type="TextureRect" parent="." unique_id=1542562080]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_6mwb7")
+expand_mode = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="Container" unique_id=824563555]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 4
+
+[node name="Name" type="Label" parent="Container/MarginContainer" unique_id=1048479691]
+unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 0
 text = "Player Name"
 
-[node name="Ready" type="CheckBox" parent="." unique_id=377169581]
+[node name="Ready" type="CheckBox" parent="Container/MarginContainer" unique_id=377169581]
+unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 8
 button_mask = 0

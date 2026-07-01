@@ -1,7 +1,12 @@
 [gd_scene format=3 uid="uid://c67bb553mf8lh"]
 
 [ext_resource type="Script" uid="uid://l64y7c1wjkps" path="res://lobby/lobby.gd" id="1_ll2xe"]
+[ext_resource type="Texture2D" uid="uid://xr4q6kvof51v" path="res://lobby/Realistic Background.png" id="2_4veey"]
 [ext_resource type="Script" uid="uid://bwcqt5iw3tocy" path="res://lobby/team_display.gd" id="2_mnguq"]
+[ext_resource type="Texture2D" uid="uid://bq83xip00a0lo" path="res://lobby/assets/flag_red.png" id="3_gi5k6"]
+[ext_resource type="Texture2D" uid="uid://nr6pgnxf46v6" path="res://lobby/assets/flag_blue.png" id="4_dk04u"]
+[ext_resource type="Texture2D" uid="uid://chpuggayl74r3" path="res://lobby/assets/change_team.png" id="4_qfux7"]
+[ext_resource type="Texture2D" uid="uid://bgx12ky7srbpq" path="res://lobby/assets/change_team_dark.png" id="5_4veey"]
 
 [node name="Lobby" type="Control" unique_id=827044749]
 layout_mode = 3
@@ -12,6 +17,16 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ll2xe")
 
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1238335809]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_4veey")
+expand_mode = 3
+
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=2070492877]
 layout_mode = 1
 anchors_preset = 15
@@ -20,17 +35,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 50
+theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 50
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1781101225]
 layout_mode = 2
-
-[node name="LobbyId" type="Label" parent="MarginContainer/VBoxContainer" unique_id=614405741]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Session ID:"
 
 [node name="TeamDisplay" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1918383306]
 unique_name_in_owner = true
@@ -38,73 +48,113 @@ layout_mode = 2
 size_flags_vertical = 3
 script = ExtResource("2_mnguq")
 
-[node name="TeamA" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TeamDisplay" unique_id=1299908873]
+[node name="TeamA" type="TextureRect" parent="MarginContainer/VBoxContainer/TeamDisplay" unique_id=1733458452]
+modulate = Color(1, 1, 1, 0.8627451)
 layout_mode = 2
 size_flags_horizontal = 3
+texture = ExtResource("3_gi5k6")
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamA" unique_id=1411733400]
-layout_mode = 2
-text = "Team Red"
-
-[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamA" unique_id=1427991958]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="TeamAMembers" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamA/Panel" unique_id=1695811806]
-unique_name_in_owner = true
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamA" unique_id=1441705114]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 30
 
-[node name="ChangeTeam" type="Button" parent="MarginContainer/VBoxContainer/TeamDisplay" unique_id=2044628709]
+[node name="LabelMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamA/VBoxContainer" unique_id=1301405798]
+layout_mode = 2
+theme_override_constants/margin_top = 35
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamA/VBoxContainer/LabelMargin" unique_id=1411733400]
+layout_mode = 2
+text = "Team Red"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TeamMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamA/VBoxContainer" unique_id=1520920757]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 100
+
+[node name="TeamAMembers" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamA/VBoxContainer/TeamMargin" unique_id=1695811806]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Buttons" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TeamDisplay" unique_id=2021943377]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="ChangeTeam" type="TextureButton" parent="MarginContainer/VBoxContainer/TeamDisplay/Buttons" unique_id=1430047548]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 4
-text = "Change Team"
+texture_normal = ExtResource("4_qfux7")
+texture_pressed = ExtResource("5_4veey")
+texture_hover = ExtResource("4_qfux7")
+texture_disabled = ExtResource("4_qfux7")
+texture_focused = ExtResource("4_qfux7")
 
-[node name="TeamB" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TeamDisplay" unique_id=972434469]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamB" unique_id=1542189251]
-layout_mode = 2
-text = "Team Blue"
-
-[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamB" unique_id=1763502740]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="TeamBMembers" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamB/Panel" unique_id=413994118]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Buttons" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1880581729]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="Ready" type="Button" parent="MarginContainer/VBoxContainer/Buttons" unique_id=658967567]
+[node name="Ready" type="Button" parent="MarginContainer/VBoxContainer/TeamDisplay/Buttons" unique_id=658967567]
 layout_mode = 2
 text = "Ready"
 
-[node name="Start" type="Button" parent="MarginContainer/VBoxContainer/Buttons" unique_id=153019040]
+[node name="Start" type="Button" parent="MarginContainer/VBoxContainer/TeamDisplay/Buttons" unique_id=153019040]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "The host may start the game when everyone is ready"
 disabled = true
 text = "Start"
 
+[node name="TeamB" type="TextureRect" parent="MarginContainer/VBoxContainer/TeamDisplay" unique_id=821943694]
+modulate = Color(1, 1, 1, 0.8627451)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("4_dk04u")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamB" unique_id=978315726]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="LabelMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamB/VBoxContainer" unique_id=45498644]
+layout_mode = 2
+theme_override_constants/margin_top = 35
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamB/VBoxContainer/LabelMargin" unique_id=1542189251]
+layout_mode = 2
+text = "Team Blue"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TeamMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamB/VBoxContainer" unique_id=1624258258]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 100
+
+[node name="TeamBMembers" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TeamDisplay/TeamB/VBoxContainer/TeamMargin" unique_id=413994118]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="Exit" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1963657954]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Exit"
+
+[node name="LobbyId" type="Label" parent="MarginContainer/VBoxContainer" unique_id=614405741]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Session ID:"
 
 [node name="Players" type="Node" parent="." unique_id=848201236]
 
@@ -113,7 +163,7 @@ _spawnable_scenes = PackedStringArray("uid://dnh47e40ql5yd")
 spawn_path = NodePath("../Players")
 spawn_limit = 8
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/TeamDisplay/ChangeTeam" to="." method="_on_change_team_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Buttons/Ready" to="." method="_on_ready_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Buttons/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/TeamDisplay/Buttons/ChangeTeam" to="." method="_on_change_team_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/TeamDisplay/Buttons/Ready" to="." method="_on_ready_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/TeamDisplay/Buttons/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
