@@ -1468,6 +1468,7 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 stream = ExtResource("5_w5bcw")
 volume_db = -16.0
+bus = &"SFX"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=171475078]
 libraries/ = SubResource("AnimationLibrary_bltta")

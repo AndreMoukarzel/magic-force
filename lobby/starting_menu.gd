@@ -10,8 +10,33 @@ func fade_out(duration: float = 1.0) -> Tween:
 
 
 func _on_options_pressed() -> void:
-	pass # Replace with function body.
+	$MarginContainer/VBoxContainer/Back.show()
+	$MarginContainer/VBoxContainer/Options.hide()
+	$OptionsMenu.show()
+	$HBoxContainer.hide()
+
+
+func _on_back_pressed() -> void:
+	$MarginContainer/VBoxContainer/Back.hide()
+	$MarginContainer/VBoxContainer/Options.show()
+	$OptionsMenu.hide()
+	$HBoxContainer.show()
 
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()
+
+
+func _on_master_volume_volume_changed(value: float) -> void:
+	var bus_index = AudioServer.get_bus_index("Master")
+	AudioServer.set_bus_volume_db(bus_index, value)
+
+
+func _on_music_volume_volume_changed(value: float) -> void:
+	var bus_index = AudioServer.get_bus_index("Music")
+	AudioServer.set_bus_volume_db(bus_index, value)
+
+
+func _on_sfx_volume_volume_changed(value: float) -> void:
+	var bus_index = AudioServer.get_bus_index("SFX")
+	AudioServer.set_bus_volume_db(bus_index, value)

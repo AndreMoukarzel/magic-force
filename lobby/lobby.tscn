@@ -168,7 +168,9 @@ spawn_limit = 8
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=2139886528]
 stream = ExtResource("8_l3xxi")
+volume_db = -5.0
 autoplay = true
+bus = &"Music"
 parameters/looping = true
 
 [node name="Blackout" type="TextureRect" parent="." unique_id=1374310400]

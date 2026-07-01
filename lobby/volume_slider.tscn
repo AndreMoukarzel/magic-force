@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://0bd8dg2quhd"]
+
+[ext_resource type="Texture2D" uid="uid://jsiudn4a3wci" path="res://lobby/assets/steam_lobby_button.png" id="1_ug3tp"]
+[ext_resource type="Script" uid="uid://m70giflbsm81" path="res://lobby/volume_slider.gd" id="1_yeav0"]
+
+[node name="VolumeSlider" type="HBoxContainer" unique_id=267101495]
+theme_override_constants/separation = 10
+alignment = 1
+script = ExtResource("1_yeav0")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1887275492]
+layout_mode = 2
+theme_override_constants/margin_right = 12
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer" unique_id=1804682741]
+layout_mode = 2
+texture = ExtResource("1_ug3tp")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="MarginContainer/TextureRect" unique_id=731680253]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 18
+text = "Volume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="." unique_id=1720775786]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="Value" type="Label" parent="." unique_id=1578291085]
+layout_mode = 2
+text = " 90"
+horizontal_alignment = 2
+
+[connection signal="drag_ended" from="HSlider" to="." method="_on_h_slider_drag_ended"]
