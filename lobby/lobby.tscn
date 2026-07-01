@@ -7,6 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://nr6pgnxf46v6" path="res://lobby/assets/flag_blue.png" id="4_dk04u"]
 [ext_resource type="Texture2D" uid="uid://chpuggayl74r3" path="res://lobby/assets/change_team.png" id="4_qfux7"]
 [ext_resource type="Texture2D" uid="uid://bgx12ky7srbpq" path="res://lobby/assets/change_team_dark.png" id="5_4veey"]
+[ext_resource type="AudioStream" uid="uid://dyp6ph3seefbc" path="res://lobby/music/youve got a friend in me.mp3" id="8_l3xxi"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_4veey"]
 
 [node name="Lobby" type="Control" unique_id=827044749]
 layout_mode = 3
@@ -162,6 +165,22 @@ text = "Session ID:"
 _spawnable_scenes = PackedStringArray("uid://dnh47e40ql5yd")
 spawn_path = NodePath("../Players")
 spawn_limit = 8
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=2139886528]
+stream = ExtResource("8_l3xxi")
+autoplay = true
+parameters/looping = true
+
+[node name="Blackout" type="TextureRect" parent="." unique_id=1374310400]
+modulate = Color(0, 0, 0, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("CanvasTexture_4veey")
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/TeamDisplay/Buttons/ChangeTeam" to="." method="_on_change_team_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/TeamDisplay/Buttons/Ready" to="." method="_on_ready_pressed"]

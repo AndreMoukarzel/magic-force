@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cvj3vh5nu4h1y"
+path="res://.godot/imported/Marcus Warner - To Build An Army.mp3-ab0e4be3e476d0dc84a7b243fa823378.mp3str"
+
+[deps]
+
+source_file="res://lobby/music/Marcus Warner - To Build An Army.mp3"
+dest_files=["res://.godot/imported/Marcus Warner - To Build An Army.mp3-ab0e4be3e476d0dc84a7b243fa823378.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

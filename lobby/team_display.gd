@@ -13,7 +13,11 @@ func get_less_populous_team() -> String:
 
 func get_team_players(team_name: String) -> Array:
 	## Returns list of names of players on specified Team
-	var team_node: VBoxContainer = get_node("Team" + team_name).get_node("Panel/Team" + team_name + "Members")
+	var team_node: VBoxContainer = get_node(
+		"Team" + team_name
+		).get_node(
+			"VBoxContainer/TeamMargin/Team" + team_name + "Members"
+	)
 	var player_names: Array[String] = []
 	
 	for player_label in team_node.get_children():
@@ -38,6 +42,7 @@ func add_player_label(
 	player_id: int, player_name: String, team: String, is_ready: bool=false, steam_name: String=""
 	) -> void:
 	## Adds PlayerLabel object to specified Team's Members Panel
+	print("Adding player label for ", player_id)
 	var NewLabel := PLAYER_LABEL_SCN.instantiate()
 	NewLabel.name = str(player_id)
 	NewLabel.set_player_name(player_name)

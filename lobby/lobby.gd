@@ -118,6 +118,8 @@ func get_ready(player_id: int) -> void:
 
 @rpc("call_local")
 func start_game_to_all() -> void:
+	var tween: Tween = fade_out($AudioStreamPlayer)
+	await tween.finished
 	get_tree().change_scene_to_file("res://arenas/multiplayer_test_scene.tscn")
 
 
@@ -155,6 +157,23 @@ func update_start_state() -> void:
 		%Start.disabled = true
 
 
+func fade_out(AudioPlayer: AudioStreamPlayer, duration: float = 1.0) -> Tween:
+	var tween = create_tween()
+	# Transitioning from current volume to -80 dB (which is inaudible)
+	tween.tween_property(AudioPlayer, "volume_db", -80.0, duration)
+	tween.tween_property($Blackout, "modulate", Color(0.0, 0.0, 0.0, 1.0), duration)
+	return tween
+
+
+func fade_in(AudioPlayer: AudioStreamPlayer, duration: float = 1.0) -> void:
+	AudioPlayer.volume_db = -80.0
+	$Blackout.modulate = Color(0.0, 0.0, 0.0, 1.0)
+	var tween = create_tween()
+	# Transitioning from current volume to -80 dB (which is inaudible)
+	tween.tween_property(AudioPlayer, "volume_db", 0.0, duration)
+	tween.tween_property($Blackout, "modulate", Color(0.0, 0.0, 0.0, 0.0), duration)
+
+
 func _on_change_team_pressed() -> void:
 	var player_id: int = multiplayer.get_unique_id()
 	change_team.rpc(player_id)
@@ -177,12 +196,17 @@ func _on_start_pressed() -> void:
 func _on_server_disconnected() -> void:
 	print("Server lost")
 	if multiplayer:
+		Network.leave_lobby()
 		multiplayer.multiplayer_peer.close()
 	if get_tree():
+		var tween: Tween = fade_out($AudioStreamPlayer)
+		await tween.finished
 		get_tree().change_scene_to_file("res://lobby/starting_menu.tscn")
 
 
 func _on_exit_pressed() -> void:
 	Network.leave_lobby()
 	multiplayer.multiplayer_peer.close()
+	var tween: Tween = fade_out($AudioStreamPlayer)
+	await tween.finished
 	get_tree().change_scene_to_file("res://lobby/starting_menu.tscn")

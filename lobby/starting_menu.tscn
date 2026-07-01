@@ -3,7 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://xr4q6kvof51v" path="res://lobby/Realistic Background.png" id="1_67a7l"]
 [ext_resource type="PackedScene" uid="uid://bnimf6pdpvl35" path="res://lobby/local_play.tscn" id="2_3dfk4"]
 [ext_resource type="PackedScene" uid="uid://ccqkiop2b4ieq" path="res://lobby/steam_hud.tscn" id="3_3dfk4"]
-[ext_resource type="AudioStream" uid="uid://csrhir4opfkcr" path="res://lobby/theme of juno.mp3" id="4_3dfk4"]
+[ext_resource type="AudioStream" uid="uid://csrhir4opfkcr" path="res://lobby/music/theme of juno.mp3" id="4_3dfk4"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_3dfk4"]
 
 [node name="StartingMenu" type="Control" unique_id=2012985928]
 layout_mode = 3
@@ -43,8 +45,18 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 6
 
+[node name="Blackout" type="TextureRect" parent="." unique_id=1658853555]
+modulate = Color(0, 0, 0, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("CanvasTexture_3dfk4")
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=555785009]
 stream = ExtResource("4_3dfk4")
-volume_db = -20.0
 autoplay = true
-parameters/looping = false
+parameters/looping = true
