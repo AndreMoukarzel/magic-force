@@ -143,6 +143,7 @@ one_shot = true
 [connection signal="respawn" from="GameHandler/SpawnHandler" to="." method="_on_spawn_handler_respawn"]
 [connection signal="brasil" from="GameHandler/PointHandler" to="." method="_on_point_handler_brasil"]
 [connection signal="goal_scored" from="GameHandler/PointHandler" to="GameHandler/GoalRiserHandler" method="_on_point_handler_goal_scored"]
+[connection signal="match_draw" from="GameHandler/PointHandler" to="." method="_on_point_handler_match_draw"]
 [connection signal="victory" from="GameHandler/PointHandler" to="." method="_on_point_handler_victory"]
 
 [editable path="GameHandler"]

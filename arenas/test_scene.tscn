@@ -126,6 +126,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 165)
 metadata/_edit_lock_ = true
 
 [connection signal="goal_scored" from="GameHandler/PointHandler" to="GameHandler/GoalRiserHandler" method="_on_point_handler_goal_scored"]
+[connection signal="match_draw" from="GameHandler/PointHandler" to="." method="_on_point_handler_match_draw"]
 [connection signal="victory" from="GameHandler/PointHandler" to="." method="_on_point_handler_victory"]
 
 [editable path="GameHandler"]

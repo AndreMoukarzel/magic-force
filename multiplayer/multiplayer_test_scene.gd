@@ -98,3 +98,11 @@ func _on_point_handler_brasil() -> void:
 
 func _on_spawn_handler_respawn() -> void:
 	$CapySpawner.clean_capys.rpc()
+
+
+func _on_point_handler_match_draw() -> void:
+	$GameHandler/SpawnHandler/GoalRespawnTimer.set_paused(true)
+	$BackToLobby.start()
+	await $BackToLobby.timeout
+	if multiplayer.is_server():
+		back_to_lobby.rpc()

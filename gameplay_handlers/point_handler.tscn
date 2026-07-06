@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://qkf6p7xymemo"]
 
 [ext_resource type="Script" uid="uid://hcj0epu188wp" path="res://gameplay_handlers/point_handler.gd" id="1_qvxy1"]
+[ext_resource type="Texture2D" uid="uid://bq83xip00a0lo" path="res://lobby/assets/flag_red.png" id="2_qasek"]
+[ext_resource type="Texture2D" uid="uid://nr6pgnxf46v6" path="res://lobby/assets/flag_blue.png" id="3_hldhu"]
 
 [node name="PointHandler" type="Control" unique_id=1917597936]
 layout_mode = 3
@@ -21,10 +23,65 @@ offset_bottom = 23.0
 grow_horizontal = 2
 theme_override_constants/separation = 30
 
-[node name="ScoreA" type="Label" parent="HBoxContainer" unique_id=170878673]
+[node name="TeamFlagA" type="TextureRect" parent="HBoxContainer" unique_id=14349812]
+custom_minimum_size = Vector2(40, 60)
 layout_mode = 2
-text = "0"
+texture = ExtResource("2_qasek")
+expand_mode = 3
 
-[node name="ScoreB" type="Label" parent="HBoxContainer" unique_id=1645040945]
-layout_mode = 2
+[node name="ScoreA" type="Label" parent="HBoxContainer/TeamFlagA" unique_id=170878673]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -11.5
+offset_right = 5.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
 text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimerLabel" type="Label" parent="HBoxContainer" unique_id=1819105675]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+text = "3:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TeamFlagB" type="TextureRect" parent="HBoxContainer" unique_id=145616682]
+custom_minimum_size = Vector2(40, 60)
+layout_mode = 2
+texture = ExtResource("3_hldhu")
+expand_mode = 3
+
+[node name="ScoreB" type="Label" parent="HBoxContainer/TeamFlagB" unique_id=1645040945]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -11.5
+offset_right = 5.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="." unique_id=421492848]
+wait_time = 180.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
