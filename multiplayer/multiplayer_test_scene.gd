@@ -11,6 +11,8 @@ func _ready() -> void:
 	if multiplayer.is_server():
 		_create_all_player_characters(multiplayer.get_unique_id())
 		_set_players_authority()
+	else:
+		multiplayer.server_disconnected.connect(back_to_lobby)
 
 
 func _create_all_player_characters(server_id: int) -> void:
@@ -74,11 +76,14 @@ func _set_authority_to_client(player_id: int) -> void:
 	var Player = $Players.get_node(str(player_id))
 	if Player.TEAM == "B":
 		Player.get_node("CameraSpring").global_rotation = Vector3(0.0, deg_to_rad(180.0), 0.0)
+	Player.get_node("CameraSpring").connect("locked", _on_camera_spring_locked)
+	Player.get_node("CameraSpring").connect("unlocked", _on_camera_spring_unlocked)
 	Player.set_multiplayer_authority(player_id)
 
 
 @rpc("call_local")
 func back_to_lobby() -> void:
+	$GameMenu.hide()
 	Network.leave_lobby()
 	multiplayer.multiplayer_peer.close()
 	get_tree().change_scene_to_file("res://lobby/starting_menu.tscn")
@@ -106,3 +111,19 @@ func _on_point_handler_match_draw() -> void:
 	await $BackToLobby.timeout
 	if multiplayer.is_server():
 		back_to_lobby.rpc()
+
+
+func _on_resume_pressed() -> void:
+	$Players.get_node(str(multiplayer.get_unique_id())).get_node("CameraSpring").toggle_mouse_state()
+
+
+func _on_quit_pressed() -> void:
+	back_to_lobby.rpc()
+
+
+func _on_camera_spring_locked() -> void:
+	$GameMenu.hide()
+
+
+func _on_camera_spring_unlocked() -> void:
+	$GameMenu.show()

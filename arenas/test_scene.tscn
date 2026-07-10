@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://yyhv57x8ch56" path="res://entity/pusher.tscn" id="8_njel3"]
 [ext_resource type="PackedScene" uid="uid://dsc4fwneck132" path="res://goals/siege_goal.tscn" id="8_xpexy"]
 [ext_resource type="PackedScene" uid="uid://cq82bbnw3xp8x" path="res://entity/grabber.tscn" id="9_njel3"]
+[ext_resource type="PackedScene" uid="uid://cddx5sjwh0j7g" path="res://arenas/game_menu.tscn" id="10_hdb50"]
 
 [sub_resource type="Gradient" id="Gradient_xpexy"]
 interpolation_mode = 2
@@ -125,8 +126,17 @@ metadata/_edit_lock_ = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 165)
 metadata/_edit_lock_ = true
 
+[node name="GameMenu" parent="." unique_id=1430908592 instance=ExtResource("10_hdb50")]
+visible = false
+
 [connection signal="goal_scored" from="GameHandler/PointHandler" to="GameHandler/GoalRiserHandler" method="_on_point_handler_goal_scored"]
 [connection signal="match_draw" from="GameHandler/PointHandler" to="." method="_on_point_handler_match_draw"]
 [connection signal="victory" from="GameHandler/PointHandler" to="." method="_on_point_handler_victory"]
+[connection signal="locked" from="Players/Player/CameraSpring" to="." method="_on_camera_spring_locked"]
+[connection signal="unlocked" from="Players/Player/CameraSpring" to="." method="_on_camera_spring_unlocked"]
+[connection signal="pressed" from="GameMenu/MarginContainer/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="GameMenu/MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
 
 [editable path="GameHandler"]
+[editable path="Players/Player"]
+[editable path="GameMenu"]

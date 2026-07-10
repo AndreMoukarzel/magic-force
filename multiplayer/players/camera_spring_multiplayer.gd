@@ -10,7 +10,4 @@ func _unhandled_input(event: InputEvent) -> void:
 			rotation.x = clamp(rotation.x, MIN_V_ANGLE, MAX_V_ANGLE)
 		
 		if event.is_action_pressed("open_menu"):
-			if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-			else:
-				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+			toggle_mouse_state()

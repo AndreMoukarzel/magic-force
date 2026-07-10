@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dsc4fwneck132" path="res://goals/siege_goal.tscn" id="4_8odck"]
 [ext_resource type="Script" uid="uid://bgnq2a7b0txkb" path="res://arenas/goal_riser_handler.gd" id="4_bcydl"]
 [ext_resource type="Script" uid="uid://chgisaopbn87c" path="res://arenas/capy_spawner.gd" id="6_unas5"]
+[ext_resource type="PackedScene" uid="uid://cddx5sjwh0j7g" path="res://arenas/game_menu.tscn" id="8_xynlu"]
 
 [sub_resource type="Gradient" id="Gradient_unas5"]
 interpolation_mode = 2
@@ -140,10 +141,16 @@ replication_config = SubResource("SceneReplicationConfig_8odck")
 wait_time = 5.0
 one_shot = true
 
+[node name="GameMenu" parent="." unique_id=1430908592 instance=ExtResource("8_xynlu")]
+visible = false
+
 [connection signal="respawn" from="GameHandler/SpawnHandler" to="." method="_on_spawn_handler_respawn"]
 [connection signal="brasil" from="GameHandler/PointHandler" to="." method="_on_point_handler_brasil"]
 [connection signal="goal_scored" from="GameHandler/PointHandler" to="GameHandler/GoalRiserHandler" method="_on_point_handler_goal_scored"]
 [connection signal="match_draw" from="GameHandler/PointHandler" to="." method="_on_point_handler_match_draw"]
 [connection signal="victory" from="GameHandler/PointHandler" to="." method="_on_point_handler_victory"]
+[connection signal="pressed" from="GameMenu/MarginContainer/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="GameMenu/MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
 
 [editable path="GameHandler"]
+[editable path="GameMenu"]

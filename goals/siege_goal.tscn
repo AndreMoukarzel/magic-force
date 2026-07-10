@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bpqmu8gqq8gea" path="res://goals/goal.gd" id="1_6tec8"]
 [ext_resource type="PackedScene" uid="uid://c1db6lh8cpq0q" path="res://goals/siege_tower_2.tscn" id="3_5t13c"]
 [ext_resource type="PackedScene" uid="uid://dd84r4wq5pwjd" path="res://goals/rocks_large_2.tscn" id="4_5t13c"]
+[ext_resource type="AudioStream" uid="uid://dcpu5rj5t448c" path="res://goals/freesound_community-referee-whistle-blow-gymnasium-6320.mp3" id="4_uyay0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ef6tv"]
 size = Vector3(7, 6, 5.235)
@@ -24,3 +25,8 @@ transform = Transform3D(-5.2453663e-07, 0, 12, 0, 12, 0, -12, 0, -5.2453663e-07,
 
 [node name="rocks-large3" parent="." unique_id=657246833 instance=ExtResource("4_5t13c")]
 transform = Transform3D(-12, 0, -1.0490733e-06, 0, 12, 0, 1.0490733e-06, 0, -12, -8, 0, 12)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=2113376933]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, 0)
+stream = ExtResource("4_uyay0")
+bus = &"SFX"

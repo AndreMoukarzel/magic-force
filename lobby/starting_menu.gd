@@ -1,6 +1,10 @@
 extends Control
 
 
+func _ready() -> void:
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+
+
 func fade_out(duration: float = 1.0) -> Tween:
 	var tween = create_tween()
 	# Transitioning from current volume to -80 dB (which is inaudible)
@@ -40,3 +44,10 @@ func _on_music_volume_volume_changed(value: float) -> void:
 func _on_sfx_volume_volume_changed(value: float) -> void:
 	var bus_index = AudioServer.get_bus_index("SFX")
 	AudioServer.set_bus_volume_db(bus_index, value)
+
+
+func _on_fullscreen_check_box_toggled(toggled_on: bool) -> void:
+	if toggled_on:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)

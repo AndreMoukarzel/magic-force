@@ -1,23 +1,38 @@
 extends SpringArm3D
 
 
+signal locked
+signal unlocked
+
+
 @export var SENS: float = 0.005
 @export_range(-90.0, 0.0, 0.1, "radians_as_degrees") var MIN_V_ANGLE: float = -PI/2
 @export_range(0.0, 90.0, 0.1, "radians_as_degrees") var MAX_V_ANGLE: float = PI/4
+
+var LOCKED: bool = true
 
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
+
+func toggle_mouse_state() -> void:
+	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		LOCKED = false
+		emit_signal("unlocked")
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		LOCKED = true
+		emit_signal("locked")
+
+
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
+	if LOCKED and (event is InputEventMouseMotion):
 		rotation.y -= event.relative.x * SENS
 		rotation.y = wrapf(rotation.y, 0.0, TAU)
 		rotation.x -= event.relative.y * SENS
 		rotation.x = clamp(rotation.x, MIN_V_ANGLE, MAX_V_ANGLE)
 	
 	if event.is_action_pressed("open_menu"):
-		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		else:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		toggle_mouse_state()
