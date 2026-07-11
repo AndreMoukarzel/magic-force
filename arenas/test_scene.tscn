@@ -139,4 +139,6 @@ visible = false
 
 [editable path="GameHandler"]
 [editable path="Players/Player"]
+[editable path="SiegeGoalB"]
+[editable path="SiegeGoalB/siege-tower2"]
 [editable path="GameMenu"]

@@ -17,5 +17,5 @@ volume_db = -10.0
 
 [node name="Riser" type="AudioStreamPlayer3D" parent="." unique_id=773589003]
 stream = ExtResource("4_mub3j")
-volume_db = -14.0
+volume_db = -20.0
 pitch_scale = 1.55

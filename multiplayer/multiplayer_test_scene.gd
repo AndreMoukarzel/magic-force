@@ -109,8 +109,7 @@ func _on_point_handler_match_draw() -> void:
 	$GameHandler/SpawnHandler/GoalRespawnTimer.set_paused(true)
 	$BackToLobby.start()
 	await $BackToLobby.timeout
-	if multiplayer.is_server():
-		back_to_lobby.rpc()
+	back_to_lobby.rpc()
 
 
 func _on_resume_pressed() -> void:
