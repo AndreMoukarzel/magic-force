@@ -40,7 +40,7 @@ The existing arena comports the spawning of 4 players on each team. If you manag
 
 There is also an easter egg if you manage to score 7 to 1, which is only possible in multiplayer.
 
-![Gameplay](docs/gameplay.gif)
+![Gameplay](docs/Gsameplay.gif)
 
 
 # Have fun!
