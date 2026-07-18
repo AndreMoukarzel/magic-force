@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://hrshhttjx7at" path="res://arenas/zoos/grab_zoo.gd" id="1_c53w5"]
 [ext_resource type="PackedScene" uid="uid://bx8b8yvq5h1jd" path="res://player/player.tscn" id="1_j8jxi"]
-[ext_resource type="PackedScene" uid="uid://bbhhjkh6mw2xv" path="res://base_mage.tscn" id="2_uc3ch"]
+[ext_resource type="PackedScene" uid="uid://bbhhjkh6mw2xv" path="res://player/base_mage.tscn" id="2_uc3ch"]
 [ext_resource type="PackedScene" uid="uid://pnabqdq6vid7" path="res://spells/grab/projectile_grab.tscn" id="3_gcqjj"]
 [ext_resource type="PackedScene" uid="uid://cbq8n0y1yl5u0" path="res://ball/ball.tscn" id="4_gcqjj"]
 

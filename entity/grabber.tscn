@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cq82bbnw3xp8x"]
 
 [ext_resource type="Script" uid="uid://d0j5f4p5a4rxx" path="res://entity/grabber.gd" id="1_f8ep5"]
-[ext_resource type="PackedScene" uid="uid://bbhhjkh6mw2xv" path="res://base_mage.tscn" id="1_p0a1k"]
+[ext_resource type="PackedScene" uid="uid://bbhhjkh6mw2xv" path="res://player/base_mage.tscn" id="1_p0a1k"]
 [ext_resource type="PackedScene" uid="uid://7w2a5k2w72i7" path="res://spells/grab/force_grab.tscn" id="3_f8ep5"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_13rmr"]

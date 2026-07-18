@@ -1,6 +1,6 @@
-[gd_scene load_steps=7 format=4 uid="uid://bbhhjkh6mw2xv"]
+[gd_scene format=4 uid="uid://bbhhjkh6mw2xv"]
 
-[ext_resource type="PackedScene" uid="uid://dat5ka1sdrdf2" path="res://low_poly_mage.glb" id="1_i4way"]
+[ext_resource type="PackedScene" uid="uid://djc13ahfeq0x" path="res://player/low_poly_mage.glb" id="1_i4way"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i4way"]
 cull_mode = 2
