@@ -14,15 +14,15 @@ func fade_out(duration: float = 1.0) -> Tween:
 
 
 func _on_options_pressed() -> void:
-	$MarginContainer/VBoxContainer/Back.show()
-	$MarginContainer/VBoxContainer/Options.hide()
+	$OptionsAndQuit/VBoxContainer/Back.show()
+	$OptionsAndQuit/VBoxContainer/Options.hide()
 	$OptionsMenu.show()
 	$HBoxContainer.hide()
 
 
 func _on_back_pressed() -> void:
-	$MarginContainer/VBoxContainer/Back.hide()
-	$MarginContainer/VBoxContainer/Options.show()
+	$OptionsAndQuit/VBoxContainer/Back.hide()
+	$OptionsAndQuit/VBoxContainer/Options.show()
 	$OptionsMenu.hide()
 	$HBoxContainer.show()
 

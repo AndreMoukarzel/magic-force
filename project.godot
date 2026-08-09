@@ -16,8 +16,8 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="Magic Balls"
 run/main_scene="uid://0mk7es65ny1j"
-config/features=PackedStringArray("4.6", "GL Compatibility")
-config/icon="uid://ujc2evpvsb5u"
+config/features=PackedStringArray("4.7", "GL Compatibility")
+config/icon="uid://ch6x4kgb3brrj"
 config/windows_native_icon="res://configs/icon.ico"
 
 [audio]
